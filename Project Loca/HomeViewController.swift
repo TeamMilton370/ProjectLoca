@@ -12,37 +12,81 @@ import Photos
 
 class HomeViewController: UIViewController{
 
-	//UI Variables
-	var previewView: UIView?
-	
-	
+    @IBOutlet weak var previewView: CameraView!
+    @IBOutlet weak var startButton: UIButton!
+    var sessionIsActive = false
+
 	//data variables
 	var captureSession: AVCaptureSession?
 	var captureDevice : AVCaptureDevice?
 	var captureDeviceInput: AVCaptureDeviceInput?
 	var videoPreviewLayer: AVCaptureVideoPreviewLayer?
 	
-	
 	var stillImageOutput: AVCaptureStillImageOutput?
 	
-
-	
 	override func viewDidLoad() {
-		
 		print("hello world")
 		super.viewDidLoad()
-		
+//        startCapture()
 	}
 	
+    @IBAction func startSession(_ sender: Any) {
+        if sessionIsActive == false {
+            captureSession = AVCaptureSession()
+            captureSession?.sessionPreset = AVCaptureSessionPresetPhoto
+            
+            var defaultDevice: AVCaptureDevice?
+            
+            if let backCamera = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .back) {
+                defaultDevice = backCamera
+            }
+            
+            var error: NSError?
+            var input: AVCaptureDeviceInput!
+            do {
+                input = try AVCaptureDeviceInput(device: defaultDevice)
+            } catch let error1 as NSError {
+                error = error1
+                input = nil
+                print("Error: \(error!.localizedDescription)")
+            }
+            
+            if error == nil && (captureSession?.canAddInput(input))! {
+                captureSession?.addInput(input)
+            }
+            
+            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            videoPreviewLayer!.videoGravity = AVLayerVideoGravityResizeAspect
+            videoPreviewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
+            
+            videoPreviewLayer!.frame = previewView.bounds
+            previewView.layer.addSublayer(videoPreviewLayer!)
+            captureSession?.startRunning()
+            
+            sessionIsActive = true
+        } else {
+            captureSession?.stopRunning()
+            sessionIsActive = false
+        }
+    }
+    
+    /* DATA
+    let dataOutput = AVCaptureVideoDataOutput()
+    dataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString) : NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange as UInt32)] // 3
+    dataOutput.alwaysDiscardsLateVideoFrames = true
+    if (captureSession?.canAddOutput(dataOutput))!{
+    captureSession?.addOutput(dataOutput)
+    }
+    */
+    
 	func getVideoAuthorization(){
 		if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) ==  AVAuthorizationStatus.authorized{
-			startCapture()
-		}else{
+            print("already authorized")
+        }else{
 			AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { (granted :Bool) -> Void in
 				if granted == true
 				{
 					print("got it")
-					self.startCapture()
 				}
 				else
 				{
@@ -50,61 +94,6 @@ class HomeViewController: UIViewController{
 				}
 			});
 		}
-	}
-	
-	func startCapture(){
-		
-		//check for authorization
-		if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) != AVAuthorizationStatus.authorized{
-			getVideoAuthorization()
-		}
-		
-		//create capture session
-		captureSession = AVCaptureSession()
-		captureSession?.sessionPreset = AVCaptureSessionPresetLow
-		
-		//get video  device
-		var defaultVideoDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-		if let backCamera = AVCaptureDevice.defaultDevice(withDeviceType: AVCaptureDeviceType.builtInDualCamera, mediaType: AVMediaTypeVideo, position: .back){
-			defaultVideoDevice = backCamera
-		}
-		
-		//configure device input
-		var deviceInput: AVCaptureDeviceInput?
-		do{
-			deviceInput = try AVCaptureDeviceInput(device: defaultVideoDevice)
-		}catch{
-			print("error: \(error)")
-		}
-		
-		//configure capture session
-		captureSession?.beginConfiguration()
-		if (captureSession?.canAddInput(deviceInput))!{
-			captureSession?.addInput(deviceInput)
-		}
-		let dataOutput = AVCaptureVideoDataOutput()
-		dataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString) : NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange as UInt32)] // 3
-		dataOutput.alwaysDiscardsLateVideoFrames = true
-		if (captureSession?.canAddOutput(dataOutput))!{
-			captureSession?.addOutput(dataOutput)
-		}
-		captureSession?.commitConfiguration()
-		//let queue = DispatchQueue(label: "com.invasivecode.videoQueue")
-		//dataOutput.setSampleBufferDelegate(self, queue: queue)
-
-
-		videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-		videoPreviewLayer!.videoGravity = AVLayerVideoGravityResizeAspect
-		videoPreviewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-		
-		previewView = UIView()
-		self.view.addSubview(previewView!)
-		previewView!.frame = self.view.frame
-		videoPreviewLayer?.frame = previewView!.bounds
-		previewView?.layer.addSublayer(videoPreviewLayer!)
-		
-		
-		captureSession?.startRunning()
 	}
 	
 

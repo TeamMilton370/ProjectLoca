@@ -28,6 +28,7 @@ class HomeViewController: UIViewController{
 
 	
 	override func viewDidLoad() {
+		
 		print("hello world")
 		super.viewDidLoad()
 		
@@ -111,7 +112,44 @@ class HomeViewController: UIViewController{
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-
+	
+	
+	func practiceAPICall(){
+		let todoEndpoint: String = "https://jsonplaceholder.typicode.com/todos/1"
+		guard let url = URL(string: todoEndpoint) else {
+			print("Error: cannot create URL")
+			return
+		}
+		let urlRequest = URLRequest(url: url)
+		
+		let session = URLSession.shared
+		let task = session.dataTask(with: urlRequest) { (data, response, error) in
+			guard error == nil else{
+				print(error)
+				return
+			}
+			guard data != nil else{
+				print("no data")
+				return;
+			}
+			do{
+				guard let todo = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any] else{
+					print("error converting data to JSON")
+					return
+				}
+				print("toDo is \(todo.description)")
+				guard let todoTitle = todo["title"] as? String else{
+					print("could not get title")
+					return
+				}
+				print("the title is \(todoTitle)")
+			}catch{
+				print("error converting to JSON: \(error)")
+			}
+		}
+		task.resume()	//execute call
+	
+	}
 
 }
 

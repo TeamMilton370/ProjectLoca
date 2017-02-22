@@ -13,9 +13,11 @@
 		632E76331E43F7560098CC91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632E76311E43F7560098CC91 /* Main.storyboard */; };
 		632E76351E43F7560098CC91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 632E76341E43F7560098CC91 /* Assets.xcassets */; };
 		632E76381E43F7560098CC91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632E76361E43F7560098CC91 /* LaunchScreen.storyboard */; };
+		FFF7A0DE13770904A3DEBFFA /* Pods_Project_Loca.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9898F8DC1B8737FF67266E3 /* Pods_Project_Loca.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A509FA944547E47953C78CC /* Pods-Project Loca.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project Loca.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Project Loca/Pods-Project Loca.debug.xcconfig"; sourceTree = "<group>"; };
 		36002C3E1E491C6B00D5CFF4 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		632E762A1E43F7560098CC91 /* Project Loca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project Loca.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		632E762D1E43F7560098CC91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +26,8 @@
 		632E76341E43F7560098CC91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		632E76371E43F7560098CC91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		632E76391E43F7560098CC91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9A85DD20066A0DFEFA1744EE /* Pods-Project Loca.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project Loca.release.xcconfig"; path = "Pods/Target Support Files/Pods-Project Loca/Pods-Project Loca.release.xcconfig"; sourceTree = "<group>"; };
+		D9898F8DC1B8737FF67266E3 /* Pods_Project_Loca.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_Loca.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFF7A0DE13770904A3DEBFFA /* Pods_Project_Loca.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B08F81E16B1DF4D0D23E224 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1A509FA944547E47953C78CC /* Pods-Project Loca.debug.xcconfig */,
+				9A85DD20066A0DFEFA1744EE /* Pods-Project Loca.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		632E76211E43F7560098CC91 = {
 			isa = PBXGroup;
 			children = (
 				632E762C1E43F7560098CC91 /* Project Loca */,
 				632E762B1E43F7560098CC91 /* Products */,
+				4B08F81E16B1DF4D0D23E224 /* Pods */,
+				9080C4A6184A2A9A602B6811 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +83,14 @@
 			path = "Project Loca";
 			sourceTree = "<group>";
 		};
+		9080C4A6184A2A9A602B6811 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9898F8DC1B8737FF67266E3 /* Pods_Project_Loca.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 632E763C1E43F7560098CC91 /* Build configuration list for PBXNativeTarget "Project Loca" */;
 			buildPhases = (
+				66FA56A2DDC6F6EC4229C797 /* [CP] Check Pods Manifest.lock */,
 				632E76261E43F7560098CC91 /* Sources */,
 				632E76271E43F7560098CC91 /* Frameworks */,
 				632E76281E43F7560098CC91 /* Resources */,
+				045244A0FAC5918B7D117514 /* [CP] Embed Pods Frameworks */,
+				D6BA7D58E257F4EDA83F8B83 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -134,6 +161,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		045244A0FAC5918B7D117514 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Project Loca/Pods-Project Loca-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		66FA56A2DDC6F6EC4229C797 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D6BA7D58E257F4EDA83F8B83 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Project Loca/Pods-Project Loca-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		632E76261E43F7560098CC91 /* Sources */ = {
@@ -263,6 +338,7 @@
 		};
 		632E763D1E43F7560098CC91 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A509FA944547E47953C78CC /* Pods-Project Loca.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8TWVWBQE3T;
@@ -277,6 +353,7 @@
 		};
 		632E763E1E43F7560098CC91 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A85DD20066A0DFEFA1744EE /* Pods-Project Loca.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8TWVWBQE3T;

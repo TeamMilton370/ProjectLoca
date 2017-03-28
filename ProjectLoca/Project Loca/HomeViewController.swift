@@ -188,6 +188,8 @@ extension HomeViewController{
         completion(true)
     }
     func takePicture() {
+
+		
         let settings = AVCapturePhotoSettings()
         let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
         let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,

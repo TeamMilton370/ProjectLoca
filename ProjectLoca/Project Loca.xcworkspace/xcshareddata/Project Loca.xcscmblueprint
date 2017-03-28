@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "44CE30165C4CF9F555EE60A3FC3F5AAB9C2D797D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2A74828F357F696C02C870D8217FF9D2D740A2EF" : 9223372036854775807,
+    "44CE30165C4CF9F555EE60A3FC3F5AAB9C2D797D" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "81F45CA2-FE0D-437C-99D9-DE9561F421BC",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2A74828F357F696C02C870D8217FF9D2D740A2EF" : "",
+    "44CE30165C4CF9F555EE60A3FC3F5AAB9C2D797D" : "ProjectLoca\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Project Loca",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Project Loca.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tangert\/CS370-notes.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2A74828F357F696C02C870D8217FF9D2D740A2EF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/TeamMilton370\/ProjectLoca.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "44CE30165C4CF9F555EE60A3FC3F5AAB9C2D797D"
+    }
+  ]
+}

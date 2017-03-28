@@ -1,0 +1,18 @@
+PODS:
+  - AKPickerView (0.2.7)
+  - Alamofire (4.2.0)
+  - SwiftyJSON (3.1.4)
+
+DEPENDENCIES:
+  - AKPickerView
+  - Alamofire
+  - SwiftyJSON
+
+SPEC CHECKSUMS:
+  AKPickerView: 125372e36fcc372216127600a541f14dcdbb7993
+  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+
+PODFILE CHECKSUM: 2f6f846ae9998fb93677651a69873e3c315e56f3
+
+COCOAPODS: 1.2.0.rc.1

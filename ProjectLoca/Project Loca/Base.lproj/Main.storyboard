@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4z6-Hr-Q79">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="KNj-j8-C14">
+            <objects>
+                <navigationController id="4z6-Hr-Q79" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lFp-33-381">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ymL-Am-tex"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wli-2d-QHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-702" y="137"/>
+        </scene>
+        <!--Loca-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Project_Loca" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fl5-XX-f5U" customClass="CameraView" customModule="Project_Loca" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="176" width="375" height="400"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3z5-95-GeF" customClass="AKPickerView">
+                                <rect key="frame" x="0.0" y="64" width="375" height="64"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RvE-Sw-udQ">
+                                <rect key="frame" x="127.5" y="590" width="119" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="tVB-CC-YdN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="What's that?"/>
+                                <connections>
+                                    <action selector="pressQuery:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DrU-QD-h7W"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAX-3r-ZaR">
+                                <rect key="frame" x="66" y="136" width="56" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTA-v5-Bk6">
+                                <rect key="frame" x="230" y="136" width="76" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RvE-Sw-udQ" secondAttribute="bottom" constant="17" id="BEf-Hi-Ii9"/>
+                            <constraint firstItem="aAX-3r-ZaR" firstAttribute="baseline" secondItem="jTA-v5-Bk6" secondAttribute="baseline" id="J8R-pN-P1S"/>
+                            <constraint firstAttribute="trailing" secondItem="3z5-95-GeF" secondAttribute="trailing" id="Jx4-hk-mtk"/>
+                            <constraint firstItem="fl5-XX-f5U" firstAttribute="top" secondItem="aAX-3r-ZaR" secondAttribute="bottom" constant="19" id="M8A-ym-O1b"/>
+                            <constraint firstItem="3z5-95-GeF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="P7G-02-qEc"/>
+                            <constraint firstItem="3z5-95-GeF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="QMP-3k-nBF"/>
+                            <constraint firstItem="3z5-95-GeF" firstAttribute="leading" secondItem="fl5-XX-f5U" secondAttribute="leading" id="TbE-iD-qdE"/>
+                            <constraint firstItem="3z5-95-GeF" firstAttribute="trailing" secondItem="fl5-XX-f5U" secondAttribute="trailing" id="Tne-hA-Sjr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jTA-v5-Bk6" secondAttribute="trailing" constant="53" id="WrI-iV-fR3"/>
+                            <constraint firstItem="aAX-3r-ZaR" firstAttribute="top" secondItem="3z5-95-GeF" secondAttribute="bottom" constant="8" symbolic="YES" id="ZCO-qA-058"/>
+                            <constraint firstItem="RvE-Sw-udQ" firstAttribute="centerX" secondItem="fl5-XX-f5U" secondAttribute="centerX" id="cp3-0B-eMO"/>
+                            <constraint firstItem="aAX-3r-ZaR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="eH8-hP-4cz"/>
+                            <constraint firstItem="aAX-3r-ZaR" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="136" id="ekt-jh-zZ1"/>
+                            <constraint firstItem="RvE-Sw-udQ" firstAttribute="top" secondItem="fl5-XX-f5U" secondAttribute="bottom" constant="14" id="pBI-Wo-bMF"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Loca" id="dw1-cq-aGy">
+                        <barButtonItem key="rightBarButtonItem" title="Settings" id="vAn-um-Tfa"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="inLanguage" destination="aAX-3r-ZaR" id="Ohs-Tk-udV"/>
+                        <outlet property="languagePicker" destination="3z5-95-GeF" id="xtv-7I-yHe"/>
+                        <outlet property="outLanguage" destination="jTA-v5-Bk6" id="nJQ-pS-XrW"/>
+                        <outlet property="previewView" destination="fl5-XX-f5U" id="hFF-mC-Cw9"/>
+                        <outlet property="queryButton" destination="RvE-Sw-udQ" id="eAM-r6-4p1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="137.18140929535232"/>
+        </scene>
+    </scenes>
+</document>

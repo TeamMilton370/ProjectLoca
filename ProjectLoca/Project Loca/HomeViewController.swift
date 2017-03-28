@@ -17,10 +17,10 @@ import Accelerate
 
 class HomeViewController: UIViewController, UpdateUIDelegate {
     
+    @IBOutlet weak var previewView: CameraView!
     //IBOutlets
     @IBOutlet weak var queryButton: UIButton!
-    @IBOutlet weak var previewView: CameraView!
-    @IBOutlet weak var languagePicker: AKPickerView!
+//    @IBOutlet weak var languagePicker: AKPickerView!
     
     @IBOutlet weak var inLanguage: UILabel!
     @IBOutlet weak var outLanguage: UILabel!
@@ -32,6 +32,9 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
     
     //for picker view
     let languages = ["Spanish", "French", "Italian", "Japanese", "Chinese"]
+    
+    //action view
+    var alert: UIAlertController!
     
     //neural network
     var inception3Net: Inception3Net!
@@ -75,17 +78,18 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
         queryButton.backgroundColor = UIColor.white.withAlphaComponent(0.25)
         queryButton.frame = CGRect(x: 97, y: 590, width: 200, height: 60)
 
+        self.previewView.frame = CGRect(x: self.view.frame.minX, y: self.view.frame.minY, width: self.view.frame.width, height: self.view.frame.height)
         
         //Language Picker
-        self.languagePicker.dataSource = self
-        self.languagePicker.delegate = self
-        
-        self.languagePicker.font = UIFont(name: "HelveticaNeue-Light", size: 20)!
-        self.languagePicker.highlightedFont = UIFont(name: "HelveticaNeue", size: 20)!
-        self.languagePicker.pickerViewStyle = .styleFlat
-        self.languagePicker.isMaskDisabled = false
-        self.languagePicker.reloadData()
-        self.languagePicker.interitemSpacing = 5
+//        self.languagePicker.dataSource = self
+//        self.languagePicker.delegate = self
+//        
+//        self.languagePicker.font = UIFont(name: "HelveticaNeue-Light", size: 20)!
+//        self.languagePicker.highlightedFont = UIFont(name: "HelveticaNeue", size: 20)!
+//        self.languagePicker.pickerViewStyle = .styleFlat
+//        self.languagePicker.isMaskDisabled = false
+//        self.languagePicker.reloadData()
+//        self.languagePicker.interitemSpacing = 5
         
         //Neural Network
         // Load default device.
@@ -110,7 +114,27 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
         
         // we use this CIContext as one of the steps to get a MTLTexture
         ciContext = CIContext.init(mtlDevice: device!)
+        
+        alert = addActionSheet()
+
 	}
+    
+    func addActionSheet() -> UIAlertController {
+        let alertController = UIAlertController(title: "You found a new word!", message: nil, preferredStyle: .actionSheet)
+        
+        let saveButton = UIAlertAction(title: "Save to words", style: .default, handler: { (action) -> Void in
+            print("Ok button tapped")
+        })
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+            print("Cancel button tapped")
+        })
+        
+        alertController.addAction(saveButton)
+        alertController.addAction(cancelButton)
+        
+        return alertController
+    }
     
     
     func didReceiveTranslation(input1: String, input2: String) {
@@ -140,6 +164,7 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
     
     @IBAction func pressQuery(_ sender: Any) {
         takePicture()
+        
     }
     
     func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
@@ -286,22 +311,9 @@ extension HomeViewController: AVCapturePhotoCaptureDelegate {
                     return
                 }
                 
-                print("just got the data! starting animation")
-                UIView.animate(withDuration: 0.75, delay: 0.0, usingSpringWithDamping: 20, initialSpringVelocity: 20, options: .curveEaseInOut, animations: {
-                    
-                    print("Showing mic button")
-                    let newX = self.queryButton.frame.width/1.5 + self.queryButton.frame.minX/1.5
-                    self.queryButton.frame = CGRect(x: newX, y: 590, width: 100, height: 60)
-                    self.queryButton.setTitle("Mic", for: .normal)
-                    
-                }) { (Bool) in
-                    print("Completed animation")
-                    UIView.animate(withDuration: 0.75, animations: {
-                        self.queryButton.frame = CGRect(x: 97, y: 590, width: 200, height: 60)
-                        self.queryButton.setTitle("What's that?", for: .normal)
-                        
-                    })
-                }
+                print("just got the data!")
+                self.tabBarController?.present(self.alert, animated: true, completion: nil)
+                
             })
             
             

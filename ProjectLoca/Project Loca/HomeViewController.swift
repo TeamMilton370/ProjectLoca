@@ -29,7 +29,9 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
     var sessionIsActive = false
 	var captureSession = AVCaptureSession()
 	var videoPreviewLayer: AVCaptureVideoPreviewLayer?
-    
+	let photoOutput = AVCapturePhotoOutput()
+
+	
     //for picker view
     let languages = ["Spanish", "French", "Italian", "Japanese", "Chinese"]
     
@@ -49,11 +51,16 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
     static var dataIntefaceDelegate: DataInterfaceDelegate?
     static var languageSetupDelegate: LanguageSetupDelegate?
     static var updateUIDelegate: UpdateUIDelegate?
+	
+	
+	//for constant capture
+	var captureTimer: Timer!
+	var captureInteral: TimeInterval = 1
 
-    
+}
+extension HomeViewController{
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        print("hello world")
         //CAMERA
         //starts the capture session
         startSession()
@@ -110,6 +117,8 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
         
         // we use this CIContext as one of the steps to get a MTLTexture
         ciContext = CIContext.init(mtlDevice: device!)
+		
+		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
 	}
     
     
@@ -139,8 +148,12 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
     }
     
     @IBAction func pressQuery(_ sender: Any) {
-        takePicture()
-    }
+		if captureTimer.isValid{
+			captureTimer.invalidate()
+		}else{
+			captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
+		}
+	}
     
     func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
         let startTime = CACurrentMediaTime()
@@ -174,9 +187,6 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
         print("Running Time: \(endTime - startTime) [sec]")
         completion(true)
     }
-
-    
-    let photoOutput = AVCapturePhotoOutput()
     func takePicture() {
         let settings = AVCapturePhotoSettings()
         let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!

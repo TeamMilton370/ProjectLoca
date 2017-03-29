@@ -22,8 +22,8 @@ class TranslationManager: NSObject, TranslationDelegate, LanguageSetupDelegate {
         HomeViewController.languageSetupDelegate = self
     }
     
-    func didReceiveText(input: String) {
-        YandexAPICall(word: input)
+	func didTranslateText(translation: String) {
+        YandexAPICall(word: translation)
     }
     
     func didChangeLanguage(language: String) {

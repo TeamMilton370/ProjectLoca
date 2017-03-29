@@ -17,7 +17,6 @@ class DataInterface: NSObject, DataInterfaceDelegate {
     //delegates
     static var imageRecognitionDelegate: ImageRecognitionDelegate?
     static var translationDelegate: TranslationDelegate?
-    static var updateUIDelegate: UpdateUIDelegate?
     
     //instances
     var imageRecognitionManager = ImageRecognitionManager()
@@ -55,7 +54,7 @@ class DataInterface: NSObject, DataInterfaceDelegate {
     //this is called once the image recognition is finished.
     func sendDataToTranslator() {
         print("About to send data!")
-        DataInterface.translationDelegate?.didReceiveText(input: analyzedImageLabels.first!)
+        DataInterface.translationDelegate?.didTranslateText(translation: analyzedImageLabels.first!)
     }
     
     //this is called once the translation is finished
@@ -63,9 +62,9 @@ class DataInterface: NSObject, DataInterfaceDelegate {
         print("Sending to UI!")
         print("Analyzed image labels: \(analyzedImageLabels)")
         print("Translated image labels: \(translatedImageLabels)")
-        DataInterface.updateUIDelegate?.didReceiveTranslation(
-            input1: analyzedImageLabels.first!,
-            input2: translatedImageLabels.last!)
+		//   DataInterface.updateUIDelegate?.didReceiveTranslation(
+       //     input1: analyzedImageLabels.first!,
+		//     input2: translatedImageLabels.last!)
     }
     
 }

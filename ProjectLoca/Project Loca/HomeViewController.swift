@@ -15,8 +15,15 @@ import MetalPerformanceShaders
 import Accelerate
 
 
-class HomeViewController: UIViewController, UpdateUIDelegate {
-    
+class HomeViewController: UIViewController {
+	
+	var localTranslator: LocalTranslator!
+	
+	//Delegate
+	var photoCaptureDelegate: PhotoCaptureDelegate!
+	var neuralNetDelegate: NeuralNetDelegate!
+	var translationDelegate: TranslationDelegate!
+	
     @IBOutlet weak var previewView: CameraView!
     //IBOutlets
     @IBOutlet weak var queryButton: UIButton!
@@ -45,15 +52,12 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
     
     var textureLoader : MTKTextureLoader!
     var ciContext : CIContext!
-    var sourceTexture : MTLTexture? = nil
-
     
     static let session = URLSession.shared
     let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil) // Communicate with the session and other session objects on this queue.
     
     static var dataIntefaceDelegate: DataInterfaceDelegate?
     static var languageSetupDelegate: LanguageSetupDelegate?
-    static var updateUIDelegate: UpdateUIDelegate?
 	
 	
 	//for constant capture
@@ -64,13 +68,19 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
 extension HomeViewController{
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		//local translator
+		localTranslator = LocalTranslator()
+		
+		//protocal for camera and neuralNet
+		self.photoCaptureDelegate = self
+		self.neuralNetDelegate = self
         //CAMERA
         //starts the capture session
         startSession()
         
         //initializing data interface
         let _ = DataInterface()
-        DataInterface.updateUIDelegate = self
         
         //VISUALS        
         //camera view
@@ -120,20 +130,64 @@ extension HomeViewController{
         ciContext = CIContext.init(mtlDevice: device!)
         alert = addActionSheet()
                
-		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
+		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(executeTranslation), userInfo: nil, repeats: true)
 	}
-    
+	func executeTranslation(){
+		takePicture()
+		//take picture -> capture -> didGetTexture -> neurlaNet.didGetResults -> Translate.performTranslate -> updateUI
+		// run inference neural network to get predictions and display them
+	}	//called by timer
+	func takePicture() {
+		let settings = AVCapturePhotoSettings()
+		let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
+		let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
+		                     kCVPixelBufferWidthKey as String: 160,
+		                     kCVPixelBufferHeightKey as String: 160,
+		                     ]
+		settings.previewPhotoFormat = previewFormat
+		self.photoOutput.capturePhoto(with: settings, delegate: self)
+	}	//calls capture
+	func updateText(input1: String, input2: String?) {
+		self.inLanguage.text = input1
+		self.outLanguage.text = input2
+		
+		/*
+		UIView.animate(withDuration: 0.75, delay: 0.0, usingSpringWithDamping: 20, initialSpringVelocity: 20, options: .curveEaseInOut, animations: {
+		
+		print("Showing mic button")
+		let newX = self.queryButton.frame.width/1.5 + self.queryButton.frame.minX/1.5
+		self.queryButton.frame = CGRect(x: newX, y: 590, width: 100, height: 60)
+		self.queryButton.setTitle("Mic", for: .normal)
+		
+		}) { (Bool) in
+		print("Completed animation")
+		UIView.animate(withDuration: 0.75, animations: {
+		self.queryButton.frame = CGRect(x: 97, y: 590, width: 200, height: 60)
+		self.queryButton.setTitle("What's that?", for: .normal)
+		
+		})
+		}
+		*/
+	}
+	@IBAction func pressQuery(_ sender: Any) {
+		if captureTimer.isValid{
+			captureTimer.invalidate()
+			self.tabBarController?.present(self.alert, animated: true, completion: nil)
+		}else{
+			captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(executeTranslation), userInfo: nil, repeats: true)
+		}
+	}
     func addActionSheet() -> UIAlertController {
         let alertController = UIAlertController(title: "You found a new word!", message: nil, preferredStyle: .actionSheet)
         
         let saveButton = UIAlertAction(title: "Save to words", style: .default, handler: { (action) -> Void in
-            print("About to save a word")
-            
-            
+			self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.executeTranslation), userInfo: nil, repeats: true)
+
+			
         })
         
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
-            print("Cancel button tapped")
+			self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.executeTranslation), userInfo: nil, repeats: true)
         })
         
         alertController.addAction(saveButton)
@@ -141,45 +195,15 @@ extension HomeViewController{
         
         return alertController
     }
-    
-    
-    func didReceiveTranslation(input1: String, input2: String) {
-        print("Original: \(input1)")
-        print("Translation: \(input2)")
-        
-        self.inLanguage.text = input1
-        self.outLanguage.text = input2
-        
-        UIView.animate(withDuration: 0.75, delay: 0.0, usingSpringWithDamping: 20, initialSpringVelocity: 20, options: .curveEaseInOut, animations: {
-            
-                print("Showing mic button")
-                let newX = self.queryButton.frame.width/1.5 + self.queryButton.frame.minX/1.5
-                self.queryButton.frame = CGRect(x: newX, y: 590, width: 100, height: 60)
-                self.queryButton.setTitle("Mic", for: .normal)
-            
-        }) { (Bool) in
-            print("Completed animation")
-            UIView.animate(withDuration: 0.75, animations: {
-                self.queryButton.frame = CGRect(x: 97, y: 590, width: 200, height: 60)
-                self.queryButton.setTitle("What's that?", for: .normal)
-
-            })
-        }
-
-    }
-    
-    @IBAction func pressQuery(_ sender: Any) {
-		  if captureTimer.isValid{
-			  captureTimer.invalidate()
-		  }else{
-			captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
-		  }
-	}
- func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
+	func runNetwork(sourceTexture: MTLTexture) {
         let startTime = CACurrentMediaTime()
-        
         // to deliver optimal performance we leave some resources used in MPSCNN to be released at next call of autoreleasepool,
         // so the user can decide the appropriate time to release this
+		
+		// display top-5 predictions for what the object should be labelled
+		var resultString = ""
+		var translation = ""
+		var proababilities = [Float]()
         autoreleasepool{
             // encoding command buffer
             let commandBuffer = commandQueue.makeCommandBuffer()
@@ -191,48 +215,23 @@ extension HomeViewController{
             commandBuffer.commit()
             commandBuffer.waitUntilCompleted()
             
-            // display top-5 predictions for what the object should be labelled
-            var resultStr = ""
-            var translation = ""
-            var probs = [Float]()
-            
-            inception3Net.getResults().forEach({ (label,prob) in
-                probs.append(prob)
-                resultStr = resultStr + label + "\t" + String(format: "%.1f", prob * 100) + "%\n\n"
-                
-                var delimiter = ","
-                var newstr = label
-                var token = newstr.components(separatedBy: delimiter)
-                print(newstr)
-                translation = token.last!
-            })
-            
-            DispatchQueue.main.async {
-                self.inLanguage.text = resultStr
-                self.outLanguage.text = translation
-            }
+			var resultsString = ""
+			var translation = ""
+			var results: [(String, Float)] = inception3Net.getResults()
+			
+			results.sort{$0.1 > $1.1}
+			neuralNetDelegate.didGetResult(results: results)
+
         }
         
         let endTime = CACurrentMediaTime()
         print("Running Time: \(endTime - startTime) [sec]")
-        completion(true)
     }
-    func takePicture() {
-        let settings = AVCapturePhotoSettings()
-        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
-        let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
-                             kCVPixelBufferWidthKey as String: 160,
-                             kCVPixelBufferHeightKey as String: 160,
-                             ]
-        settings.previewPhotoFormat = previewFormat
-        
-        self.photoOutput.capturePhoto(with: settings, delegate: self)
-    }
-
+	//initialization stuff
     func startSession() {
         if !sessionIsActive {
             captureSession = AVCaptureSession()
-            
+			
             //image quality
             captureSession.sessionPreset = AVCaptureSessionPresetMedium
             
@@ -276,7 +275,6 @@ extension HomeViewController{
             sessionIsActive = false
         }
     }
-    
 	func getVideoAuthorization(){
 		if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) ==  AVAuthorizationStatus.authorized{
             print("already authorized")
@@ -291,16 +289,34 @@ extension HomeViewController{
 		}
 	}
 }
-
+extension HomeViewController: PhotoCaptureDelegate{
+	func didCaptureTexture(sourceTexture : MTLTexture?){
+		guard sourceTexture != nil else {
+			print("no texture found")
+			return
+		}
+		runNetwork(sourceTexture: sourceTexture!)
+	}
+}
+extension HomeViewController: NeuralNetDelegate{
+	func didGetResult(results: [(String, Float)]){
+		let firstResult = results[0].0
+		let firstProbability = results[0].1
+		let toReturn = "\(firstResult) \(firstProbability)"
+		
+		let translation = localTranslator.translate(word: firstResult)
+		print("translation of \(firstResult) is \(translation)")
+		updateText(input1: toReturn, input2: translation)
+		//display results
+		
+	}
+}
 extension HomeViewController: AVCapturePhotoCaptureDelegate {
-    //delegate method called from takePicture()
-	//random little change
-    func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
+	func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?){
         
         if let error = error {
             print("error occure : \(error.localizedDescription)")
         }
-        
         if  let sampleBuffer = photoSampleBuffer,
             let previewBuffer = previewPhotoSampleBuffer,
             let dataImage =  AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer:  sampleBuffer, previewPhotoSampleBuffer: previewBuffer) {
@@ -308,46 +324,29 @@ extension HomeViewController: AVCapturePhotoCaptureDelegate {
             let dataProvider = CGDataProvider(data: dataImage as CFData)
             guard let cgImage = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) else {
                 print("couldn't get an image")
-                
                 return
             }
             
             // get a texture from this CGImage
             do {
-                self.sourceTexture = try self.textureLoader.newTexture(with: cgImage, options: [:])
+                let sourceTexture = try self.textureLoader.newTexture(with: cgImage, options: [:])
+				photoCaptureDelegate.didCaptureTexture(sourceTexture: sourceTexture)
             }
             catch let error as NSError {
                 fatalError("Unexpected error ocurred: \(error.localizedDescription).")
             }
-            
-            // run inference neural network to get predictions and display them
-            self.runNetwork(completion: { (gotData) in
-                guard gotData else {
-                    print("didn't get data")
-                    return
-                }
-                
-                print("just got the data!")
-                self.tabBarController?.present(self.alert, animated: true, completion: nil)
-                
-            })
-            
-            
         } else {
             print("some error here")
         }
     }
 }
-
 extension HomeViewController: AKPickerViewDelegate, AKPickerViewDataSource {
     func pickerView(_ pickerView: AKPickerView, titleForItem item: Int) -> String {
         return self.languages[item]
     }
-    
     func numberOfItems(in pickerView: AKPickerView!) -> UInt {
         return UInt(languages.count)
     }
-    
     func pickerView(_ pickerView: AKPickerView!, didSelectItem item: Int) {
         print("language selected: \(languages[item])")
         HomeViewController.languageSetupDelegate?.didChangeLanguage(language: languages[item])

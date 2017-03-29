@@ -222,6 +222,7 @@
 		632E76331E43F7560098CC91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632E76311E43F7560098CC91 /* Main.storyboard */; };
 		632E76351E43F7560098CC91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 632E76341E43F7560098CC91 /* Assets.xcassets */; };
 		632E76381E43F7560098CC91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632E76361E43F7560098CC91 /* LaunchScreen.storyboard */; };
+		633351DF1E8C38B7005FBA91 /* LocalTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633351DE1E8C38B7005FBA91 /* LocalTranslator.swift */; };
 		6BC74CD3B2DE792BC77DC6CA /* Pods_Project_Loca.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5CD7EA8619A3F47249DEC4D /* Pods_Project_Loca.framework */; };
 /* End PBXBuildFile section */
 
@@ -446,6 +447,7 @@
 		632E76341E43F7560098CC91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		632E76371E43F7560098CC91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		632E76391E43F7560098CC91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		633351DE1E8C38B7005FBA91 /* LocalTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTranslator.swift; sourceTree = "<group>"; };
 		7365078CE979AFC74F432A5A /* Pods-Project Loca.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project Loca.release.xcconfig"; path = "Pods/Target Support Files/Pods-Project Loca/Pods-Project Loca.release.xcconfig"; sourceTree = "<group>"; };
 		F5CD7EA8619A3F47249DEC4D /* Pods_Project_Loca.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_Loca.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -739,6 +741,7 @@
 				36CDC9A21E57AA2800720EDE /* TranslationManager.swift */,
 				36EDC64A1E5A13BA00885354 /* DataInterface.swift */,
 				36CDC9A41E57AA3100720EDE /* ImageRecognitionManager.swift */,
+				633351DE1E8C38B7005FBA91 /* LocalTranslator.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -829,7 +832,7 @@
 				TargetAttributes = {
 					632E76291E43F7560098CC91 = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 3D642QE477;
+						DevelopmentTeam = 3GAL6UXS95;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1130,6 +1133,7 @@
 				36CDC9A51E57AA3100720EDE /* ImageRecognitionManager.swift in Sources */,
 				36EDC64B1E5A13BA00885354 /* DataInterface.swift in Sources */,
 				36A7292F1E6C91B600C1694D /* SlimMPSCNN.swift in Sources */,
+				633351DF1E8C38B7005FBA91 /* LocalTranslator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1253,7 +1257,7 @@
 			baseConfigurationReference = 1ADEDA206A81C200B900CD5F /* Pods-Project Loca.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3D642QE477;
+				DEVELOPMENT_TEAM = 3GAL6UXS95;
 				INFOPLIST_FILE = "Project Loca/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "none.Project-Loca";
@@ -1268,7 +1272,7 @@
 			baseConfigurationReference = 7365078CE979AFC74F432A5A /* Pods-Project Loca.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3D642QE477;
+				DEVELOPMENT_TEAM = 3GAL6UXS95;
 				INFOPLIST_FILE = "Project Loca/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "none.Project-Loca";

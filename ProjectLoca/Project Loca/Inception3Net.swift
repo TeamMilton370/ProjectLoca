@@ -1948,6 +1948,7 @@ class Inception3Net{
     // the network given by tensrFlow outputs 1008 class probabilities however as we have no labels for index 0, 1001-1007, we 
     // have classes from original ImageNet2012
     let labels = [
+					"",
                      "kit fox, Vulpes macrotis",
                      "English setter",
                      "Siberian husky",

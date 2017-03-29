@@ -27,7 +27,7 @@ protocol ImageRecognitionDelegate {
 
 //Called from Data Intefcace -> Translation
 protocol TranslationDelegate {
-    func didReceiveText(input: String)
+    func didTranslateText(translation: String)
 }
 
 protocol UpdateDataInterfaceDelegate {
@@ -39,7 +39,11 @@ protocol LanguageSetupDelegate {
     func didChangeLanguage(language: String)
 }
 
-protocol UpdateUIDelegate {
-    //the "..." means any amount of strings
-    func didReceiveTranslation(input1: String, input2: String)
+protocol PhotoCaptureDelegate {
+	func didCaptureTexture(sourceTexture : MTLTexture?)
 }
+protocol NeuralNetDelegate {
+	func didGetResult(results: [(String, Float)])
+}
+
+

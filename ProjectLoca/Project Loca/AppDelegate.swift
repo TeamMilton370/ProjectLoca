@@ -10,7 +10,6 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-	//APP delegates ARE AWESOME
 	var window: UIWindow?
 
 

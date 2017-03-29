@@ -29,7 +29,9 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
     var sessionIsActive = false
 	var captureSession = AVCaptureSession()
 	var videoPreviewLayer: AVCaptureVideoPreviewLayer?
-    
+	let photoOutput = AVCapturePhotoOutput()
+
+	
     //for picker view
     let languages = ["Spanish", "French", "Italian", "Japanese", "Chinese"]
     
@@ -52,11 +54,16 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
     static var dataIntefaceDelegate: DataInterfaceDelegate?
     static var languageSetupDelegate: LanguageSetupDelegate?
     static var updateUIDelegate: UpdateUIDelegate?
+	
+	
+	//for constant capture
+	var captureTimer: Timer!
+	var captureInteral: TimeInterval = 1
 
-    
+}
+extension HomeViewController{
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        print("hello world")
         //CAMERA
         //starts the capture session
         startSession()
@@ -111,9 +118,9 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
         
         // we use this CIContext as one of the steps to get a MTLTexture
         ciContext = CIContext.init(mtlDevice: device!)
-        
         alert = addActionSheet()
-                
+               
+		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
 	}
     
     func addActionSheet() -> UIAlertController {
@@ -162,11 +169,13 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
     }
     
     @IBAction func pressQuery(_ sender: Any) {
-        takePicture()
-        
-    }
-    
-    func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
+		  if captureTimer.isValid{
+			  captureTimer.invalidate()
+		  }else{
+			captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
+		  }
+	}
+ func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
         let startTime = CACurrentMediaTime()
         
         // to deliver optimal performance we leave some resources used in MPSCNN to be released at next call of autoreleasepool,
@@ -208,9 +217,6 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
         print("Running Time: \(endTime - startTime) [sec]")
         completion(true)
     }
-
-    
-    let photoOutput = AVCapturePhotoOutput()
     func takePicture() {
         let settings = AVCapturePhotoSettings()
         let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
@@ -288,6 +294,7 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
 
 extension HomeViewController: AVCapturePhotoCaptureDelegate {
     //delegate method called from takePicture()
+	//random little change
     func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
         
         if let error = error {

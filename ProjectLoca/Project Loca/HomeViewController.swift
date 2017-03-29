@@ -128,12 +128,15 @@ extension HomeViewController{
         
         let saveButton = UIAlertAction(title: "Save to words", style: .default, handler: { (action) -> Void in
             print("About to save a word")
-            
-            
+			self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
+
+			
         })
         
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
             print("Cancel button tapped")
+			self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
+
         })
         
         alertController.addAction(saveButton)
@@ -171,9 +174,11 @@ extension HomeViewController{
     @IBAction func pressQuery(_ sender: Any) {
 		  if captureTimer.isValid{
 			  captureTimer.invalidate()
-		  }else{
-			captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
-		  }
+		}else{
+			self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
+
+		}
+		 self.tabBarController?.present(self.alert, animated: true, completion: nil)
 	}
  func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
         let startTime = CACurrentMediaTime()
@@ -328,7 +333,7 @@ extension HomeViewController: AVCapturePhotoCaptureDelegate {
                 }
                 
                 print("just got the data!")
-                self.tabBarController?.present(self.alert, animated: true, completion: nil)
+				
                 
             })
             

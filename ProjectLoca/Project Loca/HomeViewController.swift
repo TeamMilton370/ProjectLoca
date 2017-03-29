@@ -267,6 +267,7 @@ extension HomeViewController{
 
 extension HomeViewController: AVCapturePhotoCaptureDelegate {
     //delegate method called from takePicture()
+	//random little change
     func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
         
         if let error = error {

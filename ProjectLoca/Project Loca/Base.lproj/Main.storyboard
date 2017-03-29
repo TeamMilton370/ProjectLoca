@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -76,41 +75,58 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RvE-Sw-udQ">
-                                <rect key="frame" x="128" y="541" width="119" height="60"/>
+                                <rect key="frame" x="117" y="533" width="141" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="hbp-mO-psD"/>
+                                    <constraint firstAttribute="width" constant="141" id="5eQ-Ne-pxg"/>
+                                    <constraint firstAttribute="height" constant="60" id="wtL-DD-aON"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                                 <state key="normal" title="What's that?"/>
                                 <connections>
                                     <action selector="pressQuery:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DrU-QD-h7W"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAX-3r-ZaR">
-                                <rect key="frame" x="66" y="92" width="56" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTA-v5-Bk6" customClass="PaddingLabel" customModule="Project_Loca" customModuleProvider="target">
+                                <rect key="frame" x="111" y="103" width="152" height="41"/>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTA-v5-Bk6">
-                                <rect key="frame" x="230" y="92" width="76" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAX-3r-ZaR" customClass="PaddingLabel" customModule="Project_Loca" customModuleProvider="target">
+                                <rect key="frame" x="160" y="151" width="55" height="24"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RvE-Sw-udQ" secondAttribute="bottom" constant="17" id="0X7-6S-MmI"/>
-                            <constraint firstItem="aAX-3r-ZaR" firstAttribute="baseline" secondItem="jTA-v5-Bk6" secondAttribute="baseline" id="A9Z-jF-yyW"/>
-                            <constraint firstItem="k05-mk-GkR" firstAttribute="centerX" secondItem="RvE-Sw-udQ" secondAttribute="centerX" id="CVf-6v-69U"/>
-                            <constraint firstItem="aAX-3r-ZaR" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="72" id="H54-7N-che"/>
-                            <constraint firstItem="k05-mk-GkR" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="NQE-cl-Smp"/>
-                            <constraint firstItem="k05-mk-GkR" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="UjD-gk-On8"/>
-                            <constraint firstItem="k05-mk-GkR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="YFW-lU-m2b"/>
-                            <constraint firstAttribute="trailing" secondItem="k05-mk-GkR" secondAttribute="trailing" id="ane-l7-8oE"/>
-                            <constraint firstItem="aAX-3r-ZaR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="sFj-F6-Dqf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="jTA-v5-Bk6" secondAttribute="trailing" constant="53" id="zvN-YY-upj"/>
+                            <constraint firstItem="k05-mk-GkR" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="GDb-b9-aue"/>
+                            <constraint firstAttribute="trailing" secondItem="k05-mk-GkR" secondAttribute="trailing" id="JYq-8P-Krl"/>
+                            <constraint firstItem="k05-mk-GkR" firstAttribute="centerX" secondItem="jTA-v5-Bk6" secondAttribute="centerX" id="Qqe-xs-ThJ"/>
+                            <constraint firstItem="aAX-3r-ZaR" firstAttribute="centerX" secondItem="RvE-Sw-udQ" secondAttribute="centerX" id="dAr-c3-11a"/>
+                            <constraint firstItem="jTA-v5-Bk6" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="83" id="fd0-KO-6Q6"/>
+                            <constraint firstItem="aAX-3r-ZaR" firstAttribute="top" secondItem="jTA-v5-Bk6" secondAttribute="bottom" constant="7" id="g1z-17-Mxl"/>
+                            <constraint firstItem="jTA-v5-Bk6" firstAttribute="centerX" secondItem="aAX-3r-ZaR" secondAttribute="centerX" id="gHp-tR-WUX"/>
+                            <constraint firstItem="k05-mk-GkR" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="gJk-64-Woc"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RvE-Sw-udQ" secondAttribute="bottom" constant="25" id="gPN-Ja-Ly6"/>
+                            <constraint firstItem="k05-mk-GkR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="obo-R7-4ZK"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="search" id="min-t4-IWQ"/>
@@ -126,7 +142,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="420" y="430"/>
+            <point key="canvasLocation" x="420" y="429.53523238380814"/>
         </scene>
     </scenes>
 </document>

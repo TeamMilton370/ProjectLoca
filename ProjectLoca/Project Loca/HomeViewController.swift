@@ -22,8 +22,8 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
     @IBOutlet weak var queryButton: UIButton!
 //    @IBOutlet weak var languagePicker: AKPickerView!
     
-    @IBOutlet weak var inLanguage: UILabel!
-    @IBOutlet weak var outLanguage: UILabel!
+    @IBOutlet weak var inLanguage: PaddingLabel!
+    @IBOutlet weak var outLanguage: PaddingLabel!
     
 	//Camera-related variables
     var sessionIsActive = false
@@ -70,26 +70,23 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
         inLanguage.text = ""
         outLanguage.text = ""
         
+        inLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
+        inLanguage.layer.cornerRadius = 10
+        inLanguage.clipsToBounds = true
+        
+        outLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
+        outLanguage.layer.cornerRadius = 10
+        outLanguage.clipsToBounds = true
+        
         //Query button
         queryButton.layer.borderColor = UIColor.darkGray.cgColor
         queryButton.layer.borderWidth = 2
         queryButton.layer.cornerRadius = 30
         queryButton.setTitleColor(UIColor.darkGray, for: .normal)
-        queryButton.backgroundColor = UIColor.white.withAlphaComponent(0.25)
+        queryButton.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         queryButton.frame = CGRect(x: 97, y: 590, width: 200, height: 60)
 
         self.previewView.frame = CGRect(x: self.view.frame.minX, y: self.view.frame.minY, width: self.view.frame.width, height: self.view.frame.height)
-        
-        //Language Picker
-//        self.languagePicker.dataSource = self
-//        self.languagePicker.delegate = self
-//        
-//        self.languagePicker.font = UIFont(name: "HelveticaNeue-Light", size: 20)!
-//        self.languagePicker.highlightedFont = UIFont(name: "HelveticaNeue", size: 20)!
-//        self.languagePicker.pickerViewStyle = .styleFlat
-//        self.languagePicker.isMaskDisabled = false
-//        self.languagePicker.reloadData()
-//        self.languagePicker.interitemSpacing = 5
         
         //Neural Network
         // Load default device.
@@ -116,14 +113,16 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
         ciContext = CIContext.init(mtlDevice: device!)
         
         alert = addActionSheet()
-
+                
 	}
     
     func addActionSheet() -> UIAlertController {
         let alertController = UIAlertController(title: "You found a new word!", message: nil, preferredStyle: .actionSheet)
         
         let saveButton = UIAlertAction(title: "Save to words", style: .default, handler: { (action) -> Void in
-            print("Ok button tapped")
+            print("About to save a word")
+            
+            
         })
         
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
@@ -185,13 +184,23 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
             
             // display top-5 predictions for what the object should be labelled
             var resultStr = ""
+            var translation = ""
+            var probs = [Float]()
             
             inception3Net.getResults().forEach({ (label,prob) in
+                probs.append(prob)
                 resultStr = resultStr + label + "\t" + String(format: "%.1f", prob * 100) + "%\n\n"
+                
+                var delimiter = ","
+                var newstr = label
+                var token = newstr.components(separatedBy: delimiter)
+                print(newstr)
+                translation = token.last!
             })
             
             DispatchQueue.main.async {
                 self.inLanguage.text = resultStr
+                self.outLanguage.text = translation
             }
         }
         

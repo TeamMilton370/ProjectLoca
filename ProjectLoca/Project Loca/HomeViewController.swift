@@ -154,6 +154,9 @@ extension HomeViewController{
 			captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
 		}
 	}
+	func randoFunc(){
+		print("randoFunc")
+	}
     
     func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
         let startTime = CACurrentMediaTime()
@@ -188,8 +191,6 @@ extension HomeViewController{
         completion(true)
     }
     func takePicture() {
-
-		
         let settings = AVCapturePhotoSettings()
         let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
         let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,

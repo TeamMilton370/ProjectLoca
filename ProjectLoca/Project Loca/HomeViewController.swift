@@ -17,13 +17,13 @@ import Accelerate
 
 class HomeViewController: UIViewController, UpdateUIDelegate {
     
+    @IBOutlet weak var previewView: CameraView!
     //IBOutlets
     @IBOutlet weak var queryButton: UIButton!
-    @IBOutlet weak var previewView: CameraView!
-    @IBOutlet weak var languagePicker: AKPickerView!
+//    @IBOutlet weak var languagePicker: AKPickerView!
     
-    @IBOutlet weak var inLanguage: UILabel!
-    @IBOutlet weak var outLanguage: UILabel!
+    @IBOutlet weak var inLanguage: PaddingLabel!
+    @IBOutlet weak var outLanguage: PaddingLabel!
     
 	//Camera-related variables
     var sessionIsActive = false
@@ -34,6 +34,9 @@ class HomeViewController: UIViewController, UpdateUIDelegate {
 	
     //for picker view
     let languages = ["Spanish", "French", "Italian", "Japanese", "Chinese"]
+    
+    //action view
+    var alert: UIAlertController!
     
     //neural network
     var inception3Net: Inception3Net!
@@ -74,25 +77,23 @@ extension HomeViewController{
         inLanguage.text = ""
         outLanguage.text = ""
         
+        inLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
+        inLanguage.layer.cornerRadius = 10
+        inLanguage.clipsToBounds = true
+        
+        outLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
+        outLanguage.layer.cornerRadius = 10
+        outLanguage.clipsToBounds = true
+        
         //Query button
         queryButton.layer.borderColor = UIColor.darkGray.cgColor
         queryButton.layer.borderWidth = 2
         queryButton.layer.cornerRadius = 30
         queryButton.setTitleColor(UIColor.darkGray, for: .normal)
-        queryButton.backgroundColor = UIColor.white.withAlphaComponent(0.25)
+        queryButton.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         queryButton.frame = CGRect(x: 97, y: 590, width: 200, height: 60)
 
-        
-        //Language Picker
-        self.languagePicker.dataSource = self
-        self.languagePicker.delegate = self
-        
-        self.languagePicker.font = UIFont(name: "HelveticaNeue-Light", size: 20)!
-        self.languagePicker.highlightedFont = UIFont(name: "HelveticaNeue", size: 20)!
-        self.languagePicker.pickerViewStyle = .styleFlat
-        self.languagePicker.isMaskDisabled = false
-        self.languagePicker.reloadData()
-        self.languagePicker.interitemSpacing = 5
+        self.previewView.frame = CGRect(x: self.view.frame.minX, y: self.view.frame.minY, width: self.view.frame.width, height: self.view.frame.height)
         
         //Neural Network
         // Load default device.
@@ -117,9 +118,29 @@ extension HomeViewController{
         
         // we use this CIContext as one of the steps to get a MTLTexture
         ciContext = CIContext.init(mtlDevice: device!)
-		
+        alert = addActionSheet()
+               
 		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
 	}
+    
+    func addActionSheet() -> UIAlertController {
+        let alertController = UIAlertController(title: "You found a new word!", message: nil, preferredStyle: .actionSheet)
+        
+        let saveButton = UIAlertAction(title: "Save to words", style: .default, handler: { (action) -> Void in
+            print("About to save a word")
+            
+            
+        })
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+            print("Cancel button tapped")
+        })
+        
+        alertController.addAction(saveButton)
+        alertController.addAction(cancelButton)
+        
+        return alertController
+    }
     
     
     func didReceiveTranslation(input1: String, input2: String) {
@@ -148,17 +169,13 @@ extension HomeViewController{
     }
     
     @IBAction func pressQuery(_ sender: Any) {
-		if captureTimer.isValid{
-			captureTimer.invalidate()
-		}else{
+		  if captureTimer.isValid{
+			  captureTimer.invalidate()
+		  }else{
 			captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
-		}
+		  }
 	}
-	func randoFunc(){
-		print("randoFunc")
-	}
-    
-    func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
+ func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
         let startTime = CACurrentMediaTime()
         
         // to deliver optimal performance we leave some resources used in MPSCNN to be released at next call of autoreleasepool,
@@ -176,13 +193,23 @@ extension HomeViewController{
             
             // display top-5 predictions for what the object should be labelled
             var resultStr = ""
+            var translation = ""
+            var probs = [Float]()
             
             inception3Net.getResults().forEach({ (label,prob) in
+                probs.append(prob)
                 resultStr = resultStr + label + "\t" + String(format: "%.1f", prob * 100) + "%\n\n"
+                
+                var delimiter = ","
+                var newstr = label
+                var token = newstr.components(separatedBy: delimiter)
+                print(newstr)
+                translation = token.last!
             })
             
             DispatchQueue.main.async {
                 self.inLanguage.text = resultStr
+                self.outLanguage.text = translation
             }
         }
         
@@ -300,22 +327,9 @@ extension HomeViewController: AVCapturePhotoCaptureDelegate {
                     return
                 }
                 
-                print("just got the data! starting animation")
-                UIView.animate(withDuration: 0.75, delay: 0.0, usingSpringWithDamping: 20, initialSpringVelocity: 20, options: .curveEaseInOut, animations: {
-                    
-                    print("Showing mic button")
-                    let newX = self.queryButton.frame.width/1.5 + self.queryButton.frame.minX/1.5
-                    self.queryButton.frame = CGRect(x: newX, y: 590, width: 100, height: 60)
-                    self.queryButton.setTitle("Mic", for: .normal)
-                    
-                }) { (Bool) in
-                    print("Completed animation")
-                    UIView.animate(withDuration: 0.75, animations: {
-                        self.queryButton.frame = CGRect(x: 97, y: 590, width: 200, height: 60)
-                        self.queryButton.setTitle("What's that?", for: .normal)
-                        
-                    })
-                }
+                print("just got the data!")
+                self.tabBarController?.present(self.alert, animated: true, completion: nil)
+                
             })
             
             

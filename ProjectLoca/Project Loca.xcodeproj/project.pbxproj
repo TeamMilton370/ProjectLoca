@@ -209,10 +209,12 @@
 		36A7292F1E6C91B600C1694D /* SlimMPSCNN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A7292E1E6C91B600C1694D /* SlimMPSCNN.swift */; };
 		36B1F9201E6C8E84004FBA49 /* Inception3Net.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1F91F1E6C8E84004FBA49 /* Inception3Net.swift */; };
 		36B1F9221E6C8E8F004FBA49 /* Inception3Net+result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1F9211E6C8E8F004FBA49 /* Inception3Net+result.swift */; };
+		36BF97751E8B3E840091ECB9 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BF97741E8B3E840091ECB9 /* PaddingLabel.swift */; };
 		36CDC9991E57A9B600720EDE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CDC9981E57A9B600720EDE /* Extensions.swift */; };
 		36CDC99B1E57A9BD00720EDE /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CDC99A1E57A9BD00720EDE /* Protocols.swift */; };
 		36CDC9A31E57AA2800720EDE /* TranslationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CDC9A21E57AA2800720EDE /* TranslationManager.swift */; };
 		36CDC9A51E57AA3100720EDE /* ImageRecognitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CDC9A41E57AA3100720EDE /* ImageRecognitionManager.swift */; };
+		36E2930B1E8B35160080BD05 /* trans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E2930A1E8B35160080BD05 /* trans.swift */; };
 		36EDC6481E5A137200885354 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EDC6471E5A137200885354 /* Constants.swift */; };
 		36EDC64B1E5A13BA00885354 /* DataInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EDC64A1E5A13BA00885354 /* DataInterface.swift */; };
 		632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762D1E43F7560098CC91 /* AppDelegate.swift */; };
@@ -428,10 +430,12 @@
 		36A7292E1E6C91B600C1694D /* SlimMPSCNN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlimMPSCNN.swift; sourceTree = "<group>"; };
 		36B1F91F1E6C8E84004FBA49 /* Inception3Net.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inception3Net.swift; sourceTree = "<group>"; };
 		36B1F9211E6C8E8F004FBA49 /* Inception3Net+result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Inception3Net+result.swift"; sourceTree = "<group>"; };
+		36BF97741E8B3E840091ECB9 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		36CDC9981E57A9B600720EDE /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		36CDC99A1E57A9BD00720EDE /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		36CDC9A21E57AA2800720EDE /* TranslationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationManager.swift; sourceTree = "<group>"; };
 		36CDC9A41E57AA3100720EDE /* ImageRecognitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRecognitionManager.swift; sourceTree = "<group>"; };
+		36E2930A1E8B35160080BD05 /* trans.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = trans.swift; sourceTree = "<group>"; };
 		36EDC6471E5A137200885354 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		36EDC64A1E5A13BA00885354 /* DataInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInterface.swift; sourceTree = "<group>"; };
 		36EDC64E1E5A460600885354 /* Project Loca-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Project Loca-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -702,6 +706,7 @@
 			isa = PBXGroup;
 			children = (
 				632E762F1E43F7560098CC91 /* HomeViewController.swift */,
+				36BF97741E8B3E840091ECB9 /* PaddingLabel.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -723,6 +728,7 @@
 				36EDC64E1E5A460600885354 /* Project Loca-Bridging-Header.h */,
 				36CDC99A1E57A9BD00720EDE /* Protocols.swift */,
 				36EDC6471E5A137200885354 /* Constants.swift */,
+				36E2930A1E8B35160080BD05 /* trans.swift */,
 			);
 			name = Supporting;
 			sourceTree = "<group>";
@@ -1111,12 +1117,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				36EDC6481E5A137200885354 /* Constants.swift in Sources */,
+				36E2930B1E8B35160080BD05 /* trans.swift in Sources */,
 				36CDC99B1E57A9BD00720EDE /* Protocols.swift in Sources */,
 				36002C3F1E491C6B00D5CFF4 /* CameraView.swift in Sources */,
 				632E76301E43F7560098CC91 /* HomeViewController.swift in Sources */,
 				632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */,
 				36CDC9991E57A9B600720EDE /* Extensions.swift in Sources */,
 				36CDC9A31E57AA2800720EDE /* TranslationManager.swift in Sources */,
+				36BF97751E8B3E840091ECB9 /* PaddingLabel.swift in Sources */,
 				36B1F9221E6C8E8F004FBA49 /* Inception3Net+result.swift in Sources */,
 				36B1F9201E6C8E84004FBA49 /* Inception3Net.swift in Sources */,
 				36CDC9A51E57AA3100720EDE /* ImageRecognitionManager.swift in Sources */,

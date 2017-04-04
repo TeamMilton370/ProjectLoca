@@ -218,7 +218,7 @@
 		36EDC6481E5A137200885354 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EDC6471E5A137200885354 /* Constants.swift */; };
 		36EDC64B1E5A13BA00885354 /* DataInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EDC64A1E5A13BA00885354 /* DataInterface.swift */; };
 		632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762D1E43F7560098CC91 /* AppDelegate.swift */; };
-		632E76301E43F7560098CC91 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762F1E43F7560098CC91 /* HomeViewController.swift */; };
+		632E76301E43F7560098CC91 /* e.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762F1E43F7560098CC91 /* e.swift */; };
 		632E76331E43F7560098CC91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632E76311E43F7560098CC91 /* Main.storyboard */; };
 		632E76351E43F7560098CC91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 632E76341E43F7560098CC91 /* Assets.xcassets */; };
 		632E76381E43F7560098CC91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632E76361E43F7560098CC91 /* LaunchScreen.storyboard */; };
@@ -442,7 +442,7 @@
 		36EDC64E1E5A460600885354 /* Project Loca-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Project Loca-Bridging-Header.h"; sourceTree = "<group>"; };
 		632E762A1E43F7560098CC91 /* Project Loca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project Loca.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		632E762D1E43F7560098CC91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		632E762F1E43F7560098CC91 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		632E762F1E43F7560098CC91 /* e.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = e.swift; sourceTree = "<group>"; };
 		632E76321E43F7560098CC91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		632E76341E43F7560098CC91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		632E76371E43F7560098CC91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -707,7 +707,7 @@
 		36CDC99E1E57A9D400720EDE /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				632E762F1E43F7560098CC91 /* HomeViewController.swift */,
+				632E762F1E43F7560098CC91 /* e.swift */,
 				36BF97741E8B3E840091ECB9 /* PaddingLabel.swift */,
 			);
 			name = Controllers;
@@ -1123,7 +1123,7 @@
 				36E2930B1E8B35160080BD05 /* trans.swift in Sources */,
 				36CDC99B1E57A9BD00720EDE /* Protocols.swift in Sources */,
 				36002C3F1E491C6B00D5CFF4 /* CameraView.swift in Sources */,
-				632E76301E43F7560098CC91 /* HomeViewController.swift in Sources */,
+				632E76301E43F7560098CC91 /* e.swift in Sources */,
 				632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */,
 				36CDC9991E57A9B600720EDE /* Extensions.swift in Sources */,
 				36CDC9A31E57AA2800720EDE /* TranslationManager.swift in Sources */,

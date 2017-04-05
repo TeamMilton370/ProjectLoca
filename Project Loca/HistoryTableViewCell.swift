@@ -14,5 +14,6 @@ class HistoryTableViewCell: UITableViewCell {
     @IBOutlet weak var originalWord: UILabel!
     @IBOutlet weak var translatedWord: UILabel!
     @IBOutlet weak var seenCount: UILabel!
+    @IBOutlet weak var background: UIView!
     
 }

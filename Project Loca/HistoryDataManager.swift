@@ -13,6 +13,7 @@ struct wordTranslationPair: Hashable {
     var word: String!
     var translation: String!
     var image: UIImage!
+    var date: Date!
     
     var hashValue: Int {
         let hash = self.word.hashValue
@@ -35,13 +36,8 @@ class HistoryDataManager {
     //Singleton
     static let sharedInstance = HistoryDataManager()
     
-    //Data storage
-    var originalWords = [String]()
-    var translatedWords = [String]()
-    
     //Stores a tuple containing an original word, its translation, and how many times it was seen
     var translationCountDictionary = [wordTranslationPair: Int]()
-    var dict = [String: String]()
     
     init(){
         HomeViewController.updateHistoryDelegate = self

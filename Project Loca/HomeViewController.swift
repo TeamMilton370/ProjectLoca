@@ -6,6 +6,7 @@
 //  Copyright © 2017 TeamMilton370. All rights reserved.
 //
 import RealmSwift
+import Speech
 import UIKit
 import AVFoundation
 import Photos
@@ -14,13 +15,29 @@ import MetalPerformanceShaders
 import Accelerate
 
 
+/*
+zh_Hans_HK	Chinese
+
+//es	Spanish
+*/
 class HomeViewController: UIViewController {
-    
+	
+	
+	//MARK: Sppech recognition variables
+	let enSpeechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "es-Spanish"))
+	var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+	var recognitionTask: SFSpeechRecognitionTask?
+	let audioEngine = AVAudioEngine()
+	
+	
     //IBoutlets
     @IBOutlet weak var previewView: CameraView!
     @IBOutlet weak var queryButton: UIButton!
     @IBOutlet weak var inLanguage: PaddingLabel!
     @IBOutlet weak var outLanguage: PaddingLabel!
+	
+	@IBOutlet weak var micButton: UIButton!
+	@IBOutlet weak var speechTextLabel: UILabel!
     
     //Class variables
     //Camera-related variables
@@ -84,7 +101,17 @@ extension HomeViewController{
         outLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         outLanguage.layer.cornerRadius = 10
         outLanguage.clipsToBounds = true
-        
+		
+		micButton.layer.cornerRadius = 30
+		micButton.setTitleColor(UIColor.darkGray, for: .normal)
+		micButton.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+		micButton.frame = CGRect(x: 20, y: 590, width: 200, height: 60)
+		
+		speechTextLabel.layer.cornerRadius = 30
+		speechTextLabel.textColor = UIColor.darkGray
+		speechTextLabel.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+		speechTextLabel.frame = CGRect(x: 97, y: 390, width: 200, height: 60)
+		
         //Query button
         queryButton.layer.cornerRadius = 30
         queryButton.setTitleColor(UIColor.darkGray, for: .normal)
@@ -121,22 +148,9 @@ extension HomeViewController{
         // we use this CIContext as one of the steps to get a MTLTexture
         ciContext = CIContext.init(mtlDevice: device!)
         alert = addActionSheet()
-        
-        captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
+		
+		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        captureTimer.invalidate()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
-    }
-    
-    
     func addActionSheet() -> UIAlertController {
         let alertController = UIAlertController(title: "You found a new word!", message: nil, preferredStyle: .actionSheet)
         
@@ -191,16 +205,14 @@ extension HomeViewController{
         
         return alertController
     }
-    
     @IBAction func pressQuery(_ sender: Any) {
-        if captureTimer.isValid{
-            captureTimer.invalidate()
-        }else{
-            self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
-        }
-        self.tabBarController?.present(self.alert, animated: true, completion: nil)
+		captureTimer.invalidate()
+		self.tabBarController?.present(self.alert, animated: true, completion: nil)
     }
-    
+	@IBAction func pressMic(_ sender: Any){
+		initializeSpeechRecognition()
+		startRecording()
+	}
     func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
         let startTime = CACurrentMediaTime()
         
@@ -273,7 +285,6 @@ extension HomeViewController{
         
         self.photoOutput.capturePhoto(with: settings, delegate: self)
     }
-    
     func startSession() {
         if !sessionIsActive {
             captureSession = AVCaptureSession()
@@ -321,7 +332,6 @@ extension HomeViewController{
             sessionIsActive = false
         }
     }
-    
     func getVideoAuthorization(){
         if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) ==  AVAuthorizationStatus.authorized{
             print("already authorized")
@@ -396,4 +406,96 @@ extension HomeViewController {
             
         }
     }
+}
+
+extension HomeViewController: SFSpeechRecognizerDelegate{
+	func initializeSpeechRecognition(){
+		
+		enSpeechRecognizer!.delegate = self
+		
+		SFSpeechRecognizer.requestAuthorization { (authStatus) in
+			
+			switch authStatus {
+			case .authorized:
+				print("authorized")
+			case .denied:
+				print("User denied access to speech recognition")
+				
+			case .restricted:
+				print("Speech recognition restricted on this device")
+				
+			case .notDetermined:
+				print("Speech recognition not yet authorized")
+			}
+			
+			OperationQueue.main.addOperation() {
+				//self.microphoneButton.isEnabled = isButtonEnabled
+			}
+		}
+		
+	}
+	func startRecording(){
+		if recognitionTask != nil {
+			recognitionTask?.cancel()
+			recognitionTask = nil
+		}
+		
+		let audioSession = AVAudioSession.sharedInstance()
+		do {
+			try audioSession.setCategory(AVAudioSessionCategoryRecord)
+			try audioSession.setMode(AVAudioSessionModeMeasurement)
+			try audioSession.setActive(true, with: .notifyOthersOnDeactivation)
+		} catch {
+			print("audioSession properties weren't set because of an error.")
+		}
+		
+		recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+		
+		guard let inputNode = audioEngine.inputNode else {
+			fatalError("Audio engine has no input node")
+		}
+		
+		guard let recognitionRequest = recognitionRequest else {
+			fatalError("Unable to create an SFSpeechAudioBufferRecognitionRequest object")
+		}
+		
+		recognitionRequest.shouldReportPartialResults = true
+		
+		recognitionTask = enSpeechRecognizer!.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in
+			
+			var isFinal = false
+			
+			if result != nil {
+				
+				self.speechTextLabel.text = result?.bestTranscription.formattedString
+				isFinal = (result?.isFinal)!
+			}
+			
+			if error != nil || isFinal {
+				self.audioEngine.stop()
+				inputNode.removeTap(onBus: 0)
+				
+				self.recognitionRequest = nil
+				self.recognitionTask = nil
+				
+				self.micButton.isEnabled = true
+			}
+		})
+		
+		let recordingFormat = inputNode.outputFormat(forBus: 0)
+		inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
+			self.recognitionRequest?.append(buffer)
+		}
+		
+		audioEngine.prepare()
+		
+		do {
+			try audioEngine.start()
+		} catch {
+			print("audioEngine couldn't start because of an error.")
+		}
+		
+		speechTextLabel.text = "Say something, I'm listening!"
+	}
+	
 }

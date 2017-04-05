@@ -14,6 +14,7 @@ class HistoryViewController: UIViewController {
 	
 	var seenWords: Results<Word>?
 	
+	
     //MARK: IBOutlets
     
     @IBOutlet weak var languageLabel: UILabel!
@@ -21,6 +22,7 @@ class HistoryViewController: UIViewController {
     @IBOutlet weak var recentsCollectionView: UICollectionView!
     @IBOutlet weak var streaksCollectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
+	
     
     //MARK: View Controller Life Cycle
     override func viewDidLoad() {
@@ -123,3 +125,4 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
         
     }
 }
+

@@ -5,7 +5,7 @@
 //  Created by Jake Cronin on 2/2/17.
 //  Copyright © 2017 TeamMilton370. All rights reserved.
 //
-
+import RealmSwift
 import UIKit
 import AVFoundation
 import Photos
@@ -143,7 +143,36 @@ extension HomeViewController{
         let saveButton = UIAlertAction(title: "Save to words", style: .default, handler: { (action) -> Void in
             print("About to save a word")
             self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
-            
+			
+			//Do-Catch saves the word if necessary, and updates 'lastSeen' and 'timesSeen'
+			do{
+				print("in save word to realm")
+				let realm = try Realm()
+				var word = try realm.objects(Word).filter(NSPredicate(format: "word == %@", self.inLanguage.text!)).first
+				if word != nil{		//customer exists, update it
+					print("got \(word!)")
+					//now update times seen and last seen
+					try realm.write{
+						word!.timesSeen = word!.timesSeen + 1
+						word!.lastSeen = Date()
+					}
+				}else{ //customer does not exist. create new one
+					print("Word is new, saving to realm")
+					
+					try realm.write {
+						word = Word()
+						realm.add(word!)
+						word!.word = self.inLanguage.text!
+						word!.translation = self.outLanguage.text!
+						word!.dateAdded = Date()
+						word!.lastSeen = Date()
+						word!.timesSeen = 1
+					}
+				}
+			}catch{
+				print(error)
+			}
+			
             //Delegation to the history when saving
             HomeViewController.updateHistoryDelegate?.didReceiveData(
                 word: self.inLanguage.text!,

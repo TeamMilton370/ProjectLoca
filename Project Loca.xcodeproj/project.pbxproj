@@ -223,6 +223,7 @@
 		36DD06A41E9366510088B0C2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DD06A31E9366510088B0C2 /* HistoryViewController.swift */; };
 		36E2930B1E8B35160080BD05 /* Translations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E2930A1E8B35160080BD05 /* Translations.swift */; };
 		36EDC64B1E5A13BA00885354 /* DataInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EDC64A1E5A13BA00885354 /* DataInterface.swift */; };
+		632A1E061E947E96002A24DB /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A1E051E947E96002A24DB /* Word.swift */; };
 		632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762D1E43F7560098CC91 /* AppDelegate.swift */; };
 		632E76301E43F7560098CC91 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762F1E43F7560098CC91 /* HomeViewController.swift */; };
 		632E76331E43F7560098CC91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632E76311E43F7560098CC91 /* Main.storyboard */; };
@@ -452,6 +453,7 @@
 		36E2930A1E8B35160080BD05 /* Translations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translations.swift; sourceTree = "<group>"; };
 		36EDC64A1E5A13BA00885354 /* DataInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInterface.swift; sourceTree = "<group>"; };
 		36EDC64E1E5A460600885354 /* Project Loca-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Project Loca-Bridging-Header.h"; sourceTree = "<group>"; };
+		632A1E051E947E96002A24DB /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		632E762A1E43F7560098CC91 /* Project Loca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project Loca.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		632E762D1E43F7560098CC91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		632E762F1E43F7560098CC91 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -786,6 +788,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		632A1DFF1E947E6B002A24DB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				632A1E051E947E96002A24DB /* Word.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		632E76211E43F7560098CC91 = {
 			isa = PBXGroup;
 			children = (
@@ -807,6 +817,7 @@
 		632E762C1E43F7560098CC91 /* Project Loca */ = {
 			isa = PBXGroup;
 			children = (
+				632A1DFF1E947E6B002A24DB /* Models */,
 				632E762D1E43F7560098CC91 /* AppDelegate.swift */,
 				36EDC6491E5A139200885354 /* Managers */,
 				36CDC99E1E57A9D400720EDE /* Controllers */,
@@ -855,7 +866,7 @@
 				TargetAttributes = {
 					632E76291E43F7560098CC91 = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 8TWVWBQE3T;
+						DevelopmentTeam = 3GAL6UXS95;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1150,6 +1161,7 @@
 				366422A21E94268C009FB784 /* HistoryCollectionViewCell.swift in Sources */,
 				366422A71E94430D009FB784 /* StreakCollectionViewCell.swift in Sources */,
 				632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */,
+				632A1E061E947E96002A24DB /* Word.swift in Sources */,
 				36DD06A21E9366470088B0C2 /* ProgressViewController.swift in Sources */,
 				36CDC9991E57A9B600720EDE /* Extensions.swift in Sources */,
 				36CDC9A31E57AA2800720EDE /* TranslationManager.swift in Sources */,
@@ -1285,7 +1297,7 @@
 			baseConfigurationReference = 1EB08C688031DF6EA3A18D27 /* Pods-Project Loca.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 8TWVWBQE3T;
+				DEVELOPMENT_TEAM = 3GAL6UXS95;
 				INFOPLIST_FILE = "Project Loca/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "none.Project-Loca";
@@ -1300,7 +1312,7 @@
 			baseConfigurationReference = 0706110F8CBD520DD9212A58 /* Pods-Project Loca.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 8TWVWBQE3T;
+				DEVELOPMENT_TEAM = 3GAL6UXS95;
 				INFOPLIST_FILE = "Project Loca/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "none.Project-Loca";

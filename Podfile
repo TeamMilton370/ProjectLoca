@@ -10,5 +10,6 @@ target 'Project Loca' do
 pod 'Alamofire'
 pod 'SwiftyJSON'
 pod 'AKPickerView'
+pod 'RealmSwift'
 
 end

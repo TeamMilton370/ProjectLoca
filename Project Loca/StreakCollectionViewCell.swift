@@ -11,7 +11,4 @@ import UIKit
 
 class StreakCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var streakCircle: UIView!
-    @IBOutlet weak var dayLabel: UILabel!
-    
 }

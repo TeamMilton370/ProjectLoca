@@ -138,7 +138,7 @@ extension HomeViewController{
     
     
     func addActionSheet() -> UIAlertController {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "You found a new word!", message: nil, preferredStyle: .actionSheet)
         
         let saveButton = UIAlertAction(title: "Save to words", style: .default, handler: { (action) -> Void in
             print("About to save a word")
@@ -218,12 +218,12 @@ extension HomeViewController{
                     self.outLanguage.isHidden = false
                 }
                 
-                self.inLanguage.text = translation.capitalizingFirstLetter()
+                self.inLanguage.text = translation
                 
                 if trans1[translation] != nil {
-                    self.outLanguage.text = trans1[translation]?.capitalizingFirstLetter()
+                    self.outLanguage.text = trans1[translation]
                 } else {
-                    self.outLanguage.text = trans2[translation]?.capitalizingFirstLetter()
+                    self.outLanguage.text = trans2[translation]
                 }
             }
 

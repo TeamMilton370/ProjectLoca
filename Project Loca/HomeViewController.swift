@@ -22,12 +22,23 @@ zh_Hans_HK	Chinese
 */
 class HomeViewController: UIViewController {
 	
+	enum SpeechStatus {
+		case ready
+		case recognizing
+		case unavailable
+	}
+	
 	
 	//MARK: Sppech recognition variables
-	let enSpeechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "es-Spanish"))
-	var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-	var recognitionTask: SFSpeechRecognitionTask?
 	let audioEngine = AVAudioEngine()
+	let speechRecognizer: SFSpeechRecognizer? = SFSpeechRecognizer()
+	let request = SFSpeechAudioBufferRecognitionRequest()
+	var recognitionTask: SFSpeechRecognitionTask?
+	var status = SpeechStatus.ready {
+		didSet {
+			self.setMicUI(status: status)
+		}
+	}
 	
 	
     //IBoutlets
@@ -210,8 +221,17 @@ extension HomeViewController{
 		self.tabBarController?.present(self.alert, animated: true, completion: nil)
     }
 	@IBAction func pressMic(_ sender: Any){
-		initializeSpeechRecognition()
-		startRecording()
+		switch status {
+		case .ready:
+			startRecording()
+			status = .recognizing
+		case .recognizing:
+			cancelRecording()
+			status = .ready
+		default:
+			initializeSpeechRecognition()
+			break
+		}
 	}
     func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
         let startTime = CACurrentMediaTime()
@@ -392,7 +412,6 @@ extension HomeViewController: AVCapturePhotoCaptureDelegate {
         }
     }
 }
-
 extension HomeViewController {
     func handleZoom(_ gesture: UIPinchGestureRecognizer) {
         if gesture.state == .began {
@@ -407,95 +426,85 @@ extension HomeViewController {
         }
     }
 }
-
 extension HomeViewController: SFSpeechRecognizerDelegate{
 	func initializeSpeechRecognition(){
 		
-		enSpeechRecognizer!.delegate = self
-		
-		SFSpeechRecognizer.requestAuthorization { (authStatus) in
-			
-			switch authStatus {
-			case .authorized:
-				print("authorized")
-			case .denied:
-				print("User denied access to speech recognition")
-				
-			case .restricted:
-				print("Speech recognition restricted on this device")
-				
+		switch SFSpeechRecognizer.authorizationStatus() {
 			case .notDetermined:
-				print("Speech recognition not yet authorized")
-			}
-			
-			OperationQueue.main.addOperation() {
-				//self.microphoneButton.isEnabled = isButtonEnabled
-			}
+				askSpeechPermission()
+			case .authorized:
+				self.status = .ready
+			case .denied, .restricted:
+				self.status = .unavailable
 		}
 		
 	}
-	func startRecording(){
-		if recognitionTask != nil {
-			recognitionTask?.cancel()
-			recognitionTask = nil
-		}
-		
-		let audioSession = AVAudioSession.sharedInstance()
-		do {
-			try audioSession.setCategory(AVAudioSessionCategoryRecord)
-			try audioSession.setMode(AVAudioSessionModeMeasurement)
-			try audioSession.setActive(true, with: .notifyOthersOnDeactivation)
-		} catch {
-			print("audioSession properties weren't set because of an error.")
-		}
-		
-		recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-		
-		guard let inputNode = audioEngine.inputNode else {
-			fatalError("Audio engine has no input node")
-		}
-		
-		guard let recognitionRequest = recognitionRequest else {
-			fatalError("Unable to create an SFSpeechAudioBufferRecognitionRequest object")
-		}
-		
-		recognitionRequest.shouldReportPartialResults = true
-		
-		recognitionTask = enSpeechRecognizer!.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in
-			
-			var isFinal = false
-			
-			if result != nil {
-				
-				self.speechTextLabel.text = result?.bestTranscription.formattedString
-				isFinal = (result?.isFinal)!
+	
+	func askSpeechPermission(){
+		SFSpeechRecognizer.requestAuthorization { status in
+			OperationQueue.main.addOperation {
+				switch status {
+				case .authorized:
+					self.status = .ready
+				default:
+					self.status = .unavailable
+				}
 			}
-			
-			if error != nil || isFinal {
-				self.audioEngine.stop()
-				inputNode.removeTap(onBus: 0)
-				
-				self.recognitionRequest = nil
-				self.recognitionTask = nil
-				
-				self.micButton.isEnabled = true
+		}
+	}
+	
+	func startRecording(){
+		// Setup audio engine and speech recognizer
+		guard let node = audioEngine.inputNode else {
+			print("no audioengine inputNode")
+			return
+		}
+		let recordingFormat = node.outputFormat(forBus: 0)
+		node.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
+			self.request.append(buffer)
+		}
+		
+		// Prepare and start recording
+		audioEngine.prepare()
+		do {
+			print("starting audioEngine")
+			try audioEngine.start()
+			self.status = .recognizing
+		} catch {
+			return print(error)
+		}
+		
+		// Analyze the speech
+		recognitionTask = speechRecognizer?.recognitionTask(with: request, resultHandler: { result, error in
+			if let result = result {
+				print("got result: \(result.bestTranscription.formattedString)")
+				self.speechTextLabel.text = result.bestTranscription.formattedString
+				//self.searchFlight(number: result.bestTranscription.formattedString)
+			} else if let error = error {
+				print(error)
 			}
 		})
-		
-		let recordingFormat = inputNode.outputFormat(forBus: 0)
-		inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
-			self.recognitionRequest?.append(buffer)
+	}
+	func cancelRecording() {
+		audioEngine.stop()
+		if let node = audioEngine.inputNode {
+			node.removeTap(onBus: 0)
 		}
-		
-		audioEngine.prepare()
-		
-		do {
-			try audioEngine.start()
-		} catch {
-			print("audioEngine couldn't start because of an error.")
+		recognitionTask?.cancel()
+	}
+	
+	func setMicUI(status: SpeechStatus) {
+		switch status {
+		case .ready:
+			print("setting image to recognizing")
+		//micButton.setImage(, for: .normal)
+		case .recognizing:
+			print("setting image to recognizing")
+		//micButton.setImage(#imageLiteral(resourceName: "stop"), for: .normal)
+		case .unavailable:
+			print("setting image to recognizing")
+			//micButton.setImage(#imageLiteral(resourceName: "unavailable"), for: .normal)
 		}
-		
-		speechTextLabel.text = "Say something, I'm listening!"
 	}
 	
 }

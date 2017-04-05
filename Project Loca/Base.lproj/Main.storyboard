@@ -247,7 +247,7 @@
                                             <constraint firstAttribute="width" constant="146" id="Tof-7F-JUe"/>
                                             <constraint firstAttribute="height" constant="39" id="VLC-u2-t3P"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -257,6 +257,7 @@
                                             <constraint firstAttribute="height" constant="59" id="UXI-BT-tcX"/>
                                             <constraint firstAttribute="width" constant="70" id="q9F-9m-o4U"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <state key="normal" title="mic"/>
                                         <connections>
                                             <action selector="pressMic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HQR-uZ-G9o"/>

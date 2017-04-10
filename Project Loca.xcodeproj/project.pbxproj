@@ -229,6 +229,8 @@
 		632E76331E43F7560098CC91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632E76311E43F7560098CC91 /* Main.storyboard */; };
 		632E76351E43F7560098CC91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 632E76341E43F7560098CC91 /* Assets.xcassets */; };
 		632E76381E43F7560098CC91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632E76361E43F7560098CC91 /* LaunchScreen.storyboard */; };
+		63D461771E957152002C01BA /* LocaleDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D461761E957152002C01BA /* LocaleDictionary.swift */; };
+		63D4617B1E9576CC002C01BA /* RLMImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4617A1E9576CC002C01BA /* RLMImage.swift */; };
 		6E387C55AB9E6F444A466788 /* Pods_Project_Loca.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67605AC5D60BE907D88814EE /* Pods_Project_Loca.framework */; };
 /* End PBXBuildFile section */
 
@@ -461,6 +463,8 @@
 		632E76341E43F7560098CC91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		632E76371E43F7560098CC91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		632E76391E43F7560098CC91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63D461761E957152002C01BA /* LocaleDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleDictionary.swift; sourceTree = "<group>"; };
+		63D4617A1E9576CC002C01BA /* RLMImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMImage.swift; sourceTree = "<group>"; };
 		67605AC5D60BE907D88814EE /* Pods_Project_Loca.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_Loca.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -758,6 +762,7 @@
 				36CDC99A1E57A9BD00720EDE /* Protocols.swift */,
 				366422A41E94282F009FB784 /* OldProtocols.swift */,
 				36E2930A1E8B35160080BD05 /* Translations.swift */,
+				63D461761E957152002C01BA /* LocaleDictionary.swift */,
 			);
 			name = Supporting;
 			sourceTree = "<group>";
@@ -792,6 +797,7 @@
 			isa = PBXGroup;
 			children = (
 				632A1E051E947E96002A24DB /* Word.swift */,
+				63D4617A1E9576CC002C01BA /* RLMImage.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1158,8 +1164,10 @@
 				36DD069E1E9366290088B0C2 /* HistoryDataManager.swift in Sources */,
 				36002C3F1E491C6B00D5CFF4 /* CameraView.swift in Sources */,
 				632E76301E43F7560098CC91 /* HomeViewController.swift in Sources */,
+				63D4617B1E9576CC002C01BA /* RLMImage.swift in Sources */,
 				366422A21E94268C009FB784 /* HistoryCollectionViewCell.swift in Sources */,
 				366422A71E94430D009FB784 /* StreakCollectionViewCell.swift in Sources */,
+				63D461771E957152002C01BA /* LocaleDictionary.swift in Sources */,
 				632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */,
 				632A1E061E947E96002A24DB /* Word.swift in Sources */,
 				36DD06A21E9366470088B0C2 /* ProgressViewController.swift in Sources */,

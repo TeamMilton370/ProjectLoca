@@ -41,5 +41,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>I want to listen to you while you sleep</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>I want to listen to you while you sleep</string>
 </dict>
 </plist>

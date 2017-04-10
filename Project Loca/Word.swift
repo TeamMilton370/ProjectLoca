@@ -17,8 +17,8 @@ class Word: Object{
 	dynamic var dateAdded: Date!
 	dynamic var lastSeen: Date!
 	
-	dynamic var image: Data?
 	dynamic var timesSeen: Int = 0
 		
-		
+	let images = List<RLMImage>()
+
 }

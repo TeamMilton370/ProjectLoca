@@ -6,6 +6,7 @@
 //  Copyright © 2017 TeamMilton370. All rights reserved.
 //
 import RealmSwift
+import Speech
 import UIKit
 import AVFoundation
 import Photos
@@ -14,14 +15,44 @@ import MetalPerformanceShaders
 import Accelerate
 
 
+/*
+zh_Hans_HK	Chinese
+
+//es	Spanish
+*/
 class HomeViewController: UIViewController {
-    
+	
+	enum SpeechStatus {
+		case ready
+		case recognizing
+		case unavailable
+	}
+	
+	
+	//MARK: Sppech recognition variables
+	let audioEngine = AVAudioEngine()
+	var speechRecognizer: SFSpeechRecognizer? = SFSpeechRecognizer()//locale: Locale(identifier: "es Spanish"))
+	let request = SFSpeechAudioBufferRecognitionRequest()
+	var recognitionTask: SFSpeechRecognitionTask?
+	var selectedLocale: Locale = Locale(identifier: locales["English"]!)
+	var status = SpeechStatus.ready {
+		didSet {
+			self.setMicUI(status: status)
+		}
+	}
+	
+	
     //IBoutlets
     @IBOutlet weak var previewView: CameraView!
     @IBOutlet weak var queryButton: UIButton!
     @IBOutlet weak var inLanguage: PaddingLabel!
     @IBOutlet weak var outLanguage: PaddingLabel!
-    
+	
+	@IBOutlet weak var micButton: UIButton!
+	@IBOutlet weak var speechTextLabel: PaddingLabel!
+	@IBOutlet weak var toggleTextLabel: PaddingLabel!
+	@IBOutlet weak var toggleSwitch: UISwitch!
+	
     //Class variables
     //Camera-related variables
     var sessionIsActive = false
@@ -44,11 +75,11 @@ class HomeViewController: UIViewController {
     var ciContext : CIContext!
     var sourceTexture : MTLTexture? = nil
     
-    
     static let session = URLSession.shared
     let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil) // Communicate with the session and other session objects on this queue.
     
     //History data management
+	let historyDataManager = HistoryDataManager()
     static var updateHistoryDelegate: UpdateHistoryDelegate?
     
     //Constant capture
@@ -66,15 +97,14 @@ extension HomeViewController{
         startSession()
         
         //initializing data manager for word history
-        let _ = HistoryDataManager()
-        
+		
         //VISUALS
         
         //Language labels
         inLanguage.text = ""
         outLanguage.text = ""
         
-        inLanguage.isHidden = true
+        inLanguage.isHidden = false
         outLanguage.isHidden = true
         
         inLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
@@ -84,7 +114,19 @@ extension HomeViewController{
         outLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         outLanguage.layer.cornerRadius = 10
         outLanguage.clipsToBounds = true
-        
+		
+		micButton.layer.cornerRadius = 38
+		micButton.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+		
+		
+		speechTextLabel.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+		speechTextLabel.layer.cornerRadius = 8
+		speechTextLabel.clipsToBounds = true
+		
+		//toggleTextLabel.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+		//toggleTextLabel.layer.cornerRadius = 10
+
+		
         //Query button
         queryButton.layer.cornerRadius = 30
         queryButton.setTitleColor(UIColor.darkGray, for: .normal)
@@ -121,22 +163,9 @@ extension HomeViewController{
         // we use this CIContext as one of the steps to get a MTLTexture
         ciContext = CIContext.init(mtlDevice: device!)
         alert = addActionSheet()
-        
-        captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
+		
+		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        captureTimer.invalidate()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
-    }
-    
-    
     func addActionSheet() -> UIAlertController {
         let alertController = UIAlertController(title: "You found a new word!", message: nil, preferredStyle: .actionSheet)
         
@@ -145,33 +174,7 @@ extension HomeViewController{
             self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
 			
 			//Do-Catch saves the word if necessary, and updates 'lastSeen' and 'timesSeen'
-			do{
-				print("in save word to realm")
-				let realm = try Realm()
-				var word = try realm.objects(Word).filter(NSPredicate(format: "word == %@", self.inLanguage.text!)).first
-				if word != nil{		//customer exists, update it
-					print("got \(word!)")
-					//now update times seen and last seen
-					try realm.write{
-						word!.timesSeen = word!.timesSeen + 1
-						word!.lastSeen = Date()
-					}
-				}else{ //customer does not exist. create new one
-					print("Word is new, saving to realm")
-					
-					try realm.write {
-						word = Word()
-						realm.add(word!)
-						word!.word = self.inLanguage.text!
-						word!.translation = self.outLanguage.text!
-						word!.dateAdded = Date()
-						word!.lastSeen = Date()
-						word!.timesSeen = 1
-					}
-				}
-			}catch{
-				print(error)
-			}
+			self.historyDataManager.saveWord(word: self.inLanguage.text!, image: self.currentImage)
 			
             //Delegation to the history when saving
             HomeViewController.updateHistoryDelegate?.didReceiveData(
@@ -191,16 +194,39 @@ extension HomeViewController{
         
         return alertController
     }
-    
     @IBAction func pressQuery(_ sender: Any) {
-        if captureTimer.isValid{
-            captureTimer.invalidate()
-        }else{
-            self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
-        }
-        self.tabBarController?.present(self.alert, animated: true, completion: nil)
+		captureTimer.invalidate()
+		self.tabBarController?.present(self.alert, animated: true, completion: nil)
     }
-    
+	@IBAction func pressMic(_ sender: Any){
+		switch status {
+		case .ready:
+			startRecording()
+			status = .recognizing
+		case .recognizing:
+			cancelRecording()
+			status = .ready
+		default:
+			initializeSpeechRecognition()
+			break
+		}
+	}
+	@IBAction func toggleSwitch(_ sender: Any){
+		if toggleSwitch.isOn{	//quiz mode
+			toggleTextLabel.text = "Quiz"
+			outLanguage.isHidden = true
+			micButton.isHidden = false
+			micButton.isEnabled = true
+		}else{
+			toggleTextLabel.text = "Search"
+			outLanguage.isHidden = false
+			micButton.isEnabled = false
+			micButton.isHidden = true
+		}
+		
+		
+		
+	}
     func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
         let startTime = CACurrentMediaTime()
         
@@ -273,7 +299,6 @@ extension HomeViewController{
         
         self.photoOutput.capturePhoto(with: settings, delegate: self)
     }
-    
     func startSession() {
         if !sessionIsActive {
             captureSession = AVCaptureSession()
@@ -321,7 +346,6 @@ extension HomeViewController{
             sessionIsActive = false
         }
     }
-    
     func getVideoAuthorization(){
         if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) ==  AVAuthorizationStatus.authorized{
             print("already authorized")
@@ -382,7 +406,6 @@ extension HomeViewController: AVCapturePhotoCaptureDelegate {
         }
     }
 }
-
 extension HomeViewController {
     func handleZoom(_ gesture: UIPinchGestureRecognizer) {
         if gesture.state == .began {
@@ -397,3 +420,154 @@ extension HomeViewController {
         }
     }
 }
+extension HomeViewController: SFSpeechRecognizerDelegate{
+	func initializeSpeechRecognition(){
+		
+		switch SFSpeechRecognizer.authorizationStatus() {
+			case .notDetermined:
+				askSpeechPermission()
+			case .authorized:
+				self.status = .ready
+			case .denied, .restricted:
+				self.status = .unavailable
+		}
+		
+	}
+	func askSpeechPermission(){
+		SFSpeechRecognizer.requestAuthorization { status in
+			OperationQueue.main.addOperation {
+				switch status {
+				case .authorized:
+					self.status = .ready
+				default:
+					self.status = .unavailable
+				}
+			}
+		}
+	}
+	func startRecording(){
+		//pause timer
+		captureTimer.invalidate()
+		
+		// Setup audio engine and speech recognizer
+		speechRecognizer = SFSpeechRecognizer(locale: selectedLocale)
+		guard let node = audioEngine.inputNode else {
+			print("no audioengine inputNode")
+			return
+		}
+		let recordingFormat = node.outputFormat(forBus: 0)
+		node.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
+			self.request.append(buffer)
+		}
+		
+		// Prepare and start recording
+		audioEngine.prepare()
+		do {
+			print("starting audioEngine")
+			try audioEngine.start()
+			self.status = .recognizing
+		} catch {
+			return print(error)
+		}
+		
+		// Analyze the speech
+		recognitionTask = speechRecognizer?.recognitionTask(with: request, resultHandler: { result, error in
+			if let result = result {
+				print("got result: \(result.bestTranscription.formattedString)")
+				self.speechTextLabel.text = result.bestTranscription.formattedString
+				if self.speechTextLabel.text == "Test"{//self.inLanguage.text{
+					print("Correct!")
+				}else{
+					print("incorrect")
+				}
+				self.pressMic(self.micButton)
+			} else if let error = error {
+				print(error)
+			}
+		})
+	}
+	func cancelRecording() {
+		audioEngine.stop()
+		if let node = audioEngine.inputNode {
+			node.removeTap(onBus: 0)
+		}
+		recognitionTask?.cancel()
+		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
+	}
+	func setMicUI(status: SpeechStatus) {
+		switch status {
+		case .ready:
+			print("setting image to recognizing")
+		micButton.setImage(#imageLiteral(resourceName: "Microphone-48"), for: .normal)
+		case .recognizing:
+			print("setting image to recognizing")
+		micButton.setImage(#imageLiteral(resourceName: "Audio Wave Filled-50"), for: .normal)
+		case .unavailable:
+			print("setting image to recognizing")
+			micButton.setImage(#imageLiteral(resourceName: "No Microphone-48"), for: .normal)
+		}
+	}
+	
+}
+
+/*
+{(nl-NL",
+"es-MX",
+"zh-TW",
+"fr-FR",
+"it-IT",
+"vi-VN",
+"en-ZA",
+"ca-ES",
+"es-CL",
+"ko-KR",
+"ro-RO",
+"fr-CH",
+"en-PH",
+"en-CA",
+"en-SG",
+"en-IN",
+"en-NZ",
+"it-CH",
+"fr-CA",
+"da-DK",
+"de-AT",
+"pt-BR",
+"yue-CN",
+"zh-CN",
+"sv-SE",
+"es-ES",
+"ar-SA",
+"hu-HU",
+"fr-BE",
+"en-GB",
+"ja-JP",
+"zh-HK",
+"fi-FI",
+"tr-TR",
+"nb-NO",
+"en-ID",
+"en-SA",
+"pl-PL",
+"id-ID",
+"ms-MY",
+"el-GR",
+"cs-CZ",
+"hr-HR",
+"en-AE",
+"he-IL",
+"ru-RU",
+"de-CH",
+"en-AU",
+"de-DE",
+"nl-BE",
+"th-TH",
+"pt-PT",
+"sk-SK",
+"en-US",
+"en-IE",
+"es-CO",
+"uk-UA",
+"es-US"
+)}
+*/

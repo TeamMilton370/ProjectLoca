@@ -13,8 +13,8 @@ import RealmSwift
 class HistoryViewController: UIViewController {
 	
 	var seenWords: Results<Word>?
-	
-	
+	var recentImages: Results<RLMImage>?
+	let historyDataManager = HistoryDataManager.sharedInstance
     //MARK: IBOutlets
     
     @IBOutlet weak var languageLabel: UILabel!
@@ -54,6 +54,7 @@ class HistoryViewController: UIViewController {
 		do{
 			let realm = try Realm()
 			seenWords = realm.objects(Word)
+			recentImages = realm.objects(RLMImage).sorted(byKeyPath: "dateAdded", ascending: false)
 		}catch{
 			print(error)
 		}
@@ -101,23 +102,18 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
 extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let rowCount = HistoryDataManager.sharedInstance.translationCountDictionary.count
-
-        if rowCount < 5 {
-            return rowCount
-        } else {
-            return 5
-        }
+		if let count = recentImages?.count{
+			return count
+		}else{
+			return 0
+		}
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        print("called")
-        
-        let data = Array(HistoryDataManager.sharedInstance.translationCountDictionary)
+        let image = historyDataManager.loadImageFromPath(path: recentImages![indexPath.row].imageURL)
         let cell: HistoryCollectionViewCell! = collectionView.dequeueReusableCell(withReuseIdentifier: "historyCCell", for: indexPath) as! HistoryCollectionViewCell
         
-        cell?.image.image = data[indexPath.row].key.image
+        cell?.image.image =  image
         cell?.layer.cornerRadius = (cell?.frame.width)!/2
         cell?.clipsToBounds = true
         

@@ -40,6 +40,7 @@ class HomeViewController: UIViewController {
 			self.setMicUI(status: status)
 		}
 	}
+	var transcriptions: [SFTranscription]?
 	
 	
     //IBoutlets
@@ -52,6 +53,7 @@ class HomeViewController: UIViewController {
 	@IBOutlet weak var speechTextLabel: PaddingLabel!
 	@IBOutlet weak var toggleTextLabel: PaddingLabel!
 	@IBOutlet weak var toggleSwitch: UISwitch!
+	@IBOutlet weak var correctImage: UIImageView!
 	
     //Class variables
     //Camera-related variables
@@ -103,10 +105,10 @@ extension HomeViewController{
         //Language labels
         inLanguage.text = ""
         outLanguage.text = ""
-        
-        inLanguage.isHidden = false
-        outLanguage.isHidden = true
-        
+		
+		correctImage.alpha = 0.0
+		correctImage.isHidden = false
+                
         inLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         inLanguage.layer.cornerRadius = 10
         inLanguage.clipsToBounds = true
@@ -115,7 +117,7 @@ extension HomeViewController{
         outLanguage.layer.cornerRadius = 10
         outLanguage.clipsToBounds = true
 		
-		micButton.layer.cornerRadius = 38
+		micButton.layer.cornerRadius = 30
 		micButton.backgroundColor = UIColor.white.withAlphaComponent(0.7)
 		
 		
@@ -217,11 +219,15 @@ extension HomeViewController{
 			outLanguage.isHidden = true
 			micButton.isHidden = false
 			micButton.isEnabled = true
+			queryButton.isHidden = true
+			
 		}else{
 			toggleTextLabel.text = "Search"
 			outLanguage.isHidden = false
 			micButton.isEnabled = false
 			micButton.isHidden = true
+			speechTextLabel.isHidden = true
+			queryButton.isHidden = false
 		}
 		
 		
@@ -475,11 +481,7 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 			if let result = result {
 				print("got result: \(result.bestTranscription.formattedString)")
 				self.speechTextLabel.text = result.bestTranscription.formattedString
-				if self.speechTextLabel.text == "Test"{//self.inLanguage.text{
-					print("Correct!")
-				}else{
-					print("incorrect")
-				}
+				self.transcriptions = result.transcriptions
 				self.pressMic(self.micButton)
 			} else if let error = error {
 				print(error)
@@ -493,6 +495,23 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 		}
 		recognitionTask?.cancel()
 		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
+		guard transcriptions != nil else{
+			print("no transcriptions")
+			self.displayCorrectImage(correct: true)
+			return
+		}
+		for transcription in transcriptions!{
+			print("is \(outLanguage.text!) equal to \(transcription.formattedString)?")
+			if transcription.formattedString == outLanguage.text!{
+				print("yes")
+				self.displayCorrectImage(correct: true)
+				return
+			}else{
+				print("no")
+			}
+		}
+		print("didn't get it")
+		self.displayCorrectImage(correct: true)
 	}
 	func setMicUI(status: SpeechStatus) {
 		switch status {
@@ -505,6 +524,31 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 		case .unavailable:
 			print("setting image to recognizing")
 			micButton.setImage(#imageLiteral(resourceName: "No Microphone-48"), for: .normal)
+		}
+	}
+	func displayCorrectImage(correct: Bool){
+		if correct{
+			correctImage.image = #imageLiteral(resourceName: "checkmark-green")
+		}else{
+			correctImage.image = #imageLiteral(resourceName: "redX")
+		}
+		animateFadeIn(imageView: correctImage)
+		
+	}
+	func animateFadeIn(imageView: UIImageView){
+		DispatchQueue.main.async {
+			UIView.animate(withDuration: 1, delay: 0, options: .transitionCrossDissolve, animations: {
+				imageView.alpha = 1.0
+			}, completion: { (done) in
+				self.animateFadeOut(imageView: imageView)
+			})
+		}
+	}
+	func animateFadeOut(imageView: UIImageView){
+		DispatchQueue.main.async {
+			UIView.animate(withDuration: 1, delay: 0.3, options: .transitionCrossDissolve, animations: {
+				imageView.alpha = 0.0
+			}, completion: nil)
 		}
 	}
 	

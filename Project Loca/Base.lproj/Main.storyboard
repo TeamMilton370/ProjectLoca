@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -49,7 +50,7 @@
                                         <rect key="frame" x="0.0" y="28" width="343" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ijm-vf-qW9" id="vOi-d8-JfN">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translated" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dF-Wv-Vm7">
@@ -241,29 +242,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k05-mk-GkR">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xlk-E9-M28" customClass="PaddingLabel" customModule="Project_Loca" customModuleProvider="target">
-                                <rect key="frame" x="179" y="33" width="117" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="117" id="wPb-IE-1cD"/>
+                                    <constraint firstAttribute="width" constant="375" id="rlb-2C-APZ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <switch opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" onImage="Graduation Cap-104" offImage="Translation-100" translatesAutoresizingMaskIntoConstraints="NO" id="asL-ym-w1K">
-                                <rect key="frame" x="310" y="28" width="51" height="31"/>
-                                <color key="backgroundColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="onTintColor" red="0.2612535007049207" green="0.56673571206514484" blue="0.99955111742019653" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="thumbTintColor" red="0.73224103009259256" green="1" blue="0.28528886959876543" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="toggleSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="lm4-fh-FZ3"/>
-                                </connections>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Speech to Text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1KP-bv-LCQ" customClass="PaddingLabel" customModule="Project_Loca" customModuleProvider="target">
-                                <rect key="frame" x="55" y="485" width="264" height="39"/>
+                            </view>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark-green" translatesAutoresizingMaskIntoConstraints="NO" id="gg3-j6-bkT">
+                                <rect key="frame" x="37" y="155" width="300" height="300"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="264" id="Tof-7F-JUe"/>
+                                    <constraint firstAttribute="width" secondItem="gg3-j6-bkT" secondAttribute="height" multiplier="1:1" id="bfG-6L-tkz"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Speech to Text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1KP-bv-LCQ" customClass="PaddingLabel" customModule="Project_Loca" customModuleProvider="target">
+                                <rect key="frame" x="116" y="485" width="143" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="143" id="Tof-7F-JUe"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
@@ -283,17 +275,24 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F6t-jJ-Jqj">
-                                <rect key="frame" x="32" y="534" width="70" height="59"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xlk-E9-M28" customClass="PaddingLabel" customModule="Project_Loca" customModuleProvider="target">
+                                <rect key="frame" x="179" y="33" width="117" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="59" id="UXI-BT-tcX"/>
-                                    <constraint firstAttribute="width" constant="70" id="q9F-9m-o4U"/>
+                                    <constraint firstAttribute="width" constant="117" id="wPb-IE-1cD"/>
                                 </constraints>
-                                <state key="normal" image="Microphone-48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" onImage="Graduation Cap-104" offImage="Translation-100" translatesAutoresizingMaskIntoConstraints="NO" id="asL-ym-w1K">
+                                <rect key="frame" x="310" y="28" width="51" height="31"/>
+                                <color key="backgroundColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="onTintColor" red="0.2612535007049207" green="0.56673571206514484" blue="0.99955111742019653" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="thumbTintColor" red="0.73224103009259256" green="1" blue="0.28528886959876543" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="pressMic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HQR-uZ-G9o"/>
+                                    <action selector="toggleSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="lm4-fh-FZ3"/>
                                 </connections>
-                            </button>
+                            </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTA-v5-Bk6" customClass="PaddingLabel" customModule="Project_Loca" customModuleProvider="target">
                                 <rect key="frame" x="111" y="63" width="152" height="41"/>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="30"/>
@@ -334,6 +333,17 @@
                                     <action selector="pressQuery:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DrU-QD-h7W"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F6t-jJ-Jqj">
+                                <rect key="frame" x="152" y="533" width="70" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="UXI-BT-tcX"/>
+                                    <constraint firstAttribute="width" constant="70" id="q9F-9m-o4U"/>
+                                </constraints>
+                                <state key="normal" image="Microphone-48"/>
+                                <connections>
+                                    <action selector="pressMic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HQR-uZ-G9o"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -341,20 +351,23 @@
                             <constraint firstItem="asL-ym-w1K" firstAttribute="leading" secondItem="xlk-E9-M28" secondAttribute="trailing" constant="14" id="4lq-Lr-xtN"/>
                             <constraint firstItem="jTA-v5-Bk6" firstAttribute="centerX" secondItem="k05-mk-GkR" secondAttribute="centerX" id="5TI-E5-2Yp"/>
                             <constraint firstItem="F6t-jJ-Jqj" firstAttribute="centerY" secondItem="RvE-Sw-udQ" secondAttribute="centerY" id="6LV-nX-JOH"/>
-                            <constraint firstItem="RvE-Sw-udQ" firstAttribute="top" secondItem="1KP-bv-LCQ" secondAttribute="bottom" constant="9" id="AAG-9F-uMG"/>
                             <constraint firstItem="jTA-v5-Bk6" firstAttribute="centerX" secondItem="aAX-3r-ZaR" secondAttribute="centerX" id="DVY-dM-WxS"/>
                             <constraint firstItem="k05-mk-GkR" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="GDb-b9-aue"/>
                             <constraint firstItem="k05-mk-GkR" firstAttribute="top" secondItem="asL-ym-w1K" secondAttribute="bottom" constant="-59" id="ICO-nX-rJH"/>
                             <constraint firstAttribute="trailing" secondItem="k05-mk-GkR" secondAttribute="trailing" id="JYq-8P-Krl"/>
-                            <constraint firstItem="1KP-bv-LCQ" firstAttribute="centerX" secondItem="RvE-Sw-udQ" secondAttribute="centerX" id="SJU-bv-g05"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gg3-j6-bkT" secondAttribute="trailing" constant="22" id="N4I-dG-lkT"/>
+                            <constraint firstItem="1KP-bv-LCQ" firstAttribute="centerX" secondItem="k05-mk-GkR" secondAttribute="centerX" id="PmK-vd-HZf"/>
+                            <constraint firstItem="gg3-j6-bkT" firstAttribute="top" secondItem="aAX-3r-ZaR" secondAttribute="bottom" constant="25" id="Qcy-im-9PV"/>
                             <constraint firstItem="aAX-3r-ZaR" firstAttribute="centerX" secondItem="RvE-Sw-udQ" secondAttribute="centerX" id="Zh8-bi-hmR"/>
+                            <constraint firstItem="gg3-j6-bkT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="21" id="bcj-1A-4CQ"/>
+                            <constraint firstItem="F6t-jJ-Jqj" firstAttribute="centerX" secondItem="RvE-Sw-udQ" secondAttribute="centerX" id="cJc-Ka-V9f"/>
                             <constraint firstItem="k05-mk-GkR" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="gJk-64-Woc"/>
                             <constraint firstItem="jTA-v5-Bk6" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="43" id="iE6-9N-v91"/>
-                            <constraint firstItem="RvE-Sw-udQ" firstAttribute="leading" secondItem="F6t-jJ-Jqj" secondAttribute="trailing" constant="15" id="koI-zb-u12"/>
                             <constraint firstItem="k05-mk-GkR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="obo-R7-4ZK"/>
                             <constraint firstItem="aAX-3r-ZaR" firstAttribute="top" secondItem="jTA-v5-Bk6" secondAttribute="bottom" constant="2" id="qpi-pX-SZa"/>
                             <constraint firstItem="asL-ym-w1K" firstAttribute="leading" secondItem="k05-mk-GkR" secondAttribute="trailing" constant="-65" id="rFc-ab-1La"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RvE-Sw-udQ" secondAttribute="bottom" constant="25" id="uNt-Ae-7le"/>
+                            <constraint firstItem="RvE-Sw-udQ" firstAttribute="top" secondItem="1KP-bv-LCQ" secondAttribute="bottom" constant="9" id="yeB-5w-85x"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="search" id="min-t4-IWQ"/>
@@ -362,6 +375,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="vAn-um-Tfa"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="correctImage" destination="gg3-j6-bkT" id="86W-aI-WQo"/>
                         <outlet property="inLanguage" destination="aAX-3r-ZaR" id="Ohs-Tk-udV"/>
                         <outlet property="micButton" destination="F6t-jJ-Jqj" id="0h4-kx-5SM"/>
                         <outlet property="outLanguage" destination="jTA-v5-Bk6" id="nJQ-pS-XrW"/>
@@ -400,5 +414,6 @@
         <image name="Graduation Cap-104" width="104" height="104"/>
         <image name="Microphone-48" width="48" height="48"/>
         <image name="Translation-100" width="100" height="100"/>
+        <image name="checkmark-green" width="512" height="512"/>
     </resources>
 </document>

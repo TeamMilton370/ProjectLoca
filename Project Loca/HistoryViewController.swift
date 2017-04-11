@@ -15,12 +15,12 @@ class HistoryViewController: UIViewController {
 	var seenWords: Results<Word>?
 	var recentImages: Results<RLMImage>?
 	let historyDataManager = HistoryDataManager.sharedInstance
-    //MARK: IBOutlets
     
-    @IBOutlet weak var languageLabel: UILabel!
+    let blue = UIColor.init(red: 135/255, green: 206/255, blue: 250/255, alpha: 0.8)
+
+    
+    //MARK: IBOutlets
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var recentsCollectionView: UICollectionView!
-    @IBOutlet weak var streaksCollectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
 	
     
@@ -28,15 +28,11 @@ class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
+        tableView.separatorStyle = .none
         
-        self.recentsCollectionView.delegate = self
-        self.recentsCollectionView.dataSource = self
-        
-        self.recentsCollectionView.tag = 0
-        self.streaksCollectionView.tag = 1
-		
 		loadWords()
         
     }
@@ -44,17 +40,35 @@ class HistoryViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tableView.reloadData()
-        self.recentsCollectionView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showWordDetail" {
+            let selectedCell = sender as! HistoryTableViewCell
+            let destination = segue.destination as! WordDetailViewController
+            
+            destination.originalWord = selectedCell.originalWord.text!
+            destination.translatedWord = selectedCell.translatedWord.text!
+            
+            destination.coordinates.removeAll()
+            
+            for coordinate in (selectedCell.wordData?.coordinates)! {
+                print(coordinate)
+                destination.coordinates.append(coordinate)
+            }
+        }
+    }
+    
 	func loadWords(){
 		do{
 			let realm = try Realm()
-			seenWords = realm.objects(Word)
-			recentImages = realm.objects(RLMImage).sorted(byKeyPath: "dateAdded", ascending: false)
+			seenWords = realm.objects(Word.self)
+			recentImages = realm.objects(RLMImage.self).sorted(byKeyPath: "dateAdded", ascending: false)
 		}catch{
 			print(error)
 		}
@@ -66,7 +80,6 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("called")
-		//let rowCount = HistoryDataManager.sharedInstance.translationCountDictionary.count
 		guard let rowCount = seenWords?.count else{
 			return 0
 		}
@@ -83,42 +96,31 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell:HistoryTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "historyTCell") as! HistoryTableViewCell?
-        let data = Array(HistoryDataManager.sharedInstance.translationCountDictionary)
-        print("Data from manager: \(data)\n")
-
-		// cell?.originalWord.text = data[indexPath.row].key.word
-		//cell?.translatedWord.text = data[indexPath.row].key.translation
-		//cell?.seenCount.text = "\(data[indexPath.row].value)"
 		
-		cell?.originalWord.text = seenWords![indexPath.row].word
-		cell?.translatedWord.text = seenWords![indexPath.row].translation
+        //Data
+        cell?.wordData = seenWords![indexPath.row]
+		cell?.originalWord.text = seenWords![indexPath.row].word.capitalizingFirstLetter()
+		cell?.translatedWord.text = seenWords![indexPath.row].translation?.capitalizingFirstLetter()
 		cell?.seenCount.text = "\(seenWords![indexPath.row].timesSeen)"
+        
+        
+        //Styling
+        cell?.seenCount.textColor = UIColor.white
+        cell?.seenCount.backgroundColor = blue
+        cell?.seenCount.layer.cornerRadius = (cell?.seenCount.frame.width)!/2
+        cell?.seenCount.clipsToBounds = true
+        
+        cell?.background.clipsToBounds = true
+        cell?.background.layer.cornerRadius = 10
+        
+        cell?.background.layer.shadowColor = UIColor.black.cgColor
+        cell?.background.layer.shadowOpacity = 0.2
+        cell?.background.layer.shadowRadius = 5
+        cell?.background.layer.shadowOffset = CGSize.zero
+        
+        cell?.layer.cornerRadius = 10
 		
         return cell!
         
     }
 }
-
-extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		if let count = recentImages?.count{
-			return count
-		}else{
-			return 0
-		}
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let image = historyDataManager.loadImageFromPath(path: recentImages![indexPath.row].imageURL)
-        let cell: HistoryCollectionViewCell! = collectionView.dequeueReusableCell(withReuseIdentifier: "historyCCell", for: indexPath) as! HistoryCollectionViewCell
-        
-        cell?.image.image =  image
-        cell?.layer.cornerRadius = (cell?.frame.width)!/2
-        cell?.clipsToBounds = true
-        
-        return cell!
-        
-    }
-}
-

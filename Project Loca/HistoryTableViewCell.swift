@@ -11,8 +11,11 @@ import UIKit
 
 class HistoryTableViewCell: UITableViewCell {
 
+    var wordData: Word?
+    
     @IBOutlet weak var originalWord: UILabel!
     @IBOutlet weak var translatedWord: UILabel!
     @IBOutlet weak var seenCount: UILabel!
+    @IBOutlet weak var background: UIView!
     
 }

@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		36002C3F1E491C6B00D5CFF4 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36002C3E1E491C6B00D5CFF4 /* CameraView.swift */; };
 		366422A01E94259B009FB784 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3664229F1E94259B009FB784 /* HistoryTableViewCell.swift */; };
-		366422A21E94268C009FB784 /* HistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366422A11E94268C009FB784 /* HistoryCollectionViewCell.swift */; };
-		366422A51E94282F009FB784 /* OldProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366422A41E94282F009FB784 /* OldProtocols.swift */; };
-		366422A71E94430D009FB784 /* StreakCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366422A61E94430D009FB784 /* StreakCollectionViewCell.swift */; };
 		36A021B61E6C8F0D00D25729 /* bias_conv.dat in Resources */ = {isa = PBXBuildFile; fileRef = 36A020EF1E6C8F0D00D25729 /* bias_conv.dat */; };
 		36A021B71E6C8F0D00D25729 /* bias_conv_1.dat in Resources */ = {isa = PBXBuildFile; fileRef = 36A020F01E6C8F0D00D25729 /* bias_conv_1.dat */; };
 		36A021B81E6C8F0D00D25729 /* bias_conv_2.dat in Resources */ = {isa = PBXBuildFile; fileRef = 36A020F11E6C8F0D00D25729 /* bias_conv_2.dat */; };
@@ -216,13 +213,13 @@
 		36BF97751E8B3E840091ECB9 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BF97741E8B3E840091ECB9 /* PaddingLabel.swift */; };
 		36CDC9991E57A9B600720EDE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CDC9981E57A9B600720EDE /* Extensions.swift */; };
 		36CDC99B1E57A9BD00720EDE /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CDC99A1E57A9BD00720EDE /* Protocols.swift */; };
-		36CDC9A31E57AA2800720EDE /* TranslationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CDC9A21E57AA2800720EDE /* TranslationManager.swift */; };
-		36CDC9A51E57AA3100720EDE /* ImageRecognitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CDC9A41E57AA3100720EDE /* ImageRecognitionManager.swift */; };
+		36D5D77E1E9C9FE9005A22E5 /* WordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5D77D1E9C9FE9005A22E5 /* WordDetailViewController.swift */; };
+		36D5D7801E9D6518005A22E5 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5D77F1E9D6518005A22E5 /* Location.swift */; };
+		36D5D7821E9D75E8005A22E5 /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5D7811E9D75E8005A22E5 /* Progress.swift */; };
 		36DD069E1E9366290088B0C2 /* HistoryDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DD069D1E9366290088B0C2 /* HistoryDataManager.swift */; };
 		36DD06A21E9366470088B0C2 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DD06A11E9366470088B0C2 /* ProgressViewController.swift */; };
 		36DD06A41E9366510088B0C2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DD06A31E9366510088B0C2 /* HistoryViewController.swift */; };
 		36E2930B1E8B35160080BD05 /* Translations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E2930A1E8B35160080BD05 /* Translations.swift */; };
-		36EDC64B1E5A13BA00885354 /* DataInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EDC64A1E5A13BA00885354 /* DataInterface.swift */; };
 		632A1E061E947E96002A24DB /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A1E051E947E96002A24DB /* Word.swift */; };
 		632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762D1E43F7560098CC91 /* AppDelegate.swift */; };
 		632E76301E43F7560098CC91 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762F1E43F7560098CC91 /* HomeViewController.swift */; };
@@ -239,10 +236,6 @@
 		1EB08C688031DF6EA3A18D27 /* Pods-Project Loca.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project Loca.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Project Loca/Pods-Project Loca.debug.xcconfig"; sourceTree = "<group>"; };
 		36002C3E1E491C6B00D5CFF4 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		3664229F1E94259B009FB784 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
-		366422A11E94268C009FB784 /* HistoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryCollectionViewCell.swift; sourceTree = "<group>"; };
-		366422A41E94282F009FB784 /* OldProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldProtocols.swift; sourceTree = "<group>"; };
-		366422A61E94430D009FB784 /* StreakCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreakCollectionViewCell.swift; sourceTree = "<group>"; };
-		367098B81E5D53DB005B85FB /* buttonAnimation.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = buttonAnimation.playground; sourceTree = "<group>"; };
 		36A020EF1E6C8F0D00D25729 /* bias_conv.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = bias_conv.dat; sourceTree = "<group>"; };
 		36A020F01E6C8F0D00D25729 /* bias_conv_1.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bias_conv_1.dat; sourceTree = "<group>"; };
 		36A020F11E6C8F0D00D25729 /* bias_conv_2.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = bias_conv_2.dat; sourceTree = "<group>"; };
@@ -447,13 +440,13 @@
 		36BF97741E8B3E840091ECB9 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		36CDC9981E57A9B600720EDE /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		36CDC99A1E57A9BD00720EDE /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		36CDC9A21E57AA2800720EDE /* TranslationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationManager.swift; sourceTree = "<group>"; };
-		36CDC9A41E57AA3100720EDE /* ImageRecognitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRecognitionManager.swift; sourceTree = "<group>"; };
+		36D5D77D1E9C9FE9005A22E5 /* WordDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordDetailViewController.swift; sourceTree = "<group>"; };
+		36D5D77F1E9D6518005A22E5 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		36D5D7811E9D75E8005A22E5 /* Progress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
 		36DD069D1E9366290088B0C2 /* HistoryDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryDataManager.swift; sourceTree = "<group>"; };
 		36DD06A11E9366470088B0C2 /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		36DD06A31E9366510088B0C2 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		36E2930A1E8B35160080BD05 /* Translations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translations.swift; sourceTree = "<group>"; };
-		36EDC64A1E5A13BA00885354 /* DataInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInterface.swift; sourceTree = "<group>"; };
 		36EDC64E1E5A460600885354 /* Project Loca-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Project Loca-Bridging-Header.h"; sourceTree = "<group>"; };
 		632A1E051E947E96002A24DB /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		632E762A1E43F7560098CC91 /* Project Loca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project Loca.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -480,24 +473,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		366422A31E9426F1009FB784 /* Old managers */ = {
-			isa = PBXGroup;
-			children = (
-				36CDC9A21E57AA2800720EDE /* TranslationManager.swift */,
-				36EDC64A1E5A13BA00885354 /* DataInterface.swift */,
-				36CDC9A41E57AA3100720EDE /* ImageRecognitionManager.swift */,
-			);
-			name = "Old managers";
-			sourceTree = "<group>";
-		};
-		367098B61E5D536E005B85FB /* UI-prototypes */ = {
-			isa = PBXGroup;
-			children = (
-				367098B81E5D53DB005B85FB /* buttonAnimation.playground */,
-			);
-			name = "UI-prototypes";
-			sourceTree = "<group>";
-		};
 		36A020ED1E6C8F0D00D25729 /* network_params */ = {
 			isa = PBXGroup;
 			children = (
@@ -735,6 +710,7 @@
 			children = (
 				632E762F1E43F7560098CC91 /* HomeViewController.swift */,
 				36DD06A11E9366470088B0C2 /* ProgressViewController.swift */,
+				36D5D77D1E9C9FE9005A22E5 /* WordDetailViewController.swift */,
 				36DD06A31E9366510088B0C2 /* HistoryViewController.swift */,
 			);
 			name = Controllers;
@@ -745,8 +721,6 @@
 			children = (
 				36002C3E1E491C6B00D5CFF4 /* CameraView.swift */,
 				3664229F1E94259B009FB784 /* HistoryTableViewCell.swift */,
-				366422A11E94268C009FB784 /* HistoryCollectionViewCell.swift */,
-				366422A61E94430D009FB784 /* StreakCollectionViewCell.swift */,
 				632E76311E43F7560098CC91 /* Main.storyboard */,
 			);
 			name = Views;
@@ -755,12 +729,10 @@
 		36CDC9A01E57A9E500720EDE /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
-				367098B61E5D536E005B85FB /* UI-prototypes */,
 				36BF97741E8B3E840091ECB9 /* PaddingLabel.swift */,
 				36CDC9981E57A9B600720EDE /* Extensions.swift */,
 				36EDC64E1E5A460600885354 /* Project Loca-Bridging-Header.h */,
 				36CDC99A1E57A9BD00720EDE /* Protocols.swift */,
-				366422A41E94282F009FB784 /* OldProtocols.swift */,
 				36E2930A1E8B35160080BD05 /* Translations.swift */,
 				63D461761E957152002C01BA /* LocaleDictionary.swift */,
 			);
@@ -770,7 +742,6 @@
 		36EDC6491E5A139200885354 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				366422A31E9426F1009FB784 /* Old managers */,
 				36DD069D1E9366290088B0C2 /* HistoryDataManager.swift */,
 			);
 			name = Managers;
@@ -797,6 +768,8 @@
 			isa = PBXGroup;
 			children = (
 				632A1E051E947E96002A24DB /* Word.swift */,
+				36D5D77F1E9D6518005A22E5 /* Location.swift */,
+				36D5D7811E9D75E8005A22E5 /* Progress.swift */,
 				63D4617A1E9576CC002C01BA /* RLMImage.swift */,
 			);
 			name = Models;
@@ -823,8 +796,8 @@
 		632E762C1E43F7560098CC91 /* Project Loca */ = {
 			isa = PBXGroup;
 			children = (
-				632A1DFF1E947E6B002A24DB /* Models */,
 				632E762D1E43F7560098CC91 /* AppDelegate.swift */,
+				632A1DFF1E947E6B002A24DB /* Models */,
 				36EDC6491E5A139200885354 /* Managers */,
 				36CDC99E1E57A9D400720EDE /* Controllers */,
 				36CDC99F1E57A9DA00720EDE /* Views */,
@@ -872,7 +845,7 @@
 				TargetAttributes = {
 					632E76291E43F7560098CC91 = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 3GAL6UXS95;
+						DevelopmentTeam = 8TWVWBQE3T;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1164,22 +1137,19 @@
 				36DD069E1E9366290088B0C2 /* HistoryDataManager.swift in Sources */,
 				36002C3F1E491C6B00D5CFF4 /* CameraView.swift in Sources */,
 				632E76301E43F7560098CC91 /* HomeViewController.swift in Sources */,
+				36D5D77E1E9C9FE9005A22E5 /* WordDetailViewController.swift in Sources */,
+				36D5D7821E9D75E8005A22E5 /* Progress.swift in Sources */,
 				63D4617B1E9576CC002C01BA /* RLMImage.swift in Sources */,
-				366422A21E94268C009FB784 /* HistoryCollectionViewCell.swift in Sources */,
-				366422A71E94430D009FB784 /* StreakCollectionViewCell.swift in Sources */,
 				63D461771E957152002C01BA /* LocaleDictionary.swift in Sources */,
 				632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */,
 				632A1E061E947E96002A24DB /* Word.swift in Sources */,
 				36DD06A21E9366470088B0C2 /* ProgressViewController.swift in Sources */,
 				36CDC9991E57A9B600720EDE /* Extensions.swift in Sources */,
-				36CDC9A31E57AA2800720EDE /* TranslationManager.swift in Sources */,
-				366422A51E94282F009FB784 /* OldProtocols.swift in Sources */,
 				366422A01E94259B009FB784 /* HistoryTableViewCell.swift in Sources */,
 				36BF97751E8B3E840091ECB9 /* PaddingLabel.swift in Sources */,
+				36D5D7801E9D6518005A22E5 /* Location.swift in Sources */,
 				36B1F9221E6C8E8F004FBA49 /* Inception3Net+result.swift in Sources */,
 				36B1F9201E6C8E84004FBA49 /* Inception3Net.swift in Sources */,
-				36CDC9A51E57AA3100720EDE /* ImageRecognitionManager.swift in Sources */,
-				36EDC64B1E5A13BA00885354 /* DataInterface.swift in Sources */,
 				36DD06A41E9366510088B0C2 /* HistoryViewController.swift in Sources */,
 				36A7292F1E6C91B600C1694D /* SlimMPSCNN.swift in Sources */,
 			);
@@ -1305,7 +1275,7 @@
 			baseConfigurationReference = 1EB08C688031DF6EA3A18D27 /* Pods-Project Loca.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3GAL6UXS95;
+				DEVELOPMENT_TEAM = 8TWVWBQE3T;
 				INFOPLIST_FILE = "Project Loca/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "none.Project-Loca";
@@ -1320,7 +1290,7 @@
 			baseConfigurationReference = 0706110F8CBD520DD9212A58 /* Pods-Project Loca.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3GAL6UXS95;
+				DEVELOPMENT_TEAM = 8TWVWBQE3T;
 				INFOPLIST_FILE = "Project Loca/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "none.Project-Loca";

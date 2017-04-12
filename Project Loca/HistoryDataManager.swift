@@ -11,27 +11,6 @@ import UIKit
 import CoreLocation
 import RealmSwift
 
-struct wordTranslationPair: Hashable {
-    var word: String!
-    var translation: String!
-    var image: UIImage!
-    
-    var hashValue: Int {
-        let hash = self.word.hashValue
-        return hash
-    }
-    
-    init(word: String, translation: String, image: UIImage) {
-        self.word = word
-        self.translation = translation
-        self.image = image
-    }
-    
-    static func ==(lhs: wordTranslationPair, rhs: wordTranslationPair) -> Bool {
-        return lhs.hashValue == rhs.hashValue
-    }
-}
-
 class HistoryDataManager {
 	
 	var maxImages: Int = 10

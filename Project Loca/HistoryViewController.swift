@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import RealmSwift
+import CoreLocation
 
 class HistoryViewController: UIViewController {
 	
@@ -17,7 +18,7 @@ class HistoryViewController: UIViewController {
 	let historyDataManager = HistoryDataManager.sharedInstance
     
     let blue = UIColor.init(red: 135/255, green: 206/255, blue: 250/255, alpha: 0.8)
-
+    let geoCoder = CLGeocoder()
     
     //MARK: IBOutlets
     @IBOutlet weak var tableView: UITableView!
@@ -52,8 +53,8 @@ class HistoryViewController: UIViewController {
             let selectedCell = sender as! HistoryTableViewCell
             let destination = segue.destination as! WordDetailViewController
             
-            destination.originalWord = selectedCell.originalWord.text!
-            destination.translatedWord = selectedCell.translatedWord.text!
+            destination.originalWord = selectedCell.wordData?.word.capitalizingFirstLetter()
+            destination.translatedWord = selectedCell.wordData?.translation?.capitalizingFirstLetter()
             
             destination.coordinates.removeAll()
             
@@ -87,7 +88,7 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 115
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -102,7 +103,31 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
 		cell?.originalWord.text = seenWords![indexPath.row].word.capitalizingFirstLetter()
 		cell?.translatedWord.text = seenWords![indexPath.row].translation?.capitalizingFirstLetter()
 		cell?.seenCount.text = "\(seenWords![indexPath.row].timesSeen)"
+        cell?.lastSeenLabel.text = seenWords![indexPath.row].lastSeen.toString()
+        //Location
+        let location = CLLocation(latitude: (seenWords![indexPath.row].coordinates.last?.coordinate.latitude)!, longitude: (seenWords![indexPath.row].coordinates.last?.coordinate.longitude)!)
         
+        geoCoder.reverseGeocodeLocation(location, completionHandler: { placemarks, error in
+            
+            guard let addressDict = placemarks?.last?.addressDictionary else {
+                print("no dictionary")
+                return
+            }
+            
+            guard let city = addressDict["City"] as? String else {
+                print("couldn't get city")
+                return
+            }
+            
+            guard let state = addressDict["State"] as? String else {
+                print("couldn't get state")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                cell?.locationLabel.text = "\(city), \(state)"
+            }
+        })
         
         //Styling
         cell?.seenCount.textColor = UIColor.white
@@ -116,7 +141,11 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.background.layer.shadowColor = UIColor.black.cgColor
         cell?.background.layer.shadowOpacity = 0.2
         cell?.background.layer.shadowRadius = 5
-        cell?.background.layer.shadowOffset = CGSize.zero
+        
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        cell?.backgroundView = blurEffectView
+
         
         cell?.layer.cornerRadius = 10
 		

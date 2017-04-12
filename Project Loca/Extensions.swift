@@ -45,6 +45,14 @@ extension UILabel {
     }
 }
 
+extension Date {
+    func toString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy"
+        return dateFormatter.string(from: self)
+    }
+}
+
 extension String {
     func capitalizingFirstLetter() -> String {
         let first = String(characters.prefix(1)).capitalized

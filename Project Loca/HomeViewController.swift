@@ -37,8 +37,7 @@ class HomeViewController: UIViewController {
 		}
 	}
     
-    var recorder:AVAudioRecorder!
-	var transcriptions: [SFTranscription]?
+    var transcriptions: [SFTranscription]?
 	
 	
     //IBoutlets
@@ -606,7 +605,6 @@ extension HomeViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        
         print("called location manager")
         let last: CLLocation = locations.last! as! CLLocation
         self.currentLocation = last.coordinate

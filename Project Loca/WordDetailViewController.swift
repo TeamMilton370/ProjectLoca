@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import MapKit
+import Charts
 
 class WordDetailViewController: UIViewController {
     
@@ -17,8 +18,8 @@ class WordDetailViewController: UIViewController {
     var coordinates = [Location]()
     var allPins = [MKPointAnnotation]()
     let geoCoder = CLGeocoder()
-
     
+    @IBOutlet weak var chart: CombinedChartView!
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var translationLabel: UILabel!

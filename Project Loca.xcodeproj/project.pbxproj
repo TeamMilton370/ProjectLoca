@@ -221,6 +221,7 @@
 		36DD06A41E9366510088B0C2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DD06A31E9366510088B0C2 /* HistoryViewController.swift */; };
 		36E2930B1E8B35160080BD05 /* Translations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E2930A1E8B35160080BD05 /* Translations.swift */; };
 		36FAE7FE1EAC404500246466 /* Checkmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FAE7FD1EAC404500246466 /* Checkmark.swift */; };
+		36FAE8001EAC557400246466 /* ProgressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FAE7FF1EAC557400246466 /* ProgressCollectionViewCell.swift */; };
 		632A1E061E947E96002A24DB /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A1E051E947E96002A24DB /* Word.swift */; };
 		632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762D1E43F7560098CC91 /* AppDelegate.swift */; };
 		632E76301E43F7560098CC91 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762F1E43F7560098CC91 /* HomeViewController.swift */; };
@@ -450,6 +451,7 @@
 		36E2930A1E8B35160080BD05 /* Translations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translations.swift; sourceTree = "<group>"; };
 		36EDC64E1E5A460600885354 /* Project Loca-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Project Loca-Bridging-Header.h"; sourceTree = "<group>"; };
 		36FAE7FD1EAC404500246466 /* Checkmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkmark.swift; sourceTree = "<group>"; };
+		36FAE7FF1EAC557400246466 /* ProgressCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressCollectionViewCell.swift; sourceTree = "<group>"; };
 		632A1E051E947E96002A24DB /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		632E762A1E43F7560098CC91 /* Project Loca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project Loca.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		632E762D1E43F7560098CC91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -723,6 +725,7 @@
 			children = (
 				36002C3E1E491C6B00D5CFF4 /* CameraView.swift */,
 				3664229F1E94259B009FB784 /* HistoryTableViewCell.swift */,
+				36FAE7FF1EAC557400246466 /* ProgressCollectionViewCell.swift */,
 				632E76311E43F7560098CC91 /* Main.storyboard */,
 			);
 			name = Views;
@@ -1151,6 +1154,7 @@
 				36CDC9991E57A9B600720EDE /* Extensions.swift in Sources */,
 				366422A01E94259B009FB784 /* HistoryTableViewCell.swift in Sources */,
 				36BF97751E8B3E840091ECB9 /* PaddingLabel.swift in Sources */,
+				36FAE8001EAC557400246466 /* ProgressCollectionViewCell.swift in Sources */,
 				36D5D7801E9D6518005A22E5 /* Location.swift in Sources */,
 				36B1F9221E6C8E8F004FBA49 /* Inception3Net+result.swift in Sources */,
 				36B1F9201E6C8E84004FBA49 /* Inception3Net.swift in Sources */,

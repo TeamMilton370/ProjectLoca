@@ -138,6 +138,7 @@ open class Checkmark: UIView {
     open func setDamping(damp: CGFloat) {
         damping = damp
     }
+    
     open func start(completion: @escaping (Bool) -> ()) {
         clear()
         createCheckmark(rect: originalRect)

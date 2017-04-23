@@ -226,6 +226,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Data" id="qd2-UW-igh"/>
                     <connections>
+                        <outlet property="chart" destination="QXH-Fr-vko" id="pba-sk-f5g"/>
                         <outlet property="map" destination="63W-YN-pu8" id="fQM-CN-76a"/>
                         <outlet property="translationLabel" destination="hiY-xl-Lnp" id="siG-0Z-ef3"/>
                         <outlet property="wordLabel" destination="ADT-Ss-KdT" id="FCr-4j-7N1"/>
@@ -391,19 +392,57 @@
                                     <constraint firstAttribute="height" constant="263" id="2wp-vz-AWV"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="slY-Gj-EWf">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="109" height="109"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Zr3-TG-xKA">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Zr3-TG-xKA" customClass="ProgressCollectionViewCell" customModule="Project_Loca" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="109" height="109"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="109" height="109"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Cw-1Y-UPH" customClass="ProgressCollectionViewCell" customModule="Project_Loca" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="109" height="109"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHx-YX-2G5">
+                                                    <rect key="frame" x="8" y="7" width="93" height="71"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="25"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Words found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qha-oS-vRo">
+                                                    <rect key="frame" x="8" y="82" width="93" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="WLd-T2-hH8"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="leading" secondItem="Zr3-TG-xKA" secondAttribute="leadingMargin" id="GDK-bN-HCt"/>
+                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="trailing" secondItem="Qha-oS-vRo" secondAttribute="trailing" id="VD5-X7-Fw6"/>
+                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="centerX" secondItem="4Cw-1Y-UPH" secondAttribute="centerX" id="XzI-hx-7Jm"/>
+                                            <constraint firstItem="4Cw-1Y-UPH" firstAttribute="top" secondItem="Zr3-TG-xKA" secondAttribute="top" id="dvY-0e-w5H"/>
+                                            <constraint firstAttribute="trailing" secondItem="4Cw-1Y-UPH" secondAttribute="trailing" id="e0J-uP-hCn"/>
+                                            <constraint firstItem="Qha-oS-vRo" firstAttribute="top" secondItem="RHx-YX-2G5" secondAttribute="bottom" constant="4" id="fTw-bB-Hrn"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="Qha-oS-vRo" secondAttribute="bottom" constant="-2" id="o1V-Fb-ojy"/>
+                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="leading" secondItem="Qha-oS-vRo" secondAttribute="leading" id="rdg-sG-UMX"/>
+                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="top" secondItem="Zr3-TG-xKA" secondAttribute="topMargin" constant="-1" id="u3I-Sm-Iy4"/>
+                                            <constraint firstAttribute="bottom" secondItem="4Cw-1Y-UPH" secondAttribute="bottom" id="vfX-to-p6W"/>
+                                            <constraint firstItem="4Cw-1Y-UPH" firstAttribute="leading" secondItem="Zr3-TG-xKA" secondAttribute="leading" id="yjg-ja-lLh"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="foundCountLabel" destination="RHx-YX-2G5" id="a43-VQ-FSP"/>
+                                            <outlet property="wordsFoundLabel" destination="Qha-oS-vRo" id="Epy-NY-mUE"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -427,7 +466,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JGp-hq-pcz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1359" y="1189"/>
+            <point key="canvasLocation" x="1357.5999999999999" y="1188.7556221889056"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TtA-Qu-CCn">

@@ -20,11 +20,6 @@ class ProgressViewController: UIViewController {
     let chartData = LineChartData()
     var formattedChartData: [ChartDataEntry]?
     var dataSet1: LineChartDataSet?
-    
-	
-	//show number of words added over time
-	//show quiz words correct and incorrect over time
-	
 	
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -1,26 +1,31 @@
 PODS:
   - AKPickerView (0.2.7)
-  - Alamofire (4.2.0)
+  - Charts (3.0.2):
+    - Charts/Core (= 3.0.2)
+  - Charts/Core (3.0.2)
+  - Cosmos (9.0.0)
   - Realm (2.5.0):
     - Realm/Headers (= 2.5.0)
   - Realm/Headers (2.5.0)
   - RealmSwift (2.5.0):
     - Realm (= 2.5.0)
-  - SwiftyJSON (3.1.4)
+  - SwiftSiriWaveformView (2.0.0)
 
 DEPENDENCIES:
   - AKPickerView
-  - Alamofire
+  - Charts
+  - Cosmos (~> 9.0)
   - RealmSwift
-  - SwiftyJSON
+  - SwiftSiriWaveformView
 
 SPEC CHECKSUMS:
   AKPickerView: 125372e36fcc372216127600a541f14dcdbb7993
-  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  Charts: 236d6ccdd0ce6feae151d89e829a7397381a21fd
+  Cosmos: 33eee62b2a0418452aef470f711f83c3ea061b7b
   Realm: 62abce501668580092d2be9b6ba7324a3d5f906a
   RealmSwift: 9f1a8f624f2f153410115c2cb7d486be9976565d
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  SwiftSiriWaveformView: 85328da51cf5f3c6a0dbcdf9186f4417edf1b538
 
-PODFILE CHECKSUM: c5372840a6dca10fe5d356be902932afc4b8ab75
+PODFILE CHECKSUM: 35d588e6c22d5e9829dd3f71a04dce5c34fa9fb2
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0.rc.1

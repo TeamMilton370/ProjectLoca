@@ -45,5 +45,7 @@
 	<string>I want to listen to you while you sleep</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>I want to listen to you while you sleep</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>&quot;We need u.&quot;</string>
 </dict>
 </plist>

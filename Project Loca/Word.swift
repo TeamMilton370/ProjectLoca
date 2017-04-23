@@ -7,18 +7,19 @@
 //
 
 import Foundation
+import CoreLocation
 import RealmSwift
 
 class Word: Object{
 		
 	dynamic var word: String!
 	dynamic var translation: String?
-	
 	dynamic var dateAdded: Date!
 	dynamic var lastSeen: Date!
-	
 	dynamic var timesSeen: Int = 0
-		
+    dynamic var progress: Progress?
+    
+    let coordinates = List<Location>()
 	let images = List<RLMImage>()
 
 }

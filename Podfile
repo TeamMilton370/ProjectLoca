@@ -7,9 +7,10 @@ target 'Project Loca' do
 
   # Pods for Project Loca
 
-pod 'Alamofire'
-pod 'SwiftyJSON'
 pod 'AKPickerView'
 pod 'RealmSwift'
+pod 'SwiftSiriWaveformView'
+pod 'Charts'
+pod 'Cosmos', '~> 9.0'
 
 end

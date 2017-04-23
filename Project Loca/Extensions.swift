@@ -34,3 +34,33 @@ extension UIViewController {
         }
     }
 }
+
+extension UILabel {
+    func addTextSpacing(spacing: Double ) {
+        if let textString = text {
+            let attributedString = NSMutableAttributedString(string: textString)
+            attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSRange(location: 0, length: attributedString.length - 1))
+            attributedText = attributedString
+        }
+    }
+}
+
+extension Date {
+    func toString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy"
+        return dateFormatter.string(from: self)
+    }
+}
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        let first = String(characters.prefix(1)).capitalized
+        let other = String(characters.dropFirst())
+        return first + other
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
+}

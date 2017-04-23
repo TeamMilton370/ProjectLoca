@@ -8,89 +8,34 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 import RealmSwift
-
-struct wordTranslationPair: Hashable {
-    var word: String!
-    var translation: String!
-    var image: UIImage!
-    
-    var hashValue: Int {
-        let hash = self.word.hashValue
-        return hash
-    }
-    
-    init(word: String, translation: String, image: UIImage) {
-        self.word = word
-        self.translation = translation
-        self.image = image
-    }
-    
-    static func ==(lhs: wordTranslationPair, rhs: wordTranslationPair) -> Bool {
-        return lhs.hashValue == rhs.hashValue
-    }
-}
 
 class HistoryDataManager {
 	
 	var maxImages: Int = 10
+    var allWords = [Word]()
     
     //Singleton
-    static let sharedInstance = HistoryDataManager()
-    
-    //Data storage
-    var originalWords = [String]()
-    var translatedWords = [String]()
-    
-    //Stores a tuple containing an original word, its translation, and how many times it was seen
-    var translationCountDictionary = [wordTranslationPair: Int]()
-    var dict = [String: String]()
-    
-    init(){
-        HomeViewController.updateHistoryDelegate = self
-    }
-    
-}
-extension HistoryDataManager: UpdateHistoryDelegate {
-    
-    func didReceiveData(word: String, translation: String, image: UIImage) {
-        
-        let pair = wordTranslationPair(word: word, translation: translation, image: image)
-        
-        if HistoryDataManager.sharedInstance.translationCountDictionary[pair] != nil {
-            //update the count if it exists already
-            HistoryDataManager.sharedInstance.translationCountDictionary[pair] = (HistoryDataManager.sharedInstance.translationCountDictionary[pair] ?? 0) + 1
-        } else {
-            HistoryDataManager.sharedInstance.translationCountDictionary[pair] = 1
-        }
-        
-        for entry in HistoryDataManager.sharedInstance.translationCountDictionary {
-            print("Word: \(entry.key.word!)")
-            print("Translation: \(entry.key.translation!)")
-            print("Seen count: \(entry.value)")
-            print("\n")
-        }
-        
-        
-        print("Translation count: \(HistoryDataManager.sharedInstance.translationCountDictionary.count)")
-        
-    }
-}
-extension HistoryDataManager{	//Save Stuff
+    static let sharedInstance = HistoryDataManager()    
 	
-	func saveWord(word: String, image: UIImage?){
+    func saveWord(word: String, image: UIImage?, location: CLLocationCoordinate2D?){
+        
 		do{
 			print("in save word and image to realm")
 			let realm = try Realm()
-			var rlmWord = try realm.objects(Word).filter(NSPredicate(format: "word == %@", word)).first
-			if rlmWord != nil{		//customer exists, update it
+			var rlmWord = try realm.objects(Word.self).filter(NSPredicate(format: "word == %@", word)).first
+			if rlmWord != nil{		//word exists, update it
 				print("got \(word)")
 				//now update times seen and last seen
 				try realm.write{
-					rlmWord!.timesSeen = rlmWord!.timesSeen + 1
+					rlmWord!.timesSeen += 1
 					rlmWord!.lastSeen = Date()
+                    
+                    let lastLocation = Location(latitude: (location?.latitude)!, longitude: (location?.longitude)!)
+                    rlmWord!.coordinates.append(lastLocation)
 				}
-			}else{ //customer does not exist. create new one
+            } else{ //word does not exist. create new one
 				print("Word is new, saving to realm")
 				
 				try realm.write {
@@ -105,10 +50,17 @@ extension HistoryDataManager{	//Save Stuff
 					rlmWord!.dateAdded = Date()
 					rlmWord!.lastSeen = Date()
 					rlmWord!.timesSeen = 1
+                    let lastLocation = Location(latitude: (location?.latitude)!, longitude: (location?.longitude)!)
+                    rlmWord!.coordinates.append(lastLocation)
+                    
+                    //adds the word to the dictionary
+                    self.allWords.append(rlmWord!)
+
 				}
 			}
+            
 			//if images are less than 10, save this new image
-			let images = realm.objects(RLMImage)
+			let images = realm.objects(RLMImage.self)
 			if image != nil && images.count < maxImages{
 				//get new image url, save it in word, an save new image
 				let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -132,6 +84,7 @@ extension HistoryDataManager{	//Save Stuff
 		}
 		
 	}
+    
 	func loadImageFromPath(path: String) -> UIImage? {
 		let image = UIImage(contentsOfFile: path)
 		if image == nil {

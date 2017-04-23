@@ -10,6 +10,7 @@ build/
 *.perspectivev3
 !default.perspectivev3
 *.xcworkspace
+*.xcuserstate
 !default.xcworkspace
 xcuserdata
 profile
@@ -18,4 +19,4 @@ DerivedData
 .idea/
 # Pods - for those of you who use CocoaPods
 Pods
-Project Loca/.DS_Store
+*.DS_Store

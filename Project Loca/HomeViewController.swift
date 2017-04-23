@@ -5,6 +5,7 @@
 //  Created by Jake Cronin on 2/2/17.
 //  Copyright © 2017 TeamMilton370. All rights reserved.
 //
+
 import RealmSwift
 import Speech
 import UIKit
@@ -13,13 +14,9 @@ import Photos
 import MetalKit
 import MetalPerformanceShaders
 import Accelerate
+import CoreLocation
+import SwiftSiriWaveformView
 
-
-/*
-zh_Hans_HK	Chinese
-
-//es	Spanish
-*/
 class HomeViewController: UIViewController {
 	
 	enum SpeechStatus {
@@ -34,13 +31,14 @@ class HomeViewController: UIViewController {
 	var speechRecognizer: SFSpeechRecognizer? = SFSpeechRecognizer()//locale: Locale(identifier: "es Spanish"))
 	let request = SFSpeechAudioBufferRecognitionRequest()
 	var recognitionTask: SFSpeechRecognitionTask?
-	var selectedLocale: Locale = Locale(identifier: locales["English"]!)
+	var selectedLocale: Locale = Locale(identifier: locales["Spanish"]!)
 	var status = SpeechStatus.ready {
 		didSet {
 			self.setMicUI(status: status)
 		}
 	}
-	var transcriptions: [SFTranscription]?
+    
+    var transcriptions: [SFTranscription]?
 	
 	
     //IBoutlets
@@ -48,13 +46,19 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var queryButton: UIButton!
     @IBOutlet weak var inLanguage: PaddingLabel!
     @IBOutlet weak var outLanguage: PaddingLabel!
-	
-	@IBOutlet weak var micButton: UIButton!
-	@IBOutlet weak var speechTextLabel: PaddingLabel!
-	@IBOutlet weak var toggleTextLabel: PaddingLabel!
-	@IBOutlet weak var toggleSwitch: UISwitch!
-	@IBOutlet weak var correctImage: UIImageView!
-	
+    @IBOutlet weak var modeSwitch: UISegmentedControl!
+    @IBOutlet weak var micButton: UIButton!
+	@IBOutlet weak var speechTextLabel: UILabel!
+    @IBOutlet weak var checkmark: Checkmark! {
+        didSet {
+            checkmark.backgroundColor = UIColor.clear
+        }
+    }
+    
+    //blur stuff
+    var blurEffect: UIBlurEffect = UIBlurEffect(style: .light)
+    var blurView: UIVisualEffectView?
+
     //Class variables
     //Camera-related variables
     var sessionIsActive = false
@@ -64,6 +68,9 @@ class HomeViewController: UIViewController {
     var beginZoomScale: CGFloat = 1.0
     var zoomScale: CGFloat = 1.0
     
+    //Locaiton
+    let locationManager: CLLocationManager! = CLLocationManager()
+    var currentLocation: CLLocationCoordinate2D?
     
     //Action view
     var alert: UIAlertController!
@@ -88,26 +95,20 @@ class HomeViewController: UIViewController {
     var captureTimer: Timer!
     var captureInteral: TimeInterval = 1
     var currentImage: UIImage?
-    
-}
 
-extension HomeViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         //CAMERA
         //starts the capture session
         startSession()
         
-        //initializing data manager for word history
-		
         //VISUALS
+        //buttons
+        micButton.alpha = 0
         
         //Language labels
         inLanguage.text = ""
         outLanguage.text = ""
-		
-		correctImage.alpha = 0.0
-		correctImage.isHidden = false
                 
         inLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         inLanguage.layer.cornerRadius = 10
@@ -116,19 +117,21 @@ extension HomeViewController{
         outLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         outLanguage.layer.cornerRadius = 10
         outLanguage.clipsToBounds = true
-		
+        
+        inLanguage.isHidden = true
+        outLanguage.isHidden = true
+        speechTextLabel.alpha = 0
+        
+        blurView = UIVisualEffectView(effect: blurEffect)
+        blurView?.frame = CGRect(x: outLanguage.bounds.minX, y: outLanguage.bounds.minY, width: outLanguage.bounds.width*3, height: outLanguage.bounds.height*3)
+        outLanguage.addSubview(blurView!)
+        outLanguage.autoresizesSubviews = true
+        outLanguage.layoutIfNeeded()
+        blurView?.alpha = 0
+
 		micButton.layer.cornerRadius = 30
 		micButton.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-		
-		
-		speechTextLabel.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-		speechTextLabel.layer.cornerRadius = 8
-		speechTextLabel.clipsToBounds = true
-		
-		//toggleTextLabel.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-		//toggleTextLabel.layer.cornerRadius = 10
-
-		
+				
         //Query button
         queryButton.layer.cornerRadius = 30
         queryButton.setTitleColor(UIColor.darkGray, for: .normal)
@@ -167,39 +170,94 @@ extension HomeViewController{
         alert = addActionSheet()
 		
 		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
-    }
-    func addActionSheet() -> UIAlertController {
-        let alertController = UIAlertController(title: "You found a new word!", message: nil, preferredStyle: .actionSheet)
         
-        let saveButton = UIAlertAction(title: "Save to words", style: .default, handler: { (action) -> Void in
-            print("About to save a word")
-            self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
-			
-			//Do-Catch saves the word if necessary, and updates 'lastSeen' and 'timesSeen'
-			self.historyDataManager.saveWord(word: self.inLanguage.text!, image: self.currentImage)
-			
-            //Delegation to the history when saving
-            HomeViewController.updateHistoryDelegate?.didReceiveData(
-                word: self.inLanguage.text!,
-                translation: self.outLanguage.text!,
-                image: self.currentImage!)
-        })
-        
-        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
-            print("Cancel button tapped")
-            self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
+        //Location
+        if (CLLocationManager.locationServicesEnabled()) {
+            print("enabled")
             
-        })
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+        } else {
+            print("Location services are not enabled");
+        }
         
-        alertController.addAction(saveButton)
-        alertController.addAction(cancelButton)
-        
-        return alertController
     }
+
+    //MARK: IBActions
     @IBAction func pressQuery(_ sender: Any) {
 		captureTimer.invalidate()
 		self.tabBarController?.present(self.alert, animated: true, completion: nil)
     }
+    
+    enum mode {
+        case quiz
+        case dictionary
+    }
+    
+    @IBAction func modeSwitch(_ sender: Any) {
+        let send = sender as! UISegmentedControl
+        switch(send.selectedSegmentIndex) {
+        case 0:
+            print("dictionary selected")
+            switchMode(mode: .dictionary)
+            break
+        case 1:
+            print("quiz selected")
+            switchMode(mode: .quiz)
+            break
+        default:
+            break
+        }
+    }
+    
+    //animation helper function
+    func switchMode(mode: mode) {
+        
+        var button1: UIButton?
+        var button2: UIButton?
+        var alpha: CGFloat?
+        
+        switch mode {
+        case .quiz:
+            button1 = micButton
+            button2 = queryButton
+            alpha = 1
+        case .dictionary:
+            //this handles the microphone status when switching to dictionary mode in the middle of a quiz.
+            if status == .recognizing {
+                cancelRecording()
+                status = .ready
+            }
+            button1 = queryButton
+            button2 = micButton
+            alpha = 0
+        }
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.blurView?.alpha = alpha!
+        })
+        
+        button1!.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        
+        //first animation
+        UIView.animate(withDuration: 0.2, animations: {
+            button2!.alpha = 0
+            button2!.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+            button2!.isEnabled = false
+        })
+        
+        //second animation
+        UIView.animate(withDuration: 0.2, animations: {
+            button1!.isHidden = false
+            button1!.alpha = 1
+            button1!.isEnabled = true
+            button1!.transform = CGAffineTransform.identity
+        })
+        
+    }
+    
 	@IBAction func pressMic(_ sender: Any){
 		switch status {
 		case .ready:
@@ -213,26 +271,34 @@ extension HomeViewController{
 			break
 		}
 	}
-	@IBAction func toggleSwitch(_ sender: Any){
-		if toggleSwitch.isOn{	//quiz mode
-			toggleTextLabel.text = "Quiz"
-			outLanguage.isHidden = true
-			micButton.isHidden = false
-			micButton.isEnabled = true
-			queryButton.isHidden = true
-			
-		}else{
-			toggleTextLabel.text = "Search"
-			outLanguage.isHidden = false
-			micButton.isEnabled = false
-			micButton.isHidden = true
-			speechTextLabel.isHidden = true
-			queryButton.isHidden = false
-		}
-		
-		
-		
-	}
+    
+    //Helper function to add an action sheet
+    func addActionSheet() -> UIAlertController {
+        let alertController = UIAlertController(title: "You found a new word!", message: nil, preferredStyle: .actionSheet)
+        
+        let saveButton = UIAlertAction(title: "Save to words", style: .default, handler: { (action) -> Void in
+            print("About to save a word")
+            self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
+            
+            //Do-Catch saves the word if necessary, and updates 'lastSeen' and 'timesSeen'
+            self.historyDataManager.saveWord(word: self.inLanguage.text!, image: self.currentImage, location: self.locationManager.location?.coordinate)
+        })
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+            print("Cancel button tapped")
+            self.captureTimer = Timer.scheduledTimer(timeInterval: self.captureInteral, target: self, selector: #selector(self.takePicture), userInfo: nil, repeats: true)
+            
+        })
+        
+        alertController.addAction(saveButton)
+        alertController.addAction(cancelButton)
+        
+        return alertController
+    }
+    
+    var gotResult = false
+    
+    //Neural network functions
     func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
         let startTime = CACurrentMediaTime()
         
@@ -255,32 +321,31 @@ extension HomeViewController{
             var results = [(String,Float)]()
             
             inception3Net.getResults().forEach({ (label,prob) in
-                
                 let newResult = (label,prob)
                 results.append(newResult)
             })
             
-            //sort the results
             results.sort { $0.1 > $1.1 }
-//            print("First one!: \(results.first?.0)")
             translation = (results.first?.0)!
             
             let delimiter = ","
-            //take first item from tuple
             let newstr = results.first?.0
             let token = newstr?.components(separatedBy: delimiter)
             translation = (token?.first!)!
             
             DispatchQueue.main.async {
                 
-                //unhiding the labels
-                if self.inLanguage.isHidden {
+                self.gotResult = true
+                
+                if self.gotResult {
                     self.inLanguage.isHidden = false
                     self.outLanguage.isHidden = false
                 }
                 
                 self.inLanguage.text = translation
+
                 
+                //Checking for the 2 translation dictionaries
                 if trans1[translation] != nil {
                     self.outLanguage.text = trans1[translation]
                 } else {
@@ -291,20 +356,9 @@ extension HomeViewController{
         }
         
         let endTime = CACurrentMediaTime()
-//        print("Running Time: \(endTime - startTime) [sec]")
         completion(true)
     }
-    func takePicture() {
-        let settings = AVCapturePhotoSettings()
-        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
-        let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
-                             kCVPixelBufferWidthKey as String: 160,
-                             kCVPixelBufferHeightKey as String: 160,
-                             ]
-        settings.previewPhotoFormat = previewFormat
-        
-        self.photoOutput.capturePhoto(with: settings, delegate: self)
-    }
+    
     func startSession() {
         if !sessionIsActive {
             captureSession = AVCaptureSession()
@@ -352,6 +406,7 @@ extension HomeViewController{
             sessionIsActive = false
         }
     }
+    
     func getVideoAuthorization(){
         if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) ==  AVAuthorizationStatus.authorized{
             print("already authorized")
@@ -365,11 +420,23 @@ extension HomeViewController{
             });
         }
     }
+    
+    func takePicture() {
+        let settings = AVCapturePhotoSettings()
+        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
+        let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
+                             kCVPixelBufferWidthKey as String: 160,
+                             kCVPixelBufferHeightKey as String: 160,
+                             ]
+        settings.previewPhotoFormat = previewFormat
+        
+        self.photoOutput.capturePhoto(with: settings, delegate: self)
+    }
 }
 
 extension HomeViewController: AVCapturePhotoCaptureDelegate {
+    
     //delegate method called from takePicture()
-    //random little change
     func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
         
         if let error = error {
@@ -403,15 +470,13 @@ extension HomeViewController: AVCapturePhotoCaptureDelegate {
                     print("didn't get data")
                     return
                 }
-//                print("just got the data!")
             })
             
-            
         } else {
-//            print("some error here")
         }
     }
 }
+
 extension HomeViewController {
     func handleZoom(_ gesture: UIPinchGestureRecognizer) {
         if gesture.state == .began {
@@ -452,6 +517,11 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 		}
 	}
 	func startRecording(){
+        UIView.animate(withDuration: 0.2, animations: {
+            self.speechTextLabel.text = ""
+            self.speechTextLabel.alpha = 1
+        })
+        
 		//pause timer
 		captureTimer.invalidate()
 		
@@ -482,136 +552,105 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 				print("got result: \(result.bestTranscription.formattedString)")
 				self.speechTextLabel.text = result.bestTranscription.formattedString
 				self.transcriptions = result.transcriptions
-				self.pressMic(self.micButton)
 			} else if let error = error {
 				print(error)
 			}
 		})
 	}
+    
 	func cancelRecording() {
 		audioEngine.stop()
 		if let node = audioEngine.inputNode {
 			node.removeTap(onBus: 0)
 		}
+        
 		recognitionTask?.cancel()
 		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
+        
 		guard transcriptions != nil else{
 			print("no transcriptions")
-			self.displayCorrectImage(correct: true)
 			return
 		}
+        
 		for transcription in transcriptions!{
 			print("is \(outLanguage.text!) equal to \(transcription.formattedString)?")
-			if transcription.formattedString == outLanguage.text!{
+            //case insensitive comparison
+			if transcription.formattedString.caseInsensitiveCompare(outLanguage.text!) == ComparisonResult.orderedSame {
 				print("yes")
-				self.displayCorrectImage(correct: true)
+                displayQuizResult(correct: true)
 				return
 			}else{
 				print("no")
+                displayQuizResult(correct: false)
 			}
 		}
-		print("didn't get it")
-		self.displayCorrectImage(correct: true)
-	}
-	func setMicUI(status: SpeechStatus) {
-		switch status {
-		case .ready:
-			print("setting image to recognizing")
-		micButton.setImage(#imageLiteral(resourceName: "Microphone-48"), for: .normal)
-		case .recognizing:
-			print("setting image to recognizing")
-		micButton.setImage(#imageLiteral(resourceName: "Audio Wave Filled-50"), for: .normal)
-		case .unavailable:
-			print("setting image to recognizing")
-			micButton.setImage(#imageLiteral(resourceName: "No Microphone-48"), for: .normal)
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.speechTextLabel.alpha = 0
+        })
+    }
+    
+	func displayQuizResult(correct: Bool){
+        let duration = 0.6
+        self.speechTextLabel.alpha = 0
+        self.checkmark.alpha = 1
+        
+		if correct {
+            checkmark.setColor(color: UIColor.green.cgColor)
+            checkmark.setDuration(speed: CGFloat(duration))
+            
+            checkmark.start(completion: { (correct) in
+                UIView.animate(withDuration: 0.2, delay: duration*2, options: .curveEaseInOut, animations: {
+                    
+                    self.checkmark.alpha = 0
+                    
+                }, completion: nil)
+            })
+            
+		} else{
+            checkmark.setColor(color: UIColor.red.cgColor)
+            checkmark.setDuration(speed: CGFloat(duration))
+            
+            checkmark.startX(completion: { (correct) in
+                UIView.animate(withDuration: 0.2, delay: duration*2, options: .curveEaseInOut, animations: {
+
+                    self.checkmark.alpha = 0
+                    
+                }, completion: nil)
+            })
 		}
 	}
-	func displayCorrectImage(correct: Bool){
-		if correct{
-			correctImage.image = #imageLiteral(resourceName: "checkmark-green")
-		}else{
-			correctImage.image = #imageLiteral(resourceName: "redX")
-		}
-		animateFadeIn(imageView: correctImage)
-		
-	}
-	func animateFadeIn(imageView: UIImageView){
-		DispatchQueue.main.async {
-			UIView.animate(withDuration: 1, delay: 0, options: .transitionCrossDissolve, animations: {
-				imageView.alpha = 1.0
-			}, completion: { (done) in
-				self.animateFadeOut(imageView: imageView)
-			})
-		}
-	}
-	func animateFadeOut(imageView: UIImageView){
-		DispatchQueue.main.async {
-			UIView.animate(withDuration: 1, delay: 0.3, options: .transitionCrossDissolve, animations: {
-				imageView.alpha = 0.0
-			}, completion: nil)
-		}
-	}
+    
+    func setMicUI(status: SpeechStatus) {
+        switch status {
+        case .ready:
+            print("setting image to recognizing")
+            micButton.setImage(#imageLiteral(resourceName: "mic"), for: .normal)
+        case .recognizing:
+            print("setting image to recognizing")
+            micButton.setImage(#imageLiteral(resourceName: "Audio Wave Filled-50"), for: .normal)
+        case .unavailable:
+            print("setting image to recognizing")
+            micButton.setImage(#imageLiteral(resourceName: "No Microphone-48"), for: .normal)
+        }
+    }
 	
 }
 
-/*
-{(nl-NL",
-"es-MX",
-"zh-TW",
-"fr-FR",
-"it-IT",
-"vi-VN",
-"en-ZA",
-"ca-ES",
-"es-CL",
-"ko-KR",
-"ro-RO",
-"fr-CH",
-"en-PH",
-"en-CA",
-"en-SG",
-"en-IN",
-"en-NZ",
-"it-CH",
-"fr-CA",
-"da-DK",
-"de-AT",
-"pt-BR",
-"yue-CN",
-"zh-CN",
-"sv-SE",
-"es-ES",
-"ar-SA",
-"hu-HU",
-"fr-BE",
-"en-GB",
-"ja-JP",
-"zh-HK",
-"fi-FI",
-"tr-TR",
-"nb-NO",
-"en-ID",
-"en-SA",
-"pl-PL",
-"id-ID",
-"ms-MY",
-"el-GR",
-"cs-CZ",
-"hr-HR",
-"en-AE",
-"he-IL",
-"ru-RU",
-"de-CH",
-"en-AU",
-"de-DE",
-"nl-BE",
-"th-TH",
-"pt-PT",
-"sk-SK",
-"en-US",
-"en-IE",
-"es-CO",
-"uk-UA",
-"es-US"
-)}
-*/
+extension HomeViewController: CLLocationManagerDelegate {
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        locationManager.stopUpdatingLocation()
+        if ((error) != nil) {
+            print(error)
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        print("called location manager")
+        let last: CLLocation = locations.last! as! CLLocation
+        self.currentLocation = last.coordinate
+
+    }
+    
+}

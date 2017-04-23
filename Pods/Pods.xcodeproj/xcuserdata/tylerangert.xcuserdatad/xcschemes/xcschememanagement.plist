@@ -9,7 +9,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Alamofire.xcscheme</key>
+		<key>Charts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Cosmos.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -19,7 +24,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SwiftyJSON.xcscheme</key>
+		<key>Realm.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>RealmSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SwiftSiriWaveformView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,7 +42,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>57582D36DCCF4DB940EEB05A696B7426</key>
+		<key>4FDC533A4360A68ABDCE852F04B30927</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>56B5FF8D83D73D5C640A6916C52D44ED</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6E928A901F7DBEEA9A702B20BC81B0D6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -37,12 +62,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<key>D9D6F882C5E8F9042816ECC4521693ED</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AE21B2E5B0CF6E556C7C883E5A03107B</key>
+		<key>DB84D95CAF4CE54633CC72DB59E0322D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F307B842FF76B2DE6C55DB67C0885325</key>
 		<dict>
 			<key>primary</key>
 			<true/>

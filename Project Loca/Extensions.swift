@@ -45,6 +45,21 @@ extension UILabel {
     }
 }
 
+extension CGFloat {
+    static func random() -> CGFloat {
+        return CGFloat(drand48())
+    }
+}
+
+extension UIColor {
+    static func randomColor() -> UIColor {
+        return UIColor(red:   .random(),
+                       green: .random(),
+                       blue:  .random(),
+                       alpha: 1.0)
+    }
+}
+
 extension Date {
     func toString() -> String {
         let dateFormatter = DateFormatter()

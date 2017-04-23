@@ -509,46 +509,37 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Zr3-TG-xKA" customClass="ProgressCollectionViewCell" customModule="Project_Loca" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="progressCCell" id="Zr3-TG-xKA" customClass="ProgressCollectionViewCell" customModule="Project_Loca" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="109" height="109"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="109" height="109"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Cw-1Y-UPH" customClass="ProgressCollectionViewCell" customModule="Project_Loca" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="109" height="109"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHx-YX-2G5">
-                                                    <rect key="frame" x="8" y="7" width="93" height="71"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="25"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Words found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qha-oS-vRo">
+                                                    <rect key="frame" x="14" y="79" width="81" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="twQ-Op-TgC"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Words found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qha-oS-vRo">
-                                                    <rect key="frame" x="8" y="82" width="93" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="WLd-T2-hH8"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHx-YX-2G5">
+                                                    <rect key="frame" x="29" y="20" width="50" height="51"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="25"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="leading" secondItem="Zr3-TG-xKA" secondAttribute="leadingMargin" id="GDK-bN-HCt"/>
-                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="trailing" secondItem="Qha-oS-vRo" secondAttribute="trailing" id="VD5-X7-Fw6"/>
-                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="centerX" secondItem="4Cw-1Y-UPH" secondAttribute="centerX" id="XzI-hx-7Jm"/>
-                                            <constraint firstItem="4Cw-1Y-UPH" firstAttribute="top" secondItem="Zr3-TG-xKA" secondAttribute="top" id="dvY-0e-w5H"/>
-                                            <constraint firstAttribute="trailing" secondItem="4Cw-1Y-UPH" secondAttribute="trailing" id="e0J-uP-hCn"/>
-                                            <constraint firstItem="Qha-oS-vRo" firstAttribute="top" secondItem="RHx-YX-2G5" secondAttribute="bottom" constant="4" id="fTw-bB-Hrn"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="Qha-oS-vRo" secondAttribute="bottom" constant="-2" id="o1V-Fb-ojy"/>
-                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="leading" secondItem="Qha-oS-vRo" secondAttribute="leading" id="rdg-sG-UMX"/>
-                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="top" secondItem="Zr3-TG-xKA" secondAttribute="topMargin" constant="-1" id="u3I-Sm-Iy4"/>
-                                            <constraint firstAttribute="bottom" secondItem="4Cw-1Y-UPH" secondAttribute="bottom" id="vfX-to-p6W"/>
-                                            <constraint firstItem="4Cw-1Y-UPH" firstAttribute="leading" secondItem="Zr3-TG-xKA" secondAttribute="leading" id="yjg-ja-lLh"/>
+                                            <constraint firstItem="Qha-oS-vRo" firstAttribute="top" secondItem="RHx-YX-2G5" secondAttribute="bottom" constant="8" symbolic="YES" id="JAi-g8-eQx"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="Qha-oS-vRo" secondAttribute="bottom" constant="1" id="N5H-sZ-ByZ"/>
+                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="leading" secondItem="Zr3-TG-xKA" secondAttribute="leadingMargin" constant="21" id="Psr-rT-cmN"/>
+                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="top" secondItem="Zr3-TG-xKA" secondAttribute="topMargin" constant="12" id="mhO-OZ-RzM"/>
+                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="centerX" secondItem="Qha-oS-vRo" secondAttribute="centerX" id="ojs-py-UYe"/>
+                                            <constraint firstItem="RHx-YX-2G5" firstAttribute="centerX" secondItem="Zr3-TG-xKA" secondAttribute="centerX" id="q9o-We-xPe"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="foundCountLabel" destination="RHx-YX-2G5" id="a43-VQ-FSP"/>

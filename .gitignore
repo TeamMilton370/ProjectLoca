@@ -17,4 +17,12 @@ profile
 DerivedData
 .idea/
 # Pods - for those of you who use CocoaPods
+<<<<<<< HEAD
 Pods
+=======
+Pods
+.DS_Store
+Project Loca/.DS_Store
+>>>>>>> origin/master
+
+.DS_Store

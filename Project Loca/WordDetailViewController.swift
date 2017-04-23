@@ -31,13 +31,14 @@ class WordDetailViewController: UIViewController {
             rating.backgroundColor = UIColor.clear
             rating.settings.updateOnTouch = false
             rating.settings.starMargin = 5
+            rating.isUserInteractionEnabled = false
 
         }
     }
     
     @IBOutlet weak var lastLocationLabel: UILabel! {
         didSet{
-            formatLabel(label: timesSeenLabel)
+            formatLabel(label: lastLocationLabel)
         }
     }
     @IBOutlet weak var timesSeenLabel: UILabel! {

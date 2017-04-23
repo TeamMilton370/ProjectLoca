@@ -99,7 +99,7 @@ class WordDetailViewController: UIViewController {
 			print("appending data point")
 			dataEntries.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
 		}
-		
+		print("total entries: \(dataEntries.count)")
 		
         let chartDataSet = BubbleChartDataSet(values: dataEntries, label: "Visitor count")
         let chartData = BubbleChartData(dataSet: chartDataSet)

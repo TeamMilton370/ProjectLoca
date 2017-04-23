@@ -29,7 +29,7 @@ class Word: Object{
 		for quiz in quizResults{
 			if quiz.correct{
 				if toReturn[quiz.date.startOfDay] == nil{
-					print("date is new")
+					//print("date is new")
 					var quizArray = [QuizResult]()
 					quizArray.append(quiz)
 					toReturn[quiz.date.startOfDay] = quizArray
@@ -41,18 +41,22 @@ class Word: Object{
 		return toReturn
 	}
 	var inCorrectQuizzesByDay: [Date: [QuizResult]]{
+		print("in incorrect quizzes by day with \(quizResults.count)")
 		var toReturn = [Date: [QuizResult]]()
 		
 		for quiz in quizResults{
 			if quiz.correct == false{
 				if toReturn[quiz.date.startOfDay] == nil{
-					print("date is new")
+					print("found unique day")
 					var quizArray = [QuizResult]()
 					quizArray.append(quiz)
 					toReturn[quiz.date.startOfDay] = quizArray
 				}else{
+					print("adding onto existing day")
 					toReturn[quiz.date.startOfDay]!.append(quiz)
 				}
+			}else{
+				print("quiz is true, not adding")
 			}
 		}
 		return toReturn
@@ -76,7 +80,7 @@ class Word: Object{
 	}
 	
 	var inCorrectQuizDataPoints: [(x: Int, size: Int)]{
-		print("grabbing correct data points")
+		print("grabbing incorrect data points")
 		var toReturn = [(x: Int, size: Int)]()
 		var counter = 0 //no more than 10
 		for (date,array) in inCorrectQuizzesByDay.sorted(by: { (first, second) -> Bool in
@@ -86,7 +90,7 @@ class Word: Object{
 			let x = Int(date.timeIntervalSince1970)
 			counter = counter + 1
 			print("got an incorrect data point")
-
+			toReturn.append((x, size))
 			if counter == 10{
 				break
 			}

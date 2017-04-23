@@ -9,7 +9,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Alamofire.xcscheme</key>
+		<key>Charts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Cosmos.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>IQKeyboardManager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -29,7 +39,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SwiftyJSON.xcscheme</key>
+		<key>SwiftSiriWaveformView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -37,17 +47,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>07E4EB35CD66F01F485B028FEE69A4E2</key>
+		<key>4FDC533A4360A68ABDCE852F04B30927</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>28F072BF1A981FB5B3E2498AF8496050</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4B6A7638B1AE4E53A447E71F26F9CC83</key>
+		<key>5083815569A6A468940482497008F24A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -57,12 +62,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<key>9ED69364599740D870CA55ECA2399019</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D8982F5EE07F287936A4D61230A90CAF</key>
+		<key>C36CB2CB977A4E7D954935096D00A1ED</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DB036A63EF03B039E0B267079C67E4C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EB3B27594A6A14F78E2A1BC1A2D07D8B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F307B842FF76B2DE6C55DB67C0885325</key>
 		<dict>
 			<key>primary</key>
 			<true/>

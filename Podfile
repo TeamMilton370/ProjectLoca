@@ -12,5 +12,6 @@ pod 'RealmSwift'
 pod 'SwiftSiriWaveformView'
 pod 'Charts'
 pod 'Cosmos', '~> 9.0'
+pod 'IQKeyboardManager'
 
 end

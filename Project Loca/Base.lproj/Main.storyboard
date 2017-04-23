@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -395,14 +396,14 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F6t-jJ-Jqj">
-                                <rect key="frame" x="153" y="533" width="60" height="60"/>
+                                <rect key="frame" x="157.5" y="533" width="60" height="60"/>
                                 <state key="normal" image="mic"/>
                                 <connections>
                                     <action selector="pressMic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HQR-uZ-G9o"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RvE-Sw-udQ">
-                                <rect key="frame" x="153" y="533" width="60" height="60"/>
+                                <rect key="frame" x="157.5" y="533" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="AWm-af-Ijc"/>
                                     <constraint firstAttribute="width" constant="60" id="QpB-Kb-4gq"/>
@@ -415,6 +416,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="maz-kA-1Ve" customClass="Checkmark" customModule="Project_Loca" customModuleProvider="target">
                                 <rect key="frame" x="123" y="269" width="127" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="maz-kA-1Ve" secondAttribute="height" multiplier="127:128" id="qWQ-6X-xhU"/>
+                                </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o9D-B6-LYU">
                                 <rect key="frame" x="16" y="269" width="343" height="79"/>
@@ -428,7 +432,6 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="RvE-Sw-udQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="153" id="2f3-lJ-yfk"/>
                             <constraint firstItem="k05-mk-GkR" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="GDb-b9-aue"/>
                             <constraint firstItem="jTA-v5-Bk6" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="13" id="J9x-eJ-NkK"/>
                             <constraint firstAttribute="trailing" secondItem="k05-mk-GkR" secondAttribute="trailing" id="JYq-8P-Krl"/>
@@ -442,6 +445,7 @@
                             <constraint firstItem="jTA-v5-Bk6" firstAttribute="centerX" secondItem="k05-mk-GkR" secondAttribute="centerX" id="fGn-HD-05s"/>
                             <constraint firstItem="k05-mk-GkR" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="gJk-64-Woc"/>
                             <constraint firstItem="k05-mk-GkR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="obo-R7-4ZK"/>
+                            <constraint firstItem="RvE-Sw-udQ" firstAttribute="centerX" secondItem="k05-mk-GkR" secondAttribute="centerX" id="rPC-ug-xxK"/>
                             <constraint firstItem="o9D-B6-LYU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="rW7-8h-K0U"/>
                             <constraint firstItem="RvE-Sw-udQ" firstAttribute="leading" secondItem="F6t-jJ-Jqj" secondAttribute="leading" id="suJ-lw-QUw"/>
                             <constraint firstItem="F6t-jJ-Jqj" firstAttribute="bottom" secondItem="RvE-Sw-udQ" secondAttribute="bottom" id="trU-9o-e5r"/>

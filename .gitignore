@@ -20,3 +20,5 @@ DerivedData
 # Pods - for those of you who use CocoaPods
 Pods
 *.DS_Store
+
+*.xcuserstate

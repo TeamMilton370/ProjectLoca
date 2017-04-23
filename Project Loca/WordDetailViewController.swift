@@ -104,3 +104,11 @@ extension WordDetailViewController: ChartViewDelegate {
         print("Data set index: \(dataSetIndex)")
     }
 }
+
+//get data
+extension WordDetailViewController{
+	func getLineGraphDataFor(word: String) ->[Date: RLMCollection<QuizResult>]{
+		//get the w
+	}
+	
+}

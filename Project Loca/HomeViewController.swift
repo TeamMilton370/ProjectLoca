@@ -578,9 +578,11 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 			if transcription.formattedString.caseInsensitiveCompare(outLanguage.text!) == ComparisonResult.orderedSame {
 				print("yes")
                 displayQuizResult(correct: true)
+				saveQuizResult(word: outLanguage.text!, true)
 				return
 			}else{
 				print("no")
+				saveQuizResult(word: outLanguage.text!, false)
                 displayQuizResult(correct: false)
 			}
 		}
@@ -634,6 +636,30 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
             micButton.setImage(#imageLiteral(resourceName: "No Microphone-48"), for: .normal)
         }
     }
+	
+	func saveQuizResult(word: String, true: Bool, time: TimeInterval){
+		
+		do{
+			let realm = try Realm()
+			var RLMword = try realm.objects(Word).filter(NSPredicate(format: "word == %@", word)).first
+			
+			try realm.write{
+				let newQuiz: QuizResult = QuizResult()
+				newQuiz.word = RLMword
+				newQuiz.date = Date()
+				newQuiz.correct = true
+				newQuiz.timeLapsed = time
+				
+				RLMword.quizResults.append(newQuiz)
+			}
+		}catch{
+			print("error")
+		}
+		//get the word
+		
+		//
+		
+	}
 	
 }
 

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 import Charts
+import Cosmos
 
 class WordDetailViewController: UIViewController {
     
@@ -19,21 +20,60 @@ class WordDetailViewController: UIViewController {
     var allPins = [MKPointAnnotation]()
     let geoCoder = CLGeocoder()
     
+    
     @IBOutlet weak var chart: CombinedChartView!
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var translationLabel: UILabel!
+
+    @IBOutlet weak var rating: CosmosView! {
+        didSet {
+            rating.backgroundColor = UIColor.clear
+            rating.settings.updateOnTouch = false
+            rating.settings.starMargin = 5
+
+        }
+    }
+    
+    @IBOutlet weak var lastLocationLabel: UILabel! {
+        didSet{
+            formatLabel(label: timesSeenLabel)
+        }
+    }
+    @IBOutlet weak var timesSeenLabel: UILabel! {
+        didSet{
+            formatLabel(label: timesSeenLabel)
+        }
+    }
+    @IBOutlet weak var percentCorrectLabel: UILabel! {
+        didSet{
+            formatLabel(label: percentCorrectLabel)
+        }
+    }
+    
+    func formatLabel(label: UILabel) {
+        label.layer.borderColor = UIColor.lightGray.cgColor
+        label.layer.borderWidth = 1
+        label.layer.cornerRadius = 5
+        label.textColor = UIColor.lightGray
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         self.wordLabel.text = originalWord!
         self.translationLabel.text = translatedWord!        
         self.map.delegate = self
         self.map.layer.cornerRadius = 10
         
-        print("all coordinates: \(self.coordinates)")
+        //chart
+        chart.delegate = self
+        chart.notifyDataSetChanged()
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.chart.animate(yAxisDuration: 0.5)
     }
     
 }
@@ -43,8 +83,7 @@ extension WordDetailViewController: MKMapViewDelegate {
     func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
         allPins.removeAll()
         
-        //adding
-        for coord in self.coordinates {
+        for _ in self.coordinates {
             allPins.append(MKPointAnnotation())
         }
         
@@ -52,43 +91,15 @@ extension WordDetailViewController: MKMapViewDelegate {
             let pin = allPins[i]
             let coord = self.coordinates[i].coordinate
             pin.coordinate = coord
-            
-            let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
-            
-            var pinCity: String?
-            var pinState: String?
-            
-            geoCoder.reverseGeocodeLocation(location, completionHandler: { placemarks, error in
-                
-                guard let addressDict = placemarks?.last?.addressDictionary else {
-                    print("no dictionary")
-                    return
-                }
-                
-                guard let city = addressDict["City"] as? String else {
-                    print("couldn't get city")
-                    return
-                }
-                
-                guard let state = addressDict["State"] as? String else {
-                    print("couldn't get state")
-                    return
-                }
-                
-                print("\(i) \(city)")
-
-                pinCity = city
-                pinState = state
-            })
-            
-//            
-//            pin.title = "\(pinCity)"
-//            pin.subtitle = "\(pinState)"
-            print(pinState ?? "")
-            print(pinCity ?? "")
             self.map.addAnnotation(pin)
-
         }
         
+    }
+}
+
+extension WordDetailViewController: ChartViewDelegate {
+    
+    func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: Highlight) {
+        print("Data set index: \(dataSetIndex)")
     }
 }

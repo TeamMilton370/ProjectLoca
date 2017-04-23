@@ -9,8 +9,8 @@ target 'Project Loca' do
 
 pod 'AKPickerView'
 pod 'RealmSwift'
-pod 'Charts'
 pod 'SwiftSiriWaveformView'
+pod 'Charts'
 pod 'Cosmos', '~> 9.0'
 
 end

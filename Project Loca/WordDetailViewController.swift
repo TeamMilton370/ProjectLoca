@@ -32,9 +32,9 @@ class WordDetailViewController: UIViewController {
             rating.settings.updateOnTouch = false
             rating.settings.starMargin = 5
             rating.isUserInteractionEnabled = false
-
         }
     }
+    
     @IBOutlet weak var lastLocationLabel: UILabel! {
         didSet{
             formatLabel(label: lastLocationLabel)
@@ -87,6 +87,7 @@ class WordDetailViewController: UIViewController {
         for i in 0..<10{
             entryCount.append(i)
         }
+        
 		var word = Word()
 		for point in word.correctQuizDataPoints{
 			dataEntries.append(BubbleChartDataEntry(x: Double(point.x), y: 1, size: CGFloat(point.size)))

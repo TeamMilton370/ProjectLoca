@@ -10,6 +10,7 @@ build/
 *.perspectivev3
 !default.perspectivev3
 *.xcworkspace
+*xcuserstate
 !default.xcworkspace
 xcuserdata
 profile
@@ -17,5 +18,4 @@ profile
 DerivedData
 .idea/
 # Pods - for those of you who use CocoaPods
-<<<<<<< HEAD
 Pods

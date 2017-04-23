@@ -11,6 +11,7 @@ import UIKit
 import Charts
 
 class ProgressViewController: UIViewController {
+
     
     @IBOutlet weak var lineChart: LineChartView!
     @IBOutlet weak var awardsView: UICollectionView!
@@ -20,6 +21,11 @@ class ProgressViewController: UIViewController {
     var formattedChartData: [ChartDataEntry]?
     var dataSet1: LineChartDataSet?
     
+	
+	//show number of words added over time
+	//show quiz words correct and incorrect over time
+	
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         

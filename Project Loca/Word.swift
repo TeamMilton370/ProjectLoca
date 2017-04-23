@@ -21,5 +21,6 @@ class Word: Object{
     
     let coordinates = List<Location>()
 	let images = List<RLMImage>()
+	let quizResults = List<QuizResult>()
 
 }

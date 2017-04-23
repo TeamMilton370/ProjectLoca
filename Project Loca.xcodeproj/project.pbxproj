@@ -228,6 +228,7 @@
 		632E76331E43F7560098CC91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632E76311E43F7560098CC91 /* Main.storyboard */; };
 		632E76351E43F7560098CC91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 632E76341E43F7560098CC91 /* Assets.xcassets */; };
 		632E76381E43F7560098CC91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632E76361E43F7560098CC91 /* LaunchScreen.storyboard */; };
+		632F605F1EA98CF100596DF5 /* QuizResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632F605E1EA98CF100596DF5 /* QuizResult.swift */; };
 		63D461771E957152002C01BA /* LocaleDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D461761E957152002C01BA /* LocaleDictionary.swift */; };
 		63D4617B1E9576CC002C01BA /* RLMImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4617A1E9576CC002C01BA /* RLMImage.swift */; };
 		6E387C55AB9E6F444A466788 /* Pods_Project_Loca.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67605AC5D60BE907D88814EE /* Pods_Project_Loca.framework */; };
@@ -460,6 +461,7 @@
 		632E76341E43F7560098CC91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		632E76371E43F7560098CC91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		632E76391E43F7560098CC91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		632F605E1EA98CF100596DF5 /* QuizResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizResult.swift; sourceTree = "<group>"; };
 		63D461761E957152002C01BA /* LocaleDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleDictionary.swift; sourceTree = "<group>"; };
 		63D4617A1E9576CC002C01BA /* RLMImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMImage.swift; sourceTree = "<group>"; };
 		67605AC5D60BE907D88814EE /* Pods_Project_Loca.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_Loca.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -776,6 +778,7 @@
 				632A1E051E947E96002A24DB /* Word.swift */,
 				36D5D77F1E9D6518005A22E5 /* Location.swift */,
 				36D5D7811E9D75E8005A22E5 /* Progress.swift */,
+				632F605E1EA98CF100596DF5 /* QuizResult.swift */,
 				63D4617A1E9576CC002C01BA /* RLMImage.swift */,
 			);
 			name = Models;
@@ -1150,6 +1153,7 @@
 				63D461771E957152002C01BA /* LocaleDictionary.swift in Sources */,
 				632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */,
 				632A1E061E947E96002A24DB /* Word.swift in Sources */,
+				632F605F1EA98CF100596DF5 /* QuizResult.swift in Sources */,
 				36DD06A21E9366470088B0C2 /* ProgressViewController.swift in Sources */,
 				36CDC9991E57A9B600720EDE /* Extensions.swift in Sources */,
 				366422A01E94259B009FB784 /* HistoryTableViewCell.swift in Sources */,

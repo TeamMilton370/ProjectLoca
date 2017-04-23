@@ -87,7 +87,11 @@ class WordDetailViewController: UIViewController {
         for i in 0..<10{
             entryCount.append(i)
         }
-        
+		var word = Word()
+		for point in word.correctQuizDataPoints{
+			dataEntries.append(BubbleChartDataEntry(x: Double(point.x), y: 1, size: CGFloat(point.size)))
+		}
+		
         for i in 0..<entryCount.count {
             let timeIntervalForDate: TimeInterval = TimeInterval(entryCount[i])
             
@@ -186,13 +190,6 @@ extension WordDetailViewController: ChartViewDelegate {
     func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: Highlight) {
         print("Data set index: \(dataSetIndex)")
     }
-}
-
-//get data
-extension WordDetailViewController{
-	func getLineGraphDataFor(word: String) ->[Date: RLMCollection<QuizResult>]{
-		//get the w
-	}
 }
 	
 

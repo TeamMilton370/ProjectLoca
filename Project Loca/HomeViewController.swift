@@ -578,11 +578,11 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 			if transcription.formattedString.caseInsensitiveCompare(outLanguage.text!) == ComparisonResult.orderedSame {
 				print("yes")
                 displayQuizResult(correct: true)
-				saveQuizResult(word: outLanguage.text!, true)
+				saveQuizResult(word: outLanguage.text!, true: true, time: 0)
 				return
 			}else{
 				print("no")
-				saveQuizResult(word: outLanguage.text!, false)
+				saveQuizResult(word: outLanguage.text!, true: false, time: 0)
                 displayQuizResult(correct: false)
 			}
 		}
@@ -653,7 +653,7 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 				newQuiz.correct = true
 				newQuiz.timeLapsed = time
 				
-				RLMword.quizResults.append(newQuiz)
+				RLMword!.quizResults.append(newQuiz)
 			}
 		}catch{
 			print("error")

@@ -30,14 +30,15 @@ class Word: Object{
 			if quiz.correct{
 				if toReturn[quiz.date.startOfDay] == nil{
 					print("date is new")
-					let newArray = [QuizResult]()
-					newArray.append(word)
-					toReturn[word.date.startOfDay] = newArray
+					var quizArray = [QuizResult]()
+					quizArray.append(quiz)
+					toReturn[quiz.date.startOfDay] = quizArray
 				}else{
 					toReturn[quiz.date.startOfDay]!.append(quiz)
 				}
 			}
 		}
+		return toReturn
 	}
 	var inCorrectQuizzesByDay: [Date: [QuizResult]]{
 		var toReturn = [Date: [QuizResult]]()
@@ -46,27 +47,28 @@ class Word: Object{
 			if quiz.correct == false{
 				if toReturn[quiz.date.startOfDay] == nil{
 					print("date is new")
-					let newArray = [QuizResult]()
-					newArray.append(word)
-					toReturn[word.date.startOfDay] = newArray
+					var quizArray = [QuizResult]()
+					quizArray.append(quiz)
+					toReturn[quiz.date.startOfDay] = quizArray
 				}else{
 					toReturn[quiz.date.startOfDay]!.append(quiz)
 				}
 			}
 		}
+		return toReturn
 	}
 	
 	var correctQuizDataPoints: [(x: Int, size: Int)]{
 		var toReturn = [(x: Int, size: Int)]()
 		var counter = 0 //no more than 10
 		
-		for (date,array) in correctQuizzesByDay.sorted({ (first: (key1: Date, value1: [QuizResult]), second: (key2: Date, value2: [QuizResult])) -> Bool in
-				return first.key1.compare(second.key2)
+		for (date,array) in correctQuizzesByDay.sorted(by: { (first, second) -> Bool in
+				return first.key.compare(second.key) == .orderedAscending
 		}){
 			let size: Int = array.count
 			let x = Int(date.timeIntervalSince1970)
 			counter = counter + 1
-			if conter = 10{
+			if counter == 10{
 				break
 			}
 		}
@@ -77,13 +79,13 @@ class Word: Object{
 		var toReturn = [(x: Int, size: Int)]()
 		var counter = 0 //no more than 10
 		
-		for (date,array) in inCorrectQuizzesByDay.sorted({ (first: (key1: Date, value1: [QuizResult]), second: (key2: Date, value2: [QuizResult])) -> Bool in
-			return first.key1.compare(second.key2)
+		for (date,array) in inCorrectQuizzesByDay.sorted(by: { (first, second) -> Bool in
+			return first.key.compare(second.key) == .orderedAscending
 		}){
 			let size: Int = array.count
 			let x = Int(date.timeIntervalSince1970)
 			counter = counter + 1
-			if conter = 10{
+			if counter == 10{
 				break
 			}
 		}

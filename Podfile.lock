@@ -4,6 +4,7 @@ PODS:
     - Charts/Core (= 3.0.2)
   - Charts/Core (3.0.2)
   - Cosmos (9.0.0)
+  - IQKeyboardManager (4.0.9)
   - Realm (2.5.0):
     - Realm/Headers (= 2.5.0)
   - Realm/Headers (2.5.0)
@@ -15,6 +16,7 @@ DEPENDENCIES:
   - AKPickerView
   - Charts
   - Cosmos (~> 9.0)
+  - IQKeyboardManager
   - RealmSwift
   - SwiftSiriWaveformView
 
@@ -22,10 +24,11 @@ SPEC CHECKSUMS:
   AKPickerView: 125372e36fcc372216127600a541f14dcdbb7993
   Charts: 236d6ccdd0ce6feae151d89e829a7397381a21fd
   Cosmos: 33eee62b2a0418452aef470f711f83c3ea061b7b
+  IQKeyboardManager: 322c7405df3eb5f7e50dede32ea937bf3d4364e0
   Realm: 62abce501668580092d2be9b6ba7324a3d5f906a
   RealmSwift: 9f1a8f624f2f153410115c2cb7d486be9976565d
   SwiftSiriWaveformView: 85328da51cf5f3c6a0dbcdf9186f4417edf1b538
 
-PODFILE CHECKSUM: dccbb8f3a9921c9807d3cb548c622c85a6887436
+PODFILE CHECKSUM: 082673b514bdae7c08130d987d3c5674a97e06b0
 
-COCOAPODS: 1.2.0.rc.1
+COCOAPODS: 1.1.1

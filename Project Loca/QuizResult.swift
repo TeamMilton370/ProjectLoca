@@ -11,7 +11,7 @@ import RealmSwift
 
 class QuizResult: Object{
 	
-	dynamic var word: String!
+	dynamic var word: Word!
 	dynamic var date: Date!
 	dynamic var correct = false
 	dynamic var timeLapsed: TimeInterval = 0

@@ -66,6 +66,11 @@ extension Date {
         dateFormatter.dateFormat = "MMM d, yyyy"
         return dateFormatter.string(from: self)
     }
+	var startOfDay: Date{
+		let calendar = Calendar.current
+		let toReturn = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: self)
+		return toReturn!
+	}
 }
 
 extension String {

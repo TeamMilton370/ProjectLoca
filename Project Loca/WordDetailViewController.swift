@@ -87,7 +87,11 @@ class WordDetailViewController: UIViewController {
         for i in 0..<10{
             entryCount.append(i)
         }
-        
+		var word = Word()
+		for point in word.correctQuizDataPoints{
+			dataEntries.append(BubbleChartDataEntry(x: Double(point.x), y: 1, size: CGFloat(point.size)))
+		}
+		
         for i in 0..<entryCount.count {
             let timeIntervalForDate: TimeInterval = TimeInterval(entryCount[i])
             
@@ -187,6 +191,7 @@ extension WordDetailViewController: ChartViewDelegate {
         print("Data set index: \(dataSetIndex)")
     }
 }
+	
 
 extension WordDetailViewController: IAxisValueFormatter {
     
@@ -195,5 +200,4 @@ extension WordDetailViewController: IAxisValueFormatter {
         dateFormatter.dateFormat = "HH:mm.ss"
         return dateFormatter.string(from: Date(timeIntervalSince1970: value))
     }
-    
 }

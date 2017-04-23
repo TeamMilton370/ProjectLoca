@@ -13,7 +13,7 @@ class QuizResult: Object{
 	
 	dynamic var word: String!
 	dynamic var date: Date!
-	dynamic var correct: Bool!
-	dynamic var timeLapsed: NSTimeInterval?
+	dynamic var correct = false
+	dynamic var timeLapsed: TimeInterval = 0
 	
 }

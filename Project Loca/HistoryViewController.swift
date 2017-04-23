@@ -102,7 +102,6 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.wordData = seenWords![indexPath.row]
 		cell?.originalWord.text = seenWords![indexPath.row].word.capitalizingFirstLetter()
 		cell?.translatedWord.text = seenWords![indexPath.row].translation?.capitalizingFirstLetter()
-		cell?.seenCount.text = "\(seenWords![indexPath.row].timesSeen)"
         cell?.lastSeenLabel.text = seenWords![indexPath.row].lastSeen.toString()
         //Location
         let location = CLLocation(latitude: (seenWords![indexPath.row].coordinates.last?.coordinate.latitude)!, longitude: (seenWords![indexPath.row].coordinates.last?.coordinate.longitude)!)
@@ -130,11 +129,8 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
         })
         
         //Styling
-        cell?.seenCount.textColor = UIColor.white
-        cell?.seenCount.backgroundColor = blue
-        cell?.seenCount.layer.cornerRadius = (cell?.seenCount.frame.width)!/2
-        cell?.seenCount.clipsToBounds = true
-        
+        cell?.rating.backgroundColor = UIColor.clear
+        cell?.rating.isUserInteractionEnabled = false
         cell?.background.clipsToBounds = true
         cell?.background.layer.cornerRadius = 10
         

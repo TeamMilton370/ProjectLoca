@@ -189,6 +189,14 @@ extension WordDetailViewController: ChartViewDelegate {
     }
 }
 
+//get data
+extension WordDetailViewController{
+	func getLineGraphDataFor(word: String) ->[Date: RLMCollection<QuizResult>]{
+		//get the w
+	}
+}
+	
+
 extension WordDetailViewController: IAxisValueFormatter {
     
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
@@ -196,5 +204,4 @@ extension WordDetailViewController: IAxisValueFormatter {
         dateFormatter.dateFormat = "HH:mm.ss"
         return dateFormatter.string(from: Date(timeIntervalSince1970: value))
     }
-    
 }

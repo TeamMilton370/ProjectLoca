@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Cosmos
 
 class HistoryTableViewCell: UITableViewCell {
 
@@ -17,7 +18,7 @@ class HistoryTableViewCell: UITableViewCell {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var originalWord: UILabel!
     @IBOutlet weak var translatedWord: UILabel!
-    @IBOutlet weak var seenCount: UILabel!
     @IBOutlet weak var background: UIView!
+    @IBOutlet weak var rating: CosmosView!
     
 }

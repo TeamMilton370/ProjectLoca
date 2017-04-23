@@ -21,8 +21,7 @@ class Word: Object{
     
     let coordinates = List<Location>()
 	let images = List<RLMImage>()
-	let quizResults = List<QuizResult>()
-	
+	let quizResults = List<QuizResult>()	
 	
 	var correctQuizzesByDay: [Date: [QuizResult]]{
 		var toReturn = [Date: [QuizResult]]()
@@ -91,4 +90,10 @@ class Word: Object{
 		return toReturn
 	}
 	
+    
+    var masteryLevel: Int {
+        get {
+            return 0
+        }
+    }
 }

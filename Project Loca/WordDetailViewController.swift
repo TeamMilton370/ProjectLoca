@@ -20,12 +20,12 @@ class WordDetailViewController: UIViewController {
     var allPins = [MKPointAnnotation]()
     let geoCoder = CLGeocoder()
     
-    
-    @IBOutlet weak var chart: CombinedChartView!
+    weak var axisFormatDelegate: IAxisValueFormatter?
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var translationLabel: UILabel!
-
+    @IBOutlet weak var chart: BubbleChartView!
+    
     @IBOutlet weak var rating: CosmosView! {
         didSet {
             rating.backgroundColor = UIColor.clear
@@ -35,7 +35,6 @@ class WordDetailViewController: UIViewController {
 
         }
     }
-    
     @IBOutlet weak var lastLocationLabel: UILabel! {
         didSet{
             formatLabel(label: lastLocationLabel)
@@ -67,32 +66,117 @@ class WordDetailViewController: UIViewController {
         self.map.layer.cornerRadius = 10
         
         //chart
+        axisFormatDelegate = self
         chart.delegate = self
         chart.notifyDataSetChanged()
-
+        updateChartWithData()
+        formatChart()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.chart.animate(yAxisDuration: 0.5)
+        updateChartWithData()
     }
     
+    //Chart stuff
+    func updateChartWithData() {
+        var dataEntries: [BubbleChartDataEntry] = []
+        
+        var entryCount = [Int]()
+        for i in 0..<10{
+            entryCount.append(i)
+        }
+        
+        for i in 0..<entryCount.count {
+            let timeIntervalForDate: TimeInterval = TimeInterval(entryCount[i])
+            
+            //format each data entry
+            //size = quiz result count
+            //y = 1 if red, 2 if green
+            //x = date
+            
+            let dataEntry1 = BubbleChartDataEntry(x: Double(i), y: 1, size: CGFloat(i))
+            let dataEntry2 = BubbleChartDataEntry(x: Double(i), y: 2, size: CGFloat(i))
+
+            dataEntries.append(dataEntry1)
+            dataEntries.append(dataEntry2)
+
+        }
+        
+        let chartDataSet = BubbleChartDataSet(values: dataEntries, label: "Visitor count")
+        let chartData = BubbleChartData(dataSet: chartDataSet)
+        chart.data = chartData
+        
+        let xaxis = chart.xAxis
+        xaxis.valueFormatter = axisFormatDelegate
+    }
+    
+    enum quizResult {
+        case correct
+        case failure
+    }
+    
+    func getResultCount(result: quizResult) {
+    }
+    
+    func formatChart() {
+        let font = setFont(name: "Avenir heavy", size: 10)
+        
+        chart.rightAxis.drawAxisLineEnabled = false
+        chart.leftAxis.drawAxisLineEnabled = false
+        chart.leftAxis.drawLabelsEnabled = false
+        chart.rightAxis.drawLabelsEnabled = false
+        
+        chart.leftAxis.drawGridLinesEnabled = false
+        chart.rightAxis.drawGridLinesEnabled = false
+        
+        chart.chartDescription?.text = ""
+        //Font stuff
+        chart.data?.setValueFont(font)
+        chart.xAxis.labelFont = font
+        chart.legend.font = font
+        chart.noDataFont = font
+        chart.data?.setValueTextColor(UIColor.white)
+        
+        chart.xAxis.drawAxisLineEnabled = false
+        chart.legend.form = .circle
+        chart.legend.horizontalAlignment = .center
+        
+        chart.leftAxis.axisMinimum = 0
+        chart.leftAxis.axisMaximum = 3
+        
+        chart.backgroundColor = UIColor.clear
+        chart.xAxis.gridColor = UIColor.lightGray.withAlphaComponent(0.3)
+        
+        chart.xAxis.labelPosition = .bottom
+        chart.scaleXEnabled = false
+        chart.scaleYEnabled = false
+    }
+    
+    func setFont(name: String, size: CGFloat) -> NSUIFont {
+        return NSUIFont(name: name, size: size)!
+    }
 }
 
 extension WordDetailViewController: MKMapViewDelegate {
     
-    func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
-        allPins.removeAll()
-        
-        for _ in self.coordinates {
-            allPins.append(MKPointAnnotation())
-        }
-        
-        for i in 0..<self.coordinates.count {
-            let pin = allPins[i]
-            let coord = self.coordinates[i].coordinate
-            pin.coordinate = coord
-            self.map.addAnnotation(pin)
+    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
+    
+        if fullyRendered {
+            allPins.removeAll()
+            
+            for _ in self.coordinates {
+                allPins.append(MKPointAnnotation())
+            }
+            
+            for i in 0..<self.coordinates.count {
+                let pin = allPins[i]
+                let coord = self.coordinates[i].coordinate
+                pin.coordinate = coord
+                self.map.addAnnotation(pin)
+                print("COORDINATE: \(pin.coordinate)")
+            }
         }
         
     }
@@ -110,5 +194,14 @@ extension WordDetailViewController{
 	func getLineGraphDataFor(word: String) ->[Date: RLMCollection<QuizResult>]{
 		//get the w
 	}
+}
 	
+
+extension WordDetailViewController: IAxisValueFormatter {
+    
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm.ss"
+        return dateFormatter.string(from: Date(timeIntervalSince1970: value))
+    }
 }

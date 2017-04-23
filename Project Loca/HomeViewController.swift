@@ -623,6 +623,9 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 		}
 	}
     
+    func animateResult(correct: Bool) {
+    }
+    
     func setMicUI(status: SpeechStatus) {
         switch status {
         case .ready:

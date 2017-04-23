@@ -10,6 +10,5 @@ import Foundation
 import RealmSwift
 
 class Progress: Object {
-    
     let results: [Bool] = [Bool]()
 }

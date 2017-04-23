@@ -35,7 +35,7 @@ class HistoryDataManager {
                     let lastLocation = Location(latitude: (location?.latitude)!, longitude: (location?.longitude)!)
                     rlmWord!.coordinates.append(lastLocation)
 				}
-            }else{ //customer does not exist. create new one
+            } else{ //word does not exist. create new one
 				print("Word is new, saving to realm")
 				
 				try realm.write {

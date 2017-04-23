@@ -5,6 +5,7 @@
 //  Created by Jake Cronin on 2/2/17.
 //  Copyright © 2017 TeamMilton370. All rights reserved.
 //
+
 import RealmSwift
 import Speech
 import UIKit
@@ -45,14 +46,19 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var queryButton: UIButton!
     @IBOutlet weak var inLanguage: PaddingLabel!
     @IBOutlet weak var outLanguage: PaddingLabel!
-	
     @IBOutlet weak var modeSwitch: UISegmentedControl!
     @IBOutlet weak var micButton: UIButton!
-	@IBOutlet weak var speechTextLabel: PaddingLabel!
-	@IBOutlet weak var toggleTextLabel: PaddingLabel!
-	@IBOutlet weak var toggleSwitch: UISwitch!
-	@IBOutlet weak var correctImage: UIImageView!
-	
+	@IBOutlet weak var speechTextLabel: UILabel!
+    @IBOutlet weak var checkmark: Checkmark! {
+        didSet {
+            checkmark.backgroundColor = UIColor.clear
+        }
+    }
+    
+    //blur stuff
+    var blurEffect: UIBlurEffect = UIBlurEffect(style: .light)
+    var blurView: UIVisualEffectView?
+
     //Class variables
     //Camera-related variables
     var sessionIsActive = false
@@ -103,9 +109,6 @@ class HomeViewController: UIViewController {
         //Language labels
         inLanguage.text = ""
         outLanguage.text = ""
-		
-		correctImage.alpha = 0.0
-		correctImage.isHidden = false
                 
         inLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         inLanguage.layer.cornerRadius = 10
@@ -114,15 +117,21 @@ class HomeViewController: UIViewController {
         outLanguage.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         outLanguage.layer.cornerRadius = 10
         outLanguage.clipsToBounds = true
-		
+        
+        inLanguage.isHidden = true
+        outLanguage.isHidden = true
+        speechTextLabel.alpha = 0
+        
+        blurView = UIVisualEffectView(effect: blurEffect)
+        blurView?.frame = CGRect(x: outLanguage.bounds.minX, y: outLanguage.bounds.minY, width: outLanguage.bounds.width*3, height: outLanguage.bounds.height*3)
+        outLanguage.addSubview(blurView!)
+        outLanguage.autoresizesSubviews = true
+        outLanguage.layoutIfNeeded()
+        blurView?.alpha = 0
+
 		micButton.layer.cornerRadius = 30
 		micButton.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-		
-		
-		speechTextLabel.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-		speechTextLabel.layer.cornerRadius = 8
-		speechTextLabel.clipsToBounds = true
-		
+				
         //Query button
         queryButton.layer.cornerRadius = 30
         queryButton.setTitleColor(UIColor.darkGray, for: .normal)
@@ -182,6 +191,73 @@ class HomeViewController: UIViewController {
 		self.tabBarController?.present(self.alert, animated: true, completion: nil)
     }
     
+    enum mode {
+        case quiz
+        case dictionary
+    }
+    
+    @IBAction func modeSwitch(_ sender: Any) {
+        let send = sender as! UISegmentedControl
+        switch(send.selectedSegmentIndex) {
+        case 0:
+            print("dictionary selected")
+            switchMode(mode: .dictionary)
+            break
+        case 1:
+            print("quiz selected")
+            switchMode(mode: .quiz)
+            break
+        default:
+            break
+        }
+    }
+    
+    //animation helper function
+    func switchMode(mode: mode) {
+        
+        var button1: UIButton?
+        var button2: UIButton?
+        var alpha: CGFloat?
+        
+        switch mode {
+        case .quiz:
+            button1 = micButton
+            button2 = queryButton
+            alpha = 1
+        case .dictionary:
+            //this handles the microphone status when switching to dictionary mode in the middle of a quiz.
+            if status == .recognizing {
+                cancelRecording()
+                status = .ready
+            }
+            button1 = queryButton
+            button2 = micButton
+            alpha = 0
+        }
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.blurView?.alpha = alpha!
+        })
+        
+        button1!.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        
+        //first animation
+        UIView.animate(withDuration: 0.2, animations: {
+            button2!.alpha = 0
+            button2!.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+            button2!.isEnabled = false
+        })
+        
+        //second animation
+        UIView.animate(withDuration: 0.2, animations: {
+            button1!.isHidden = false
+            button1!.alpha = 1
+            button1!.isEnabled = true
+            button1!.transform = CGAffineTransform.identity
+        })
+        
+    }
+    
 	@IBAction func pressMic(_ sender: Any){
 		switch status {
 		case .ready:
@@ -194,60 +270,6 @@ class HomeViewController: UIViewController {
 			initializeSpeechRecognition()
 			break
 		}
-	}
-    
-	@IBAction func toggleSwitch(_ sender: Any){
-		if toggleSwitch.isOn{	//quiz mode
-			toggleTextLabel.text = "Quiz"
-			outLanguage.isHidden = true
-            
-            self.micButton.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-            
-            //first animation
-            UIView.animate(withDuration: 0.2, animations: { 
-                self.queryButton.alpha = 0
-                self.queryButton.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-                self.queryButton.isEnabled = false
-                
-            })
-            
-            //second animation
-            UIView.animate(withDuration: 0.2, animations: {
-                self.micButton.isHidden = false
-                self.micButton.alpha = 1
-                self.micButton.isEnabled = true
-                self.micButton.transform = CGAffineTransform.identity
-
-            })
-			
-		}else{
-            
-			toggleTextLabel.text = "Search"
-			outLanguage.isHidden = false
-            
-            self.queryButton.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-            
-            //first animation
-            UIView.animate(withDuration: 0.2, animations: {
-                
-                self.micButton.alpha = 0
-                self.micButton.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-                self.micButton.isEnabled = false
-                
-            })
-            
-            //second animation
-            UIView.animate(withDuration: 0.2, animations: {
-                self.queryButton.isHidden = false
-                self.queryButton.alpha = 1
-                self.queryButton.isEnabled = true
-                self.queryButton.transform = CGAffineTransform.identity
-                
-            })
-		}
-		
-		
-		
 	}
     
     //Helper function to add an action sheet
@@ -273,6 +295,8 @@ class HomeViewController: UIViewController {
         
         return alertController
     }
+    
+    var gotResult = false
     
     //Neural network functions
     func runNetwork(completion: @escaping (_ completed: Bool) -> Void) {
@@ -311,13 +335,15 @@ class HomeViewController: UIViewController {
             
             DispatchQueue.main.async {
                 
-                //unhiding the labels
-                if self.inLanguage.isHidden {
+                self.gotResult = true
+                
+                if self.gotResult {
                     self.inLanguage.isHidden = false
                     self.outLanguage.isHidden = false
                 }
                 
                 self.inLanguage.text = translation
+
                 
                 //Checking for the 2 translation dictionaries
                 if trans1[translation] != nil {
@@ -450,6 +476,7 @@ extension HomeViewController: AVCapturePhotoCaptureDelegate {
         }
     }
 }
+
 extension HomeViewController {
     func handleZoom(_ gesture: UIPinchGestureRecognizer) {
         if gesture.state == .began {
@@ -490,6 +517,11 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 		}
 	}
 	func startRecording(){
+        UIView.animate(withDuration: 0.2, animations: {
+            self.speechTextLabel.text = ""
+            self.speechTextLabel.alpha = 1
+        })
+        
 		//pause timer
 		captureTimer.invalidate()
 		
@@ -520,7 +552,6 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 				print("got result: \(result.bestTranscription.formattedString)")
 				self.speechTextLabel.text = result.bestTranscription.formattedString
 				self.transcriptions = result.transcriptions
-				self.pressMic(self.micButton)
 			} else if let error = error {
 				print(error)
 			}
@@ -532,11 +563,12 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 		if let node = audioEngine.inputNode {
 			node.removeTap(onBus: 0)
 		}
+        
 		recognitionTask?.cancel()
 		captureTimer = Timer.scheduledTimer(timeInterval: captureInteral, target: self, selector: #selector(takePicture), userInfo: nil, repeats: true)
+        
 		guard transcriptions != nil else{
 			print("no transcriptions")
-			self.displayCorrectImage(correct: true)
 			return
 		}
         
@@ -545,53 +577,63 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
             //case insensitive comparison
 			if transcription.formattedString.caseInsensitiveCompare(outLanguage.text!) == ComparisonResult.orderedSame {
 				print("yes")
-				self.displayCorrectImage(correct: true)
+                displayQuizResult(correct: true)
 				return
 			}else{
 				print("no")
-                self.displayCorrectImage(correct: false)
+                displayQuizResult(correct: false)
 			}
 		}
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.speechTextLabel.alpha = 0
+        })
     }
     
-	func setMicUI(status: SpeechStatus) {
-		switch status {
-		case .ready:
-			print("setting image to recognizing")
-		micButton.setImage(#imageLiteral(resourceName: "mic"), for: .normal)
-		case .recognizing:
-			print("setting image to recognizing")
-		micButton.setImage(#imageLiteral(resourceName: "Audio Wave Filled-50"), for: .normal)
-		case .unavailable:
-			print("setting image to recognizing")
-			micButton.setImage(#imageLiteral(resourceName: "No Microphone-48"), for: .normal)
+	func displayQuizResult(correct: Bool){
+        let duration = 0.6
+        self.speechTextLabel.alpha = 0
+        self.checkmark.alpha = 1
+        
+		if correct {
+            checkmark.setColor(color: UIColor.green.cgColor)
+            checkmark.setDuration(speed: CGFloat(duration))
+            
+            checkmark.start(completion: { (correct) in
+                UIView.animate(withDuration: 0.2, delay: duration*2, options: .curveEaseInOut, animations: {
+                    
+                    self.checkmark.alpha = 0
+                    
+                }, completion: nil)
+            })
+            
+		} else{
+            checkmark.setColor(color: UIColor.red.cgColor)
+            checkmark.setDuration(speed: CGFloat(duration))
+            
+            checkmark.startX(completion: { (correct) in
+                UIView.animate(withDuration: 0.2, delay: duration*2, options: .curveEaseInOut, animations: {
+
+                    self.checkmark.alpha = 0
+                    
+                }, completion: nil)
+            })
 		}
 	}
-	func displayCorrectImage(correct: Bool){
-		if correct{
-			correctImage.image = #imageLiteral(resourceName: "checkmark-green")
-		}else{
-			correctImage.image = #imageLiteral(resourceName: "redX")
-		}
-		animateFadeIn(imageView: correctImage)
-		
-	}
-	func animateFadeIn(imageView: UIImageView){
-		DispatchQueue.main.async {
-			UIView.animate(withDuration: 1, delay: 0, options: .transitionCrossDissolve, animations: {
-				imageView.alpha = 1.0
-			}, completion: { (done) in
-				self.animateFadeOut(imageView: imageView)
-			})
-		}
-	}
-	func animateFadeOut(imageView: UIImageView){
-		DispatchQueue.main.async {
-			UIView.animate(withDuration: 1, delay: 0.3, options: .transitionCrossDissolve, animations: {
-				imageView.alpha = 0.0
-			}, completion: nil)
-		}
-	}
+    
+    func setMicUI(status: SpeechStatus) {
+        switch status {
+        case .ready:
+            print("setting image to recognizing")
+            micButton.setImage(#imageLiteral(resourceName: "mic"), for: .normal)
+        case .recognizing:
+            print("setting image to recognizing")
+            micButton.setImage(#imageLiteral(resourceName: "Audio Wave Filled-50"), for: .normal)
+        case .unavailable:
+            print("setting image to recognizing")
+            micButton.setImage(#imageLiteral(resourceName: "No Microphone-48"), for: .normal)
+        }
+    }
 	
 }
 

@@ -11,5 +11,6 @@ pod 'AKPickerView'
 pod 'RealmSwift'
 pod 'Charts'
 pod 'SwiftSiriWaveformView'
+pod 'Cosmos', '~> 9.0'
 
 end

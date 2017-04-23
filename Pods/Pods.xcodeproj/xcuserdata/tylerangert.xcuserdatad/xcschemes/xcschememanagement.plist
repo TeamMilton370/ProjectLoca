@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Cosmos.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Project Loca.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,12 +42,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>11E34C032B6DEE33C42B1209756CFF02</key>
+		<key>4FDC533A4360A68ABDCE852F04B30927</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1DB0E6C3A87B6C4390846DFB65541B03</key>
+		<key>56B5FF8D83D73D5C640A6916C52D44ED</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6E928A901F7DBEEA9A702B20BC81B0D6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -52,12 +62,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A69345FA4E7190B1E2EF96C5C3AF47FC</key>
+		<key>D9D6F882C5E8F9042816ECC4521693ED</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EBFCDF3C63F7DCBEA428A9787AA16F42</key>
+		<key>DB84D95CAF4CE54633CC72DB59E0322D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

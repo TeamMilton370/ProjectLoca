@@ -220,6 +220,7 @@
 		36DD06A21E9366470088B0C2 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DD06A11E9366470088B0C2 /* ProgressViewController.swift */; };
 		36DD06A41E9366510088B0C2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DD06A31E9366510088B0C2 /* HistoryViewController.swift */; };
 		36E2930B1E8B35160080BD05 /* Translations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E2930A1E8B35160080BD05 /* Translations.swift */; };
+		36FAE7FE1EAC404500246466 /* Checkmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FAE7FD1EAC404500246466 /* Checkmark.swift */; };
 		632A1E061E947E96002A24DB /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A1E051E947E96002A24DB /* Word.swift */; };
 		632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762D1E43F7560098CC91 /* AppDelegate.swift */; };
 		632E76301E43F7560098CC91 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E762F1E43F7560098CC91 /* HomeViewController.swift */; };
@@ -448,6 +449,7 @@
 		36DD06A31E9366510088B0C2 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		36E2930A1E8B35160080BD05 /* Translations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translations.swift; sourceTree = "<group>"; };
 		36EDC64E1E5A460600885354 /* Project Loca-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Project Loca-Bridging-Header.h"; sourceTree = "<group>"; };
+		36FAE7FD1EAC404500246466 /* Checkmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkmark.swift; sourceTree = "<group>"; };
 		632A1E051E947E96002A24DB /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		632E762A1E43F7560098CC91 /* Project Loca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project Loca.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		632E762D1E43F7560098CC91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -730,6 +732,7 @@
 			isa = PBXGroup;
 			children = (
 				36BF97741E8B3E840091ECB9 /* PaddingLabel.swift */,
+				36FAE7FD1EAC404500246466 /* Checkmark.swift */,
 				36CDC9981E57A9B600720EDE /* Extensions.swift */,
 				36EDC64E1E5A460600885354 /* Project Loca-Bridging-Header.h */,
 				36CDC99A1E57A9BD00720EDE /* Protocols.swift */,
@@ -1138,6 +1141,7 @@
 				36002C3F1E491C6B00D5CFF4 /* CameraView.swift in Sources */,
 				632E76301E43F7560098CC91 /* HomeViewController.swift in Sources */,
 				36D5D77E1E9C9FE9005A22E5 /* WordDetailViewController.swift in Sources */,
+				36FAE7FE1EAC404500246466 /* Checkmark.swift in Sources */,
 				36D5D7821E9D75E8005A22E5 /* Progress.swift in Sources */,
 				63D4617B1E9576CC002C01BA /* RLMImage.swift in Sources */,
 				63D461771E957152002C01BA /* LocaleDictionary.swift in Sources */,

@@ -3,6 +3,7 @@ PODS:
   - Charts (3.0.2):
     - Charts/Core (= 3.0.2)
   - Charts/Core (3.0.2)
+  - Cosmos (9.0.0)
   - Realm (2.5.0):
     - Realm/Headers (= 2.5.0)
   - Realm/Headers (2.5.0)
@@ -13,16 +14,18 @@ PODS:
 DEPENDENCIES:
   - AKPickerView
   - Charts
+  - Cosmos (~> 9.0)
   - RealmSwift
   - SwiftSiriWaveformView
 
 SPEC CHECKSUMS:
   AKPickerView: 125372e36fcc372216127600a541f14dcdbb7993
   Charts: 236d6ccdd0ce6feae151d89e829a7397381a21fd
+  Cosmos: 33eee62b2a0418452aef470f711f83c3ea061b7b
   Realm: 62abce501668580092d2be9b6ba7324a3d5f906a
   RealmSwift: 9f1a8f624f2f153410115c2cb7d486be9976565d
   SwiftSiriWaveformView: 85328da51cf5f3c6a0dbcdf9186f4417edf1b538
 
-PODFILE CHECKSUM: ffdaf7085d20a8fe12da6f017ea6f1ee2e6c4416
+PODFILE CHECKSUM: 35d588e6c22d5e9829dd3f71a04dce5c34fa9fb2
 
 COCOAPODS: 1.2.0.rc.1

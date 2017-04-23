@@ -16,6 +16,8 @@ class WordDetailViewController: UIViewController {
     var translatedWord: String?
     var coordinates = [Location]()
     var allPins = [MKPointAnnotation]()
+    let geoCoder = CLGeocoder()
+
     
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var wordLabel: UILabel!
@@ -24,9 +26,11 @@ class WordDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         self.wordLabel.text = originalWord!
         self.translationLabel.text = translatedWord!        
         self.map.delegate = self
+        self.map.layer.cornerRadius = 10
         
         print("all coordinates: \(self.coordinates)")
     }
@@ -35,8 +39,7 @@ class WordDetailViewController: UIViewController {
 
 extension WordDetailViewController: MKMapViewDelegate {
     
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        
+    func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
         allPins.removeAll()
         
         //adding
@@ -46,8 +49,44 @@ extension WordDetailViewController: MKMapViewDelegate {
         
         for i in 0..<self.coordinates.count {
             let pin = allPins[i]
-            pin.coordinate = self.coordinates[i].coordinate
-            map.addAnnotation(pin)
+            let coord = self.coordinates[i].coordinate
+            pin.coordinate = coord
+            
+            let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
+            
+            var pinCity: String?
+            var pinState: String?
+            
+            geoCoder.reverseGeocodeLocation(location, completionHandler: { placemarks, error in
+                
+                guard let addressDict = placemarks?.last?.addressDictionary else {
+                    print("no dictionary")
+                    return
+                }
+                
+                guard let city = addressDict["City"] as? String else {
+                    print("couldn't get city")
+                    return
+                }
+                
+                guard let state = addressDict["State"] as? String else {
+                    print("couldn't get state")
+                    return
+                }
+                
+                print("\(i) \(city)")
+
+                pinCity = city
+                pinState = state
+            })
+            
+//            
+//            pin.title = "\(pinCity)"
+//            pin.subtitle = "\(pinState)"
+            print(pinState ?? "")
+            print(pinCity ?? "")
+            self.map.addAnnotation(pin)
+
         }
         
     }

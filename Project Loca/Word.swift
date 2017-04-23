@@ -20,5 +20,6 @@ class Word: Object{
 	dynamic var timesSeen: Int = 0
 		
 	let images = List<RLMImage>()
+	let quizResults = List<QuizResult>()
 
 }

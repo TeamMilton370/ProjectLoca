@@ -10,7 +10,11 @@ import Foundation
 import UIKit
 
 class ProgressViewController: UIViewController {
-    
+	
+	//show number of words added over time
+	//show quiz words correct and incorrect over time
+	
+	
     override func viewDidLoad() {
         super.viewDidLoad()
     }

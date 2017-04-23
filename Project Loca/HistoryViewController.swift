@@ -55,7 +55,8 @@ class HistoryViewController: UIViewController {
             
             destination.originalWord = selectedCell.wordData?.word.capitalizingFirstLetter()
             destination.translatedWord = selectedCell.wordData?.translation?.capitalizingFirstLetter()
-            
+			destination.realmWord = selectedCell.wordData
+			
             destination.coordinates.removeAll()
             
             for coordinate in (selectedCell.wordData?.coordinates)! {

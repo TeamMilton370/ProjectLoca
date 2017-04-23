@@ -13,7 +13,8 @@ import Charts
 import Cosmos
 
 class WordDetailViewController: UIViewController {
-    
+	
+	var realmWord: Word?
     var originalWord: String?
     var translatedWord: String?
     var coordinates = [Location]()
@@ -64,7 +65,7 @@ class WordDetailViewController: UIViewController {
         self.translationLabel.text = translatedWord!        
         self.map.delegate = self
         self.map.layer.cornerRadius = 10
-        
+		
         //chart
         axisFormatDelegate = self
         chart.delegate = self
@@ -81,32 +82,18 @@ class WordDetailViewController: UIViewController {
     
     //Chart stuff
     func updateChartWithData() {
+		if realmWord == nil{
+			return
+		}
         var dataEntries: [BubbleChartDataEntry] = []
-        
-        var entryCount = [Int]()
-        for i in 0..<10{
-            entryCount.append(i)
-        }
-		var word = Word()
-		for point in word.correctQuizDataPoints{
+		for point in realmWord!.correctQuizDataPoints{
 			dataEntries.append(BubbleChartDataEntry(x: Double(point.x), y: 1, size: CGFloat(point.size)))
 		}
+		for point in realmWord!.inCorrectQuizDataPoints{
+			dataEntries.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
+		}
 		
-        for i in 0..<entryCount.count {
-            let timeIntervalForDate: TimeInterval = TimeInterval(entryCount[i])
-            
-            //format each data entry
-            //size = quiz result count
-            //y = 1 if red, 2 if green
-            //x = date
-            let dataEntry1 = BubbleChartDataEntry(x: Double(i), y: 1, size: CGFloat(i))
-            let dataEntry2 = BubbleChartDataEntry(x: Double(i), y: 2, size: CGFloat(i))
-
-            dataEntries.append(dataEntry1)
-            dataEntries.append(dataEntry2)
-
-        }
-        
+		
         let chartDataSet = BubbleChartDataSet(values: dataEntries, label: "Visitor count")
         let chartData = BubbleChartData(dataSet: chartDataSet)
         chart.data = chartData

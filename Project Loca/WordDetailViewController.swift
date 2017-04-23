@@ -95,7 +95,6 @@ class WordDetailViewController: UIViewController {
             //size = quiz result count
             //y = 1 if red, 2 if green
             //x = date
-            
             let dataEntry1 = BubbleChartDataEntry(x: Double(i), y: 1, size: CGFloat(i))
             let dataEntry2 = BubbleChartDataEntry(x: Double(i), y: 2, size: CGFloat(i))
 

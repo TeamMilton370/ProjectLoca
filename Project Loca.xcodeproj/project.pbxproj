@@ -231,6 +231,7 @@
 		632F605F1EA98CF100596DF5 /* QuizResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632F605E1EA98CF100596DF5 /* QuizResult.swift */; };
 		63D461771E957152002C01BA /* LocaleDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D461761E957152002C01BA /* LocaleDictionary.swift */; };
 		63D4617B1E9576CC002C01BA /* RLMImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4617A1E9576CC002C01BA /* RLMImage.swift */; };
+		63E052231EAD9D0300275075 /* MyIValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E052221EAD9D0300275075 /* MyIValueFormatter.swift */; };
 		9990A379D17A2112DD8B24F5 /* Pods_Project_Loca.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A75ED68A7EB21132F24205A6 /* Pods_Project_Loca.framework */; };
 /* End PBXBuildFile section */
 
@@ -462,6 +463,7 @@
 		632F605E1EA98CF100596DF5 /* QuizResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizResult.swift; sourceTree = "<group>"; };
 		63D461761E957152002C01BA /* LocaleDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleDictionary.swift; sourceTree = "<group>"; };
 		63D4617A1E9576CC002C01BA /* RLMImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMImage.swift; sourceTree = "<group>"; };
+		63E052221EAD9D0300275075 /* MyIValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyIValueFormatter.swift; sourceTree = "<group>"; };
 		76A9AE0D144A160898E7AB78 /* Pods-Project Loca.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project Loca.release.xcconfig"; path = "Pods/Target Support Files/Pods-Project Loca/Pods-Project Loca.release.xcconfig"; sourceTree = "<group>"; };
 		A75ED68A7EB21132F24205A6 /* Pods_Project_Loca.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_Loca.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24C2122D6922A9CEB6FAA4E /* Pods-Project Loca.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project Loca.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Project Loca/Pods-Project Loca.debug.xcconfig"; sourceTree = "<group>"; };
@@ -717,6 +719,7 @@
 				632E762F1E43F7560098CC91 /* HomeViewController.swift */,
 				36DD06A11E9366470088B0C2 /* ProgressViewController.swift */,
 				36D5D77D1E9C9FE9005A22E5 /* WordDetailViewController.swift */,
+				63E052221EAD9D0300275075 /* MyIValueFormatter.swift */,
 				36DD06A31E9366510088B0C2 /* HistoryViewController.swift */,
 			);
 			name = Controllers;
@@ -1151,6 +1154,7 @@
 				36D5D7821E9D75E8005A22E5 /* Progress.swift in Sources */,
 				63D4617B1E9576CC002C01BA /* RLMImage.swift in Sources */,
 				63D461771E957152002C01BA /* LocaleDictionary.swift in Sources */,
+				63E052231EAD9D0300275075 /* MyIValueFormatter.swift in Sources */,
 				632E762E1E43F7560098CC91 /* AppDelegate.swift in Sources */,
 				632A1E061E947E96002A24DB /* Word.swift in Sources */,
 				632F605F1EA98CF100596DF5 /* QuizResult.swift in Sources */,

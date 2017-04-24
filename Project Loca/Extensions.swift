@@ -49,6 +49,13 @@ extension CGFloat {
     static func random() -> CGFloat {
         return CGFloat(drand48())
     }
+	var percent: String{
+		let numberFormatter = NumberFormatter()
+		numberFormatter.numberStyle = .percent
+		return numberFormatter.string(from: NSNumber(value: Float(self)))!
+	}
+	
+	
 }
 
 extension UIColor {

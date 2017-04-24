@@ -35,22 +35,19 @@ class WordDetailViewController: UIViewController {
             rating.isUserInteractionEnabled = false
         }
     }
-    
-    @IBOutlet weak var lastLocationLabel: UILabel! {
-        didSet{
-            formatLabel(label: lastLocationLabel)
-        }
-    }
+
     @IBOutlet weak var timesSeenLabel: UILabel! {
         didSet{
             formatLabel(label: timesSeenLabel)
+			formatTimesSeen(label: timesSeenLabel)
         }
     }
-    @IBOutlet weak var percentCorrectLabel: UILabel! {
-        didSet{
-            formatLabel(label: percentCorrectLabel)
-        }
-    }
+	@IBOutlet weak var percentCorrectLabel: UILabel!{
+		didSet{
+			formatLabel(label: percentCorrectLabel)
+			formatPercentCorrect(label: percentCorrectLabel)
+		}
+	}
     
     func formatLabel(label: UILabel) {
         label.layer.borderColor = UIColor.lightGray.cgColor
@@ -75,7 +72,31 @@ class WordDetailViewController: UIViewController {
         chart.notifyDataSetChanged()
         updateChartWithData()
         formatChart()
+		
+		
     }
+	func formatTimesSeen(label: UILabel){
+		if realmWord == nil{
+			return
+		}
+		timesSeenLabel.text = "seen \(realmWord!.quizResults.count) times"
+	}
+	func formatPercentCorrect(label: UILabel){
+		if realmWord == nil{
+			return
+		}
+		var correct = 0
+		var incorrect = 0
+		for quiz in realmWord!.quizResults{
+			if quiz.correct{
+				correct = correct + 1
+			}else{
+				incorrect = incorrect + 1
+			}
+		}
+		label.text = "\(CGFloat(correct/incorrect).percent) correct"
+		
+	}
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -90,8 +111,7 @@ class WordDetailViewController: UIViewController {
 			print("no realm word for chart. quitting")
 			return
 		}
-
-        var dataEntriesCorrect: [BubbleChartDataEntry] = []
+    var dataEntriesCorrect: [BubbleChartDataEntry] = []
 		var dataEntriesInCorrect: [BubbleChartDataEntry] = []
 
 		for point in realmWord!.correctQuizDataPoints{
@@ -99,28 +119,21 @@ class WordDetailViewController: UIViewController {
 		}
         
 		for point in realmWord!.inCorrectQuizDataPoints{
-            dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
+           dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
 		}
-        
-		for i in -5...0 {
-			print("appending")
-			dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(i*2), y: 2, size: CGFloat((i+10)*10)))
-		}
-		for i in -5...0 {
-			print("appending")
-			dataEntriesCorrect.append(BubbleChartDataEntry(x: Double(i*2+1), y: 1, size: CGFloat(i + 1)))
-			
-		}
-
+						
+		let myFormatter = MyIValueFormatter()
+		
         let chartDataSet1 = BubbleChartDataSet(values: dataEntriesCorrect, label: "Correct")
 		let chartDataSet2 = BubbleChartDataSet(values: dataEntriesInCorrect, label: "Incorrect")
 		chartDataSet2.colors = [UIColor.red.withAlphaComponent(0.7)]
-		//chartDataSet2.va
 		chartDataSet1.colors = [UIColor.green.withAlphaComponent(0.7)]
-		
+		chartDataSet2.valueFormatter = myFormatter
+		chartDataSet1.valueFormatter = myFormatter
         let chartData = BubbleChartData(dataSets: [chartDataSet1, chartDataSet2])
 		chart.data = chartData
-				
+		
+		
         let xaxis = chart.xAxis
         xaxis.valueFormatter = axisFormatDelegate
     }

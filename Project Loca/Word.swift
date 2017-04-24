@@ -101,7 +101,38 @@ class Word: Object{
     
     var masteryLevel: Int {
         get {
-            return 0
+			//get percentage in last 10 sessions.
+			
+			var correct = 0
+			var incorrect = 0
+			
+			var sortedQuizzes = quizResults.sorted { (q1, q2) -> Bool in
+				return q1.date.compare(q2.date) == .orderedAscending
+			}
+			
+			for i in 0...9{
+				if i >= sortedQuizzes.count{
+					break
+				}
+				let quiz = sortedQuizzes[i]
+				if quiz.correct{
+					correct = correct + 1
+				}else{
+					incorrect = incorrect + 1
+				}
+			}
+			
+			let percent: CGFloat = CGFloat(correct / incorrect)
+			
+			if percent > 0.9{
+				return 3
+			}else if percent > 0.75{
+				return 2
+			}else if percent > 0.5{
+				return 1
+			}else{
+				return 0
+			}
         }
     }
 }

@@ -100,31 +100,23 @@ class WordDetailViewController: UIViewController {
 				dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
 		}
 		
-		//chart.contentScaleFactor = 0.1
-		
-		//fake data
-//		dataEntries.append(BubbleChartDataEntry(x: Double(-1), y: 2, size: CGFloat(1)))
-//		dataEntries.append(BubbleChartDataEntry(x: Double(-2), y: 2, size: CGFloat(2)))
-//		dataEntries.append(BubbleChartDataEntry(x: Double(-3), y: 2, size: CGFloat(1)))
-//		dataEntries.append(BubbleChartDataEntry(x: Double(-4), y: 2, size: CGFloat(1)))
-//		
 		for i in -5...0 {
 			print("appending")
 			dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(i*2), y: 2, size: CGFloat((i+10)*10)))
 		}
 		for i in -5...0 {
 			print("appending")
-			dataEntriesCorrect.append(BubbleChartDataEntry(x: Double(i*2+1), y: 1, size: CGFloat(i + 1)))
+			dataEntriesCorrect.append(BubbleChartDataEntry(x: Double(i*2+1), y: 1, size: CGFloat(i + 20)))
 			
 		}
-
+		let myFormatter = MyIValueFormatter()
 		
         let chartDataSet1 = BubbleChartDataSet(values: dataEntriesCorrect, label: "Correct")
 		let chartDataSet2 = BubbleChartDataSet(values: dataEntriesInCorrect, label: "Incorrect")
 		chartDataSet2.colors = [UIColor.red.withAlphaComponent(0.7)]
-		//chartDataSet2.va
 		chartDataSet1.colors = [UIColor.green.withAlphaComponent(0.7)]
-		
+		chartDataSet2.valueFormatter = myFormatter
+		chartDataSet1.valueFormatter = myFormatter
         let chartData = BubbleChartData(dataSets: [chartDataSet1, chartDataSet2])
 		chart.data = chartData
 		

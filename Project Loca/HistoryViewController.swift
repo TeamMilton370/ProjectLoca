@@ -13,7 +13,7 @@ import CoreLocation
 
 class HistoryViewController: UIViewController {
 	
-	var seenWords: Results<Word>?
+	var seenWords: [Word]?
 	var recentImages: Results<RLMImage>?
 	let historyDataManager = HistoryDataManager.sharedInstance
     
@@ -45,6 +45,7 @@ class HistoryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+		loadWords(with: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -70,9 +71,16 @@ class HistoryViewController: UIViewController {
 		do{
 			let realm = try Realm()
 			if let predicate = with{
-				seenWords = realm.objects(Word.self).filter(predicate)
+				seenWords = realm.objects(Word.self).filter(predicate).sorted(by: { (w1, w2) -> Bool in
+					let bool = w1.lastSeen.compare(w2.lastSeen) == .orderedDescending
+					return bool
+				})
 			}else{
-				seenWords = realm.objects(Word.self)
+				seenWords = realm.objects(Word.self).sorted(by: { (w1, w2) -> Bool in
+					let bool = w1.lastSeen.compare(w2.lastSeen) == .orderedDescending
+					return bool
+				})
+
 			}
 			recentImages = realm.objects(RLMImage.self).sorted(byKeyPath: "dateAdded", ascending: false)
 		}catch{

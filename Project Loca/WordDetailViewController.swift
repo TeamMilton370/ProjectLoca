@@ -54,8 +54,10 @@ class WordDetailViewController: UIViewController {
         label.layer.borderWidth = 1
         label.layer.cornerRadius = 5
         label.textColor = UIColor.lightGray
-		label.leftInset = 2.0
-		label.rightInset = 2.0
+		label.leftInset = 9.0
+		label.rightInset = 9.0
+		label.topInset = 6.0
+		label.bottomInset = 6.0
     }
     
     override func viewDidLoad() {
@@ -74,7 +76,6 @@ class WordDetailViewController: UIViewController {
         chart.notifyDataSetChanged()
         updateChartWithData()
         formatChart()
-		
 		
     }
     
@@ -107,7 +108,6 @@ class WordDetailViewController: UIViewController {
 				correct = correct + 1
 			}
 		}
-    
 		label.text = "\(CGFloat(correct/realmWord!.quizResults.count).percent) correct"		
 	}
     

@@ -24,7 +24,6 @@ extension UIImage {
         return UIImageJPEGRepresentation(self, quality.rawValue)
     }
 }
-
 extension UIViewController {
     func showAlert(title: String, message: String, handler: ((UIAlertAction) -> Swift.Void)? = nil) {
         DispatchQueue.main.async { [unowned self] in
@@ -34,7 +33,6 @@ extension UIViewController {
         }
     }
 }
-
 extension UILabel {
     func addTextSpacing(spacing: Double ) {
         if let textString = text {
@@ -44,7 +42,6 @@ extension UILabel {
         }
     }
 }
-
 extension CGFloat {
     static func random() -> CGFloat {
         return CGFloat(drand48())
@@ -57,7 +54,6 @@ extension CGFloat {
 	
 	
 }
-
 extension UIColor {
     static func randomColor() -> UIColor {
         return UIColor(red:   .random(),
@@ -66,7 +62,6 @@ extension UIColor {
                        alpha: 1.0)
     }
 }
-
 extension Date {
 	func days(after date: Date) -> Int{
 		return Calendar.current.dateComponents([.day], from: date, to: self).day ?? 0
@@ -84,17 +79,6 @@ extension Date {
 		let toReturn = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: self)
 		return toReturn!
 	}
-	var last5Days: [Date]{
-		let cal = Calendar.current
-		_ = (cal as NSCalendar).component([.day], from: self)
-		var week = [Date]()
-		for i in 0..<5{
-			let days = -4 + i
-			week.append((cal as NSCalendar).date(byAdding: .day, value: days, to: self, options: [])!)
-		}
-		return week
-	}
-
 }
 
 extension String {
@@ -103,7 +87,6 @@ extension String {
         let other = String(characters.dropFirst())
         return first + other
     }
-    
     mutating func capitalizeFirstLetter() {
         self = self.capitalizingFirstLetter()
     }

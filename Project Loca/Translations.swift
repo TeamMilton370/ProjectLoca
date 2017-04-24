@@ -1855,3 +1855,7 @@ var trans2: [String: String]  = [
     "carbonara" : "carbonara",
     "dumbbell" : "pesa"
 ]
+
+
+
+

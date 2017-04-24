@@ -650,7 +650,7 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 		
 		do{
 			let realm = try Realm()
-			var RLMword = try realm.objects(Word).filter(NSPredicate(format: "word == %@", word)).first
+			var RLMword = try realm.objects(Word.self).filter(NSPredicate(format: "word == %@", word)).first
 			if RLMword == nil{
 				RLMword =  self.historyDataManager.saveWord(word: word, image: self.currentImage, location: self.locationManager.location?.coordinate)
 			}
@@ -669,10 +669,6 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 		}catch{
 			print("error")
 		}
-		//get the word
-		
-		//
-		
 	}
 	
 }

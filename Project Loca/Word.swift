@@ -69,7 +69,6 @@ class Word: Object{
 				break
 			}
 			toReturn.append((x, size))
-			
 		}
 		return toReturn
 	}

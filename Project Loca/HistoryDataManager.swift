@@ -19,12 +19,12 @@ class HistoryDataManager {
     //Singleton
     static let sharedInstance = HistoryDataManager()    
 	
-    func saveWord(word: String, image: UIImage?, location: CLLocationCoordinate2D?){
-        
+    func saveWord(word: String, image: UIImage?, location: CLLocationCoordinate2D?) -> Word{
+		var rlmWord: Word?
 		do{
 			print("in save word and image to realm")
 			let realm = try Realm()
-			var rlmWord = try realm.objects(Word.self).filter(NSPredicate(format: "word == %@", word)).first
+			rlmWord = try realm.objects(Word.self).filter(NSPredicate(format: "word == %@", word)).first
 			if rlmWord != nil{		//word exists, update it
 				print("got \(word)")
 				//now update times seen and last seen
@@ -82,6 +82,7 @@ class HistoryDataManager {
 		}catch{
 			print(error)
 		}
+		return rlmWord!
 		
 	}
     

@@ -62,7 +62,10 @@ class WordDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.wordLabel.text = originalWord!
-        self.translationLabel.text = translatedWord!        
+		if translatedWord == nil{
+			translatedWord = "no translation"
+		}
+        self.translationLabel.text = translatedWord!
         self.map.delegate = self
         self.map.layer.cornerRadius = 10
 		
@@ -82,28 +85,20 @@ class WordDetailViewController: UIViewController {
     
     //Chart stuff
     func updateChartWithData() {
+	
 		if realmWord == nil{
+			print("no realm word for chart. quitting")
 			return
 		}
         var dataEntries: [BubbleChartDataEntry] = []
-<<<<<<< HEAD
-        
-        var entryCount = [Int]()
-        for i in 0..<10{
-            entryCount.append(i)
-        }
-        
-		var word = Word()
-		for point in word.correctQuizDataPoints{
-=======
+
 		for point in realmWord!.correctQuizDataPoints{
->>>>>>> master
 			dataEntries.append(BubbleChartDataEntry(x: Double(point.x), y: 1, size: CGFloat(point.size)))
 		}
 		for point in realmWord!.inCorrectQuizDataPoints{
+			print("appending data point")
 			dataEntries.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
 		}
-		
 		
         let chartDataSet = BubbleChartDataSet(values: dataEntries, label: "Visitor count")
         let chartData = BubbleChartData(dataSet: chartDataSet)

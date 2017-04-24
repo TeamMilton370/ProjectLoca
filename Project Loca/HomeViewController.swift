@@ -645,6 +645,9 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 		do{
 			let realm = try Realm()
 			var RLMword = try realm.objects(Word).filter(NSPredicate(format: "word == %@", word)).first
+			if RLMword == nil{
+				RLMword =  self.historyDataManager.saveWord(word: word, image: self.currentImage, location: self.locationManager.location?.coordinate)
+			}
 			
 			try realm.write{
 				let newQuiz: QuizResult = QuizResult()

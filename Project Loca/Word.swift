@@ -76,15 +76,17 @@ class Word: Object{
 	}
 	
 	var inCorrectQuizDataPoints: [(x: Int, size: Int)]{
+		print("grabbing correct data points")
 		var toReturn = [(x: Int, size: Int)]()
 		var counter = 0 //no more than 10
-		
 		for (date,array) in inCorrectQuizzesByDay.sorted(by: { (first, second) -> Bool in
 			return first.key.compare(second.key) == .orderedAscending
 		}){
 			let size: Int = array.count
 			let x = Int(date.timeIntervalSince1970)
 			counter = counter + 1
+			print("got an incorrect data point")
+
 			if counter == 10{
 				break
 			}

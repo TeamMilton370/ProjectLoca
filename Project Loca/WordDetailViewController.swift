@@ -36,21 +36,18 @@ class WordDetailViewController: UIViewController {
 
         }
     }
-    @IBOutlet weak var lastLocationLabel: UILabel! {
-        didSet{
-            formatLabel(label: lastLocationLabel)
-        }
-    }
     @IBOutlet weak var timesSeenLabel: UILabel! {
         didSet{
             formatLabel(label: timesSeenLabel)
+			formatTimesSeen(label: timesSeenLabel)
         }
     }
-    @IBOutlet weak var percentCorrectLabel: UILabel! {
-        didSet{
-            formatLabel(label: percentCorrectLabel)
-        }
-    }
+	@IBOutlet weak var percentCorrectLabel: UILabel!{
+		didSet{
+			formatLabel(label: percentCorrectLabel)
+			formatPercentCorrect(label: percentCorrectLabel)
+		}
+	}
     
     func formatLabel(label: UILabel) {
         label.layer.borderColor = UIColor.lightGray.cgColor
@@ -75,7 +72,31 @@ class WordDetailViewController: UIViewController {
         chart.notifyDataSetChanged()
         updateChartWithData()
         formatChart()
+		
+		
     }
+	func formatTimesSeen(label: UILabel){
+		if realmWord == nil{
+			return
+		}
+		timesSeenLabel.text = "seen \(realmWord!.quizResults.count) times"
+	}
+	func formatPercentCorrect(label: UILabel){
+		if realmWord == nil{
+			return
+		}
+		var correct = 0
+		var incorrect = 0
+		for quiz in realmWord!.quizResults{
+			if quiz.correct{
+				correct = correct + 1
+			}else{
+				incorrect = incorrect + 1
+			}
+		}
+		label.text = "\(CGFloat(correct/incorrect).percent) correct"
+		
+	}
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

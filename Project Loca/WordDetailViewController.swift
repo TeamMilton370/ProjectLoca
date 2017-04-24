@@ -77,7 +77,6 @@ class WordDetailViewController: UIViewController {
         updateChartWithData()
         formatChart()
 		
-		
     }
     
 	func formatTimesSeen(label: UILabel){

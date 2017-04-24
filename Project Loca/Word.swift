@@ -121,8 +121,7 @@ class Word: Object{
 					incorrect = incorrect + 1
 				}
 			}
-			
-			let percent: CGFloat = CGFloat(correct / incorrect)
+			let percent: CGFloat = CGFloat(correct/(correct+incorrect))
 			
 			if percent > 0.9{
 				return 3

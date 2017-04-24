@@ -36,24 +36,26 @@ class WordDetailViewController: UIViewController {
         }
     }
 
-    @IBOutlet weak var timesSeenLabel: UILabel! {
+    @IBOutlet weak var timesSeenLabel: PaddingLabel! {
         didSet{
             formatLabel(label: timesSeenLabel)
 			formatTimesSeen(label: timesSeenLabel)
         }
     }
-	@IBOutlet weak var percentCorrectLabel: UILabel!{
+	@IBOutlet weak var percentCorrectLabel: PaddingLabel!{
 		didSet{
 			formatLabel(label: percentCorrectLabel)
 			formatPercentCorrect(label: percentCorrectLabel)
 		}
 	}
     
-    func formatLabel(label: UILabel) {
+    func formatLabel(label: PaddingLabel) {
         label.layer.borderColor = UIColor.lightGray.cgColor
         label.layer.borderWidth = 1
         label.layer.cornerRadius = 5
         label.textColor = UIColor.lightGray
+		label.leftInset = 2.0
+		label.rightInset = 2.0
     }
     
     override func viewDidLoad() {
@@ -77,24 +79,33 @@ class WordDetailViewController: UIViewController {
     }
 	func formatTimesSeen(label: UILabel){
 		if realmWord == nil{
+			label.isHidden = true
 			return
 		}
+		if realmWord?.quizResults.count == 0{
+			label.isHidden = true
+			return
+		}
+		label.isHidden = false
 		timesSeenLabel.text = "seen \(realmWord!.quizResults.count) times"
 	}
 	func formatPercentCorrect(label: UILabel){
 		if realmWord == nil{
+			label.isHidden = true
 			return
 		}
+		if realmWord?.quizResults.count == 0{
+			label.isHidden = true
+			return
+		}
+		label.isHidden = false
 		var correct = 0
-		var incorrect = 0
 		for quiz in realmWord!.quizResults{
 			if quiz.correct{
 				correct = correct + 1
-			}else{
-				incorrect = incorrect + 1
 			}
 		}
-		label.text = "\(CGFloat(correct/incorrect).percent) correct"
+		label.text = "\(CGFloat(correct/realmWord!.quizResults.count).percent) correct"
 		
 	}
     

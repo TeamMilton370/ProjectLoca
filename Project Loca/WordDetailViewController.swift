@@ -93,6 +93,7 @@ class WordDetailViewController: UIViewController {
         var dataEntries: [BubbleChartDataEntry] = []
 
 		for point in realmWord!.correctQuizDataPoints{
+			print("appending data point")
 			dataEntries.append(BubbleChartDataEntry(x: Double(point.x), y: 1, size: CGFloat(point.size)))
 		}
 		for point in realmWord!.inCorrectQuizDataPoints{

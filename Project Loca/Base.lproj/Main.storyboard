@@ -81,7 +81,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.52941176470588236" green="0.80784313725490198" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="backgroundColor" red="0.52941176469999995" green="0.80784313730000001" blue="0.98039215690000003" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstItem="lxo-Wb-XbL" firstAttribute="leading" secondItem="2Ke-JQ-snT" secondAttribute="leadingMargin" id="3Fk-yb-T5M"/>
                                                                 <constraint firstItem="qsc-EJ-PHt" firstAttribute="baseline" secondItem="lxo-Wb-XbL" secondAttribute="baseline" id="52e-Ei-7p3"/>
@@ -560,11 +560,11 @@
             </objects>
             <point key="canvasLocation" x="1357.5999999999999" y="1188.7556221889056"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--History-->
         <scene sceneID="TtA-Qu-CCn">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9Rc-NJ-sP5" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="recents" id="zsa-LR-yCb"/>
+                    <tabBarItem key="tabBarItem" title="History" image="history" id="zsa-LR-yCb"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="p9B-gJ-HSQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -579,11 +579,11 @@
             </objects>
             <point key="canvasLocation" x="420" y="-262.21889055472263"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Search-->
         <scene sceneID="Dt6-rN-6WN">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MaC-nh-qdQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="min-t4-IWQ"/>
+                    <tabBarItem key="tabBarItem" title="Search" image="search" id="min-t4-IWQ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xuT-BS-w1E">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -598,11 +598,11 @@
             </objects>
             <point key="canvasLocation" x="420" y="429.53523238380814"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Trophies-->
         <scene sceneID="iC6-Wh-HFq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Equ-I6-Bpe" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="history" id="qE6-D4-RUs"/>
+                    <tabBarItem key="tabBarItem" title="Trophies" image="trophy" id="qE6-D4-RUs"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="yZl-bK-HW0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -620,6 +620,9 @@
     </scenes>
     <resources>
         <image name="add" width="500" height="500"/>
+        <image name="history" width="25" height="25"/>
         <image name="mic" width="500" height="500"/>
+        <image name="search" width="25" height="25"/>
+        <image name="trophy" width="25" height="25"/>
     </resources>
 </document>

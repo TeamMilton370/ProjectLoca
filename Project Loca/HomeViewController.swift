@@ -24,8 +24,7 @@ class HomeViewController: UIViewController {
 		case recognizing
 		case unavailable
 	}
-	
-	
+    
 	//MARK: Sppech recognition variables
 	let audioEngine = AVAudioEngine()
 	var speechRecognizer: SFSpeechRecognizer? = SFSpeechRecognizer()//locale: Locale(identifier: "es Spanish"))
@@ -98,11 +97,18 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //nav bar
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir", size: 20)!]
+
         //CAMERA
         //starts the capture session
         startSession()
         
         //VISUALS
+        //top nav bar
+        modeSwitch.tintColor = blue
+        modeSwitch.setTitleTextAttributes([ NSFontAttributeName: UIFont(name: "Avenir", size: 14.0)! ], for: .normal)
+
         //buttons
         micButton.alpha = 0
         

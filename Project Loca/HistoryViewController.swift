@@ -17,7 +17,6 @@ class HistoryViewController: UIViewController {
 	var recentImages: Results<RLMImage>?
 	let historyDataManager = HistoryDataManager.sharedInstance
     
-    let blue = UIColor.init(red: 135/255, green: 206/255, blue: 250/255, alpha: 0.8)
     let geoCoder = CLGeocoder()
     
     //MARK: IBOutlets

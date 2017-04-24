@@ -18,7 +18,7 @@ class WordDetailViewController: UIViewController {
     var originalWord: String?
     var translatedWord: String?
     var coordinates = [Location]()
-    var allPins = [MKPointAnnotation]()
+    var allPins = [MKPinAnnotationView]()
     let geoCoder = CLGeocoder()
     
     weak var axisFormatDelegate: IAxisValueFormatter?
@@ -77,6 +77,7 @@ class WordDetailViewController: UIViewController {
 		
 		
     }
+    
 	func formatTimesSeen(label: UILabel){
 		if realmWord == nil{
 			label.isHidden = true
@@ -89,6 +90,7 @@ class WordDetailViewController: UIViewController {
 		label.isHidden = false
 		timesSeenLabel.text = "seen \(realmWord!.quizResults.count) times"
 	}
+    
 	func formatPercentCorrect(label: UILabel){
 		if realmWord == nil{
 			label.isHidden = true
@@ -105,8 +107,9 @@ class WordDetailViewController: UIViewController {
 				correct = correct + 1
 			}
 		}
-		label.text = "\(CGFloat(correct/realmWord!.quizResults.count).percent) correct"
-		
+    
+		label.text = "\(CGFloat(correct/incorrect).percent) correct"
+		label.text = "\(CGFloat(correct/realmWord!.quizResults.count).percent) correct"		
 	}
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,17 +125,18 @@ class WordDetailViewController: UIViewController {
 			print("no realm word for chart. quitting")
 			return
 		}
+
     var dataEntriesCorrect: [BubbleChartDataEntry] = []
-		var dataEntriesInCorrect: [BubbleChartDataEntry] = []
+    var dataEntriesInCorrect: [BubbleChartDataEntry] = []
 
 		for point in realmWord!.correctQuizDataPoints{
 			dataEntriesCorrect.append(BubbleChartDataEntry(x: Double(point.x), y: 1, size: CGFloat(point.size)))
 		}
         
 		for point in realmWord!.inCorrectQuizDataPoints{
-           dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
+            dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
 		}
-						
+        
 		let myFormatter = MyIValueFormatter()
 		
         let chartDataSet1 = BubbleChartDataSet(values: dataEntriesCorrect, label: "Correct")
@@ -143,8 +147,6 @@ class WordDetailViewController: UIViewController {
 		chartDataSet1.valueFormatter = myFormatter
         let chartData = BubbleChartData(dataSets: [chartDataSet1, chartDataSet2])
 		chart.data = chartData
-		
-		
         let xaxis = chart.xAxis
         xaxis.valueFormatter = axisFormatDelegate
     }
@@ -207,19 +209,24 @@ extension WordDetailViewController: MKMapViewDelegate {
             allPins.removeAll()
             
             for _ in self.coordinates {
-                allPins.append(MKPointAnnotation())
+                allPins.append(MKPinAnnotationView())
             }
             
-            for i in 0..<self.coordinates.count {
+            for i in 0..<(realmWord?.coordinates.count)! {
                 let pin = allPins[i]
                 let coord = self.coordinates[i].coordinate
-                pin.coordinate = coord
-                self.map.addAnnotation(pin)
-                print("COORDINATE: \(pin.coordinate)")
+                let annotation = MKPointAnnotation()
+                
+                annotation.coordinate = coord
+                pin.annotation = annotation
+                pin.animatesDrop = true
+                
+                self.map.addAnnotation(annotation)
             }
         }
         
     }
+
 }
 
 extension WordDetailViewController: ChartViewDelegate {

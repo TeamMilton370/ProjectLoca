@@ -39,6 +39,7 @@ class ProgressViewController: UIViewController {
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 125/3
         awardsView.collectionViewLayout = layout
+        awardsView.contentInset = UIEdgeInsetsMake(-50, 0, 0, 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {

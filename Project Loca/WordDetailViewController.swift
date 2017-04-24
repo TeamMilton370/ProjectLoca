@@ -18,7 +18,7 @@ class WordDetailViewController: UIViewController {
     var originalWord: String?
     var translatedWord: String?
     var coordinates = [Location]()
-    var allPins = [MKPointAnnotation]()
+    var allPins = [MKPinAnnotationView]()
     let geoCoder = CLGeocoder()
     
     weak var axisFormatDelegate: IAxisValueFormatter?
@@ -183,19 +183,24 @@ extension WordDetailViewController: MKMapViewDelegate {
             allPins.removeAll()
             
             for _ in self.coordinates {
-                allPins.append(MKPointAnnotation())
+                allPins.append(MKPinAnnotationView())
             }
             
-            for i in 0..<self.coordinates.count {
+            for i in 0..<(realmWord?.coordinates.count)! {
                 let pin = allPins[i]
                 let coord = self.coordinates[i].coordinate
-                pin.coordinate = coord
-                self.map.addAnnotation(pin)
-                print("COORDINATE: \(pin.coordinate)")
+                let annotation = MKPointAnnotation()
+                
+                annotation.coordinate = coord
+                pin.annotation = annotation
+                pin.animatesDrop = true
+                
+                self.map.addAnnotation(annotation)
             }
         }
         
     }
+
 }
 
 extension WordDetailViewController: ChartViewDelegate {

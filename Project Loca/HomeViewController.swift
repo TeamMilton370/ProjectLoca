@@ -25,7 +25,9 @@ class HomeViewController: UIViewController {
 		case unavailable
 	}
 	
-	
+    let blue = UIColor.init(red: 135/255, green: 206/255, blue: 250/255, alpha: 1.0)
+
+    
 	//MARK: Sppech recognition variables
 	let audioEngine = AVAudioEngine()
 	var speechRecognizer: SFSpeechRecognizer? = SFSpeechRecognizer()//locale: Locale(identifier: "es Spanish"))
@@ -98,11 +100,18 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //nav bar
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir", size: 20)!]
+
         //CAMERA
         //starts the capture session
         startSession()
         
         //VISUALS
+        //top nav bar
+        modeSwitch.tintColor = blue
+        modeSwitch.setTitleTextAttributes([ NSFontAttributeName: UIFont(name: "Avenir", size: 14.0)! ], for: .normal)
+
         //buttons
         micButton.alpha = 0
         

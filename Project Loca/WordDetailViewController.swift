@@ -88,7 +88,7 @@ class WordDetailViewController: UIViewController {
 			return
 		}
 		label.isHidden = false
-		timesSeenLabel.text = "seen \(realmWord!.quizResults.count) times"
+		timesSeenLabel.text = "Seen \(realmWord!.quizResults.count) times"
 	}
     
 	func formatPercentCorrect(label: UILabel){
@@ -108,7 +108,6 @@ class WordDetailViewController: UIViewController {
 			}
 		}
     
-		label.text = "\(CGFloat(correct/incorrect).percent) correct"
 		label.text = "\(CGFloat(correct/realmWord!.quizResults.count).percent) correct"		
 	}
     

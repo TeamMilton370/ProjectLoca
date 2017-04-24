@@ -233,8 +233,8 @@
                                     <constraint firstAttribute="height" constant="158" id="Gra-Kr-stJ"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="zlF-j1-Jtu">
-                                <rect key="frame" x="109" y="163" width="157.5" height="18"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zlF-j1-Jtu">
+                                <rect key="frame" x="119" y="165" width="137.5" height="18"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="times seen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZLT-wI-b4z" customClass="PaddingLabel" customModule="Project_Loca" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="62.5" height="18"/>
@@ -246,7 +246,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="% correct" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0t-ZS-TsO" customClass="PaddingLabel" customModule="Project_Loca" customModuleProvider="target">
-                                        <rect key="frame" x="102.5" y="0.0" width="55" height="18"/>
+                                        <rect key="frame" x="82.5" y="0.0" width="55" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="A4X-em-aZN"/>
                                         </constraints>

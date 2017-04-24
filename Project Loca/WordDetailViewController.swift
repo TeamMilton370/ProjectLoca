@@ -109,8 +109,6 @@ class WordDetailViewController: UIViewController {
 				correct = correct + 1
 			}
 		}
-    
-		label.text = "\(CGFloat(correct/incorrect).percent) correct"
 		label.text = "\(CGFloat(correct/realmWord!.quizResults.count).percent) correct"		
 	}
     

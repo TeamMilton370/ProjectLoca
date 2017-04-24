@@ -663,6 +663,7 @@ extension HomeViewController: SFSpeechRecognizerDelegate{
 				newQuiz.timeLapsed = time
 				
 				RLMword!.quizResults.append(newQuiz)
+				RLMword?.lastSeen = Date()
 			}
 		}catch{
 			print("error")

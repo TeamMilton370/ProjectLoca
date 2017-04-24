@@ -61,6 +61,12 @@ extension UIColor {
 }
 
 extension Date {
+	func days(after date: Date) -> Int{
+		return Calendar.current.dateComponents([.day], from: date, to: self).day ?? 0
+	}
+	func back(thisManyDays: Int) -> Date{
+		return Calendar.current.date(byAdding: .day, value: thisManyDays, to: self)!
+	}
     func toString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy"
@@ -71,6 +77,17 @@ extension Date {
 		let toReturn = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: self)
 		return toReturn!
 	}
+	var last5Days: [Date]{
+		let cal = Calendar.current
+		_ = (cal as NSCalendar).component([.day], from: self)
+		var week = [Date]()
+		for i in 0..<5{
+			let days = -4 + i
+			week.append((cal as NSCalendar).date(byAdding: .day, value: days, to: self, options: [])!)
+		}
+		return week
+	}
+
 }
 
 extension String {

@@ -90,21 +90,37 @@ class WordDetailViewController: UIViewController {
 			print("no realm word for chart. quitting")
 			return
 		}
-        var dataEntries: [BubbleChartDataEntry] = []
+
+        var dataEntriesCorrect: [BubbleChartDataEntry] = []
+		var dataEntriesInCorrect: [BubbleChartDataEntry] = []
 
 		for point in realmWord!.correctQuizDataPoints{
-			print("appending data point")
-			dataEntries.append(BubbleChartDataEntry(x: Double(point.x), y: 1, size: CGFloat(point.size)))
+			dataEntriesCorrect.append(BubbleChartDataEntry(x: Double(point.x), y: 1, size: CGFloat(point.size)))
 		}
-		for point in realmWord!.inCorrectQuizDataPoints{
-			print("appending data point")
-			dataEntries.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
-		}
-		
-        let chartDataSet = BubbleChartDataSet(values: dataEntries, label: "Visitor count")
-        let chartData = BubbleChartData(dataSet: chartDataSet)
-        chart.data = chartData
         
+		for point in realmWord!.inCorrectQuizDataPoints{
+            dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
+		}
+        
+		for i in -5...0 {
+			print("appending")
+			dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(i*2), y: 2, size: CGFloat((i+10)*10)))
+		}
+		for i in -5...0 {
+			print("appending")
+			dataEntriesCorrect.append(BubbleChartDataEntry(x: Double(i*2+1), y: 1, size: CGFloat(i + 1)))
+			
+		}
+
+        let chartDataSet1 = BubbleChartDataSet(values: dataEntriesCorrect, label: "Correct")
+		let chartDataSet2 = BubbleChartDataSet(values: dataEntriesInCorrect, label: "Incorrect")
+		chartDataSet2.colors = [UIColor.red.withAlphaComponent(0.7)]
+		//chartDataSet2.va
+		chartDataSet1.colors = [UIColor.green.withAlphaComponent(0.7)]
+		
+        let chartData = BubbleChartData(dataSets: [chartDataSet1, chartDataSet2])
+		chart.data = chartData
+				
         let xaxis = chart.xAxis
         xaxis.valueFormatter = axisFormatDelegate
     }
@@ -142,6 +158,9 @@ class WordDetailViewController: UIViewController {
         
         chart.leftAxis.axisMinimum = 0
         chart.leftAxis.axisMaximum = 3
+		chart.xAxis.axisMinimum = -11
+		chart.xAxis.axisMaximum = 1
+		//chart.xAxis.labelPosition
         
         chart.backgroundColor = UIColor.clear
         chart.xAxis.gridColor = UIColor.lightGray.withAlphaComponent(0.3)
@@ -190,8 +209,10 @@ extension WordDetailViewController: ChartViewDelegate {
 extension WordDetailViewController: IAxisValueFormatter {
     
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm.ss"
-        return dateFormatter.string(from: Date(timeIntervalSince1970: value))
+        dateFormatter.dateFormat = "M/d"
+		return dateFormatter.string(from: Date().back(thisManyDays: Int(value)))
+		//return
     }
 }

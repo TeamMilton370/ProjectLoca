@@ -33,9 +33,9 @@ class WordDetailViewController: UIViewController {
             rating.settings.updateOnTouch = false
             rating.settings.starMargin = 5
             rating.isUserInteractionEnabled = false
-
         }
     }
+
     @IBOutlet weak var timesSeenLabel: UILabel! {
         didSet{
             formatLabel(label: timesSeenLabel)
@@ -111,25 +111,17 @@ class WordDetailViewController: UIViewController {
 			print("no realm word for chart. quitting")
 			return
 		}
-        var dataEntriesCorrect: [BubbleChartDataEntry] = []
+    var dataEntriesCorrect: [BubbleChartDataEntry] = []
 		var dataEntriesInCorrect: [BubbleChartDataEntry] = []
 
 		for point in realmWord!.correctQuizDataPoints{
 			dataEntriesCorrect.append(BubbleChartDataEntry(x: Double(point.x), y: 1, size: CGFloat(point.size)))
 		}
+        
 		for point in realmWord!.inCorrectQuizDataPoints{
-				dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
+           dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(point.x), y: 2, size: CGFloat(point.size)))
 		}
-		
-		for i in -5...0 {
-			print("appending")
-			dataEntriesInCorrect.append(BubbleChartDataEntry(x: Double(i*2), y: 2, size: CGFloat((i+10)*10)))
-		}
-		for i in -5...0 {
-			print("appending")
-			dataEntriesCorrect.append(BubbleChartDataEntry(x: Double(i*2+1), y: 1, size: CGFloat(i + 20)))
-			
-		}
+						
 		let myFormatter = MyIValueFormatter()
 		
         let chartDataSet1 = BubbleChartDataSet(values: dataEntriesCorrect, label: "Correct")

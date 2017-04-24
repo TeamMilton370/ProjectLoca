@@ -857,7 +857,7 @@
 				TargetAttributes = {
 					632E76291E43F7560098CC91 = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 3D642QE477;
+						DevelopmentTeam = 8TWVWBQE3T;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1291,7 +1291,7 @@
 			baseConfigurationReference = B24C2122D6922A9CEB6FAA4E /* Pods-Project Loca.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3D642QE477;
+				DEVELOPMENT_TEAM = 8TWVWBQE3T;
 				INFOPLIST_FILE = "Project Loca/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "none.Project-Loca";
@@ -1306,7 +1306,7 @@
 			baseConfigurationReference = 76A9AE0D144A160898E7AB78 /* Pods-Project Loca.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3D642QE477;
+				DEVELOPMENT_TEAM = 8TWVWBQE3T;
 				INFOPLIST_FILE = "Project Loca/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "none.Project-Loca";

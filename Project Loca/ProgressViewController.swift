@@ -22,16 +22,23 @@ class ProgressViewController: UIViewController {
     let chartData = LineChartData()
     var formattedChartData: [ChartDataEntry]?
     var dataSet1: LineChartDataSet?
-	
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         awardsView.delegate = self
         awardsView.dataSource = self
         
-        let inset = UIScreen.main.bounds.width/2
+        let width = awardsView.bounds.width
+        let inset = width/4 - width/6
         
-//        awardsView.contentInset = UIEdgeInsetsMake(0, inset, 0, inset)
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+        layout.itemSize = CGSize(width: 125, height: 125)
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 125/3
+        awardsView.collectionViewLayout = layout
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,10 +65,10 @@ class ProgressViewController: UIViewController {
 
 }
 
-extension ProgressViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ProgressViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 8
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -86,10 +93,6 @@ extension ProgressViewController: UICollectionViewDelegate, UICollectionViewData
             foundCount = 250
         case 7:
             foundCount = 500
-        case 8:
-            foundCount = 750
-        case 9:
-            foundCount = 1000
         default:
             break
         }
@@ -102,7 +105,7 @@ extension ProgressViewController: UICollectionViewDelegate, UICollectionViewData
         
         cell.foundCountLabel.textColor = UIColor.white
         cell.wordsFoundLabel.textColor = UIColor.white
-        cell.layer.cornerRadius = 10
+        cell.layer.cornerRadius = 20
         
         let color = UIColor.randomColor()
         cell.foundCountLabel.backgroundColor = UIColor.white
@@ -116,6 +119,17 @@ extension ProgressViewController: UICollectionViewDelegate, UICollectionViewData
         return cell
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 110, height: 110)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        awardsView.collectionViewLayout.invalidateLayout()
+        super.viewWillTransition(to: size, with: coordinator)
+    }
+    
+
 }
 
 extension ProgressViewController: ChartViewDelegate {

@@ -24,9 +24,6 @@ class HomeViewController: UIViewController {
 		case recognizing
 		case unavailable
 	}
-	
-    let blue = UIColor.init(red: 135/255, green: 206/255, blue: 250/255, alpha: 1.0)
-
     
 	//MARK: Sppech recognition variables
 	let audioEngine = AVAudioEngine()

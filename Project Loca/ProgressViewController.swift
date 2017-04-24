@@ -9,13 +9,15 @@
 import Foundation
 import UIKit
 import Charts
+import RealmSwift
 
 class ProgressViewController: UIViewController {
 
     
-    @IBOutlet weak var lineChart: LineChartView!
     @IBOutlet weak var awardsView: UICollectionView!
-    
+	
+	var seenCount = 0
+	var seenWords: Results<Word>?
     let sharedData = HistoryDataManager.sharedInstance
     let chartData = LineChartData()
     var formattedChartData: [ChartDataEntry]?
@@ -25,7 +27,6 @@ class ProgressViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        lineChart.delegate = self
         awardsView.delegate = self
         awardsView.dataSource = self
         
@@ -38,12 +39,30 @@ class ProgressViewController: UIViewController {
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 125/3
         awardsView.collectionViewLayout = layout
+        awardsView.contentInset = UIEdgeInsetsMake(-50, 0, 0, 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        loadWords(with: nil)
+		if seenWords != nil{
+			seenCount = seenWords!.count
+		}
+		awardsView.reloadData()
     }
+	func loadWords(with: NSPredicate?){
+		do{
+			let realm = try Realm()
+			if let predicate = with{
+				seenWords = realm.objects(Word.self).filter(predicate)
+			}else{
+				seenWords = realm.objects(Word.self)
+			}
+		}catch{
+			print(error)
+		}
+		
+	}
 
 }
 
@@ -94,6 +113,9 @@ extension ProgressViewController: UICollectionViewDelegate, UICollectionViewData
         cell.foundCountLabel.textColor = color
         
         cell.backgroundColor = color
+		if seenCount < foundCount{
+			cell.backgroundColor = color.withAlphaComponent(0.1)
+		}
         
         return cell
         

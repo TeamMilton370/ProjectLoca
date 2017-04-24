@@ -17,7 +17,6 @@ class HistoryViewController: UIViewController {
 	var recentImages: Results<RLMImage>?
 	let historyDataManager = HistoryDataManager.sharedInstance
     
-    let blue = UIColor.init(red: 135/255, green: 206/255, blue: 250/255, alpha: 0.8)
     let geoCoder = CLGeocoder()
     
     //MARK: IBOutlets
@@ -28,13 +27,14 @@ class HistoryViewController: UIViewController {
     //MARK: View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+		
+		searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         tableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
         tableView.separatorStyle = .none
         
-		loadWords()
+		loadWords(with: nil)
         
     }
     
@@ -66,10 +66,14 @@ class HistoryViewController: UIViewController {
         }
     }
     
-	func loadWords(){
+	func loadWords(with: NSPredicate?){
 		do{
 			let realm = try Realm()
-			seenWords = realm.objects(Word.self)
+			if let predicate = with{
+				seenWords = realm.objects(Word.self).filter(predicate)
+			}else{
+				seenWords = realm.objects(Word.self)
+			}
 			recentImages = realm.objects(RLMImage.self).sorted(byKeyPath: "dateAdded", ascending: false)
 		}catch{
 			print(error)
@@ -149,4 +153,33 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
         return cell!
         
     }
+}
+
+extension HistoryViewController: UISearchBarDelegate{
+	
+	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+		searchBar.text = ""
+		searchBar.showsCancelButton = true
+		searchBar.placeholder = "Search by Word or Translation"
+	}
+	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+	}
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+		searchBar.showsCancelButton = false
+		searchBar.resignFirstResponder()
+		loadWords(with: nil)
+		tableView.reloadData()
+	}
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+		
+		let wordContainPredicate = NSPredicate(format: "word CONTAINS[c] %@", searchText)
+		let translationContainsPredicate = NSPredicate(format: "translation CONTAINS[c] %@", searchText)
+		
+		let compoundPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.or , subpredicates: [wordContainPredicate, translationContainsPredicate])
+		
+		loadWords(with: compoundPredicate)
+		tableView.reloadData()
+	}
+
+	
 }

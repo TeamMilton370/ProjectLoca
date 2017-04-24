@@ -108,13 +108,16 @@ class WordDetailViewController: UIViewController {
 				correct = correct + 1
 			}
 		}
-		label.text = "\(CGFloat(correct/realmWord!.quizResults.count).percent) correct"		
+		label.text = "\((CGFloat(correct)/CGFloat(realmWord!.quizResults.count)).percent) correct"
 	}
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.chart.animate(yAxisDuration: 0.5)
         updateChartWithData()
+		if realmWord != nil{
+			rating.rating = Double(realmWord!.masteryLevel)
+		}
     }
     
     //Chart stuff

@@ -114,13 +114,13 @@ class Word: Object{
 					incorrect = incorrect + 1
 				}
 			}
-			let percent: CGFloat = CGFloat(correct/(correct+incorrect))
+			let percent: CGFloat = CGFloat(correct)/CGFloat(correct+incorrect)
 			
-			if percent > 0.9{
+			if percent >= 0.9 && sortedQuizzes.count >= 5{
 				return 3
-			}else if percent > 0.75{
+			}else if percent >= 0.75{
 				return 2
-			}else if percent > 0.5{
+			}else if percent >= 0.5{
 				return 1
 			}else{
 				return 0

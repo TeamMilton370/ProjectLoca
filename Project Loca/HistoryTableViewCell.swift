@@ -12,8 +12,14 @@ import Cosmos
 
 class HistoryTableViewCell: UITableViewCell {
 
-    var wordData: Word?
-    
+	var wordData: Word?{
+		didSet{
+			if wordData != nil{
+				rating.rating = Double(wordData!.masteryLevel)
+			}
+		}
+	}
+		
     @IBOutlet weak var lastSeenLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var originalWord: UILabel!

@@ -116,6 +116,7 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
 		cell?.originalWord.text = seenWords![indexPath.row].word.capitalizingFirstLetter()
 		cell?.translatedWord.text = seenWords![indexPath.row].translation?.capitalizingFirstLetter()
         cell?.lastSeenLabel.text = seenWords![indexPath.row].lastSeen.toString()
+		
         //Location
         let location = CLLocation(latitude: (seenWords![indexPath.row].coordinates.last?.coordinate.latitude)!, longitude: (seenWords![indexPath.row].coordinates.last?.coordinate.longitude)!)
         

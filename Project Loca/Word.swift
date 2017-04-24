@@ -87,13 +87,13 @@ class Word: Object{
 			return first.key.compare(second.key) == .orderedAscending
 		}){
 			let size: Int = array.count
-			let x = Int(date.timeIntervalSince1970)
-			counter = counter + 1
-			print("got an incorrect data point")
-			toReturn.append((x, size))
-			if counter == 10{
+			let x = date.days(after: Date())	//days behind today (today is zero, yesterday is -1)
+			if x <= -10{
 				break
 			}
+			print("got an incorrect data point")
+			toReturn.append((x, size))
+			
 		}
 		return toReturn
 	}
